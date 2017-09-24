@@ -35,26 +35,16 @@
 
 <body>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <form class="navbar-form" role="search">
-    <div class="input-group add-on">
-      <input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
-      <div class="input-group-btn">
-        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-      </div>
-    </div>
-  </form>
-</body>
 
 <script>
-  $.getJSON("http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=fd4fb84bbbb34acfae890f17144ee131&stop_id=PAR:2", function(data) {
-    var k = data;
-    var obj = {
-      "hello": "2980b9",
-    };
-    console.log(obj["hello"]);
-    var body = "<table class='table'><thead><tr><th>Bus Name</th><th>Minutes Until Arrival</th><th>Destination</th></thead><tbody>";
-    for (i = 0; i < k.departures.length; i++) {
-      var current = k.departures[i];
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+    vars[key] = value;
+  });
+  $.getJSON("http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=fd4fb84bbbb34acfae890f17144ee131&pt=60&stop_id=" + vars["id"], function(data) {
+    var body = `<center><h1>${decodeURIComponent(vars['name'])}</h1></center><table class='table'><thead><tr><th>Bus Name</th><th>Minutes Until Arrival</th><th>Destination</th></thead><tbody>`;
+    for (i = 0; i < data.departures.length; i++) {
+      var current = data.departures[i];
       console.log(current.headsign);
       console.log(current.route.route_color);
       body +=
