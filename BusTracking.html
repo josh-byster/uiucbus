@@ -1,0 +1,19 @@
+<html>
+<body>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+      $.getJSON("http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=fd4fb84bbbb34acfae890f17144ee131&stop_id=PAR", function(data) {
+          var k = data;
+          for(i=0; i < k.departures.length;i++){
+            var current = k.departures[i];
+            console.log(current.headsign);
+            console.log(current.route.route_color);
+            document.body.innerHTML +=
+              "<div style='color:#"+current.route.route_color+
+              ";'>"+current.headsign + current. expected_mins+"</div><br/>";
+          }
+        });
+</script>
+
+</html>
