@@ -1,0 +1,267 @@
+{
+  "time": "2017-09-24T00:02:04-05:00",
+  "new_changeset": true,
+  "status": {
+    "code": 200,
+    "msg": "ok"
+  },
+  "rqst": {
+    "method": "GetDeparturesByStop",
+    "params": {
+      "stop_id": "PAR"
+    }
+  },
+  "departures": [{
+    "stop_id": "PAR:2",
+    "headsign": "120W Teal",
+    "route": {
+      "route_color": "006991",
+      "route_id": "TEAL LATE NIGHT SATURDAY",
+      "route_long_name": "Teal Late Night Saturday",
+      "route_short_name": "120",
+      "route_text_color": "ffffff"
+    },
+    "trip": {
+      "trip_id": "[@124.0.98416589@][1500564541162]\/12__T2UISA_V1",
+      "trip_headsign": "Illinois Terminal",
+      "route_id": "TEAL LATE NIGHT SATURDAY",
+      "block_id": "T2UISA V1",
+      "direction": "West",
+      "service_id": "T2UISA V1",
+      "shape_id": "[@124.0.98416589@]120W TEAL LATE 12"
+    },
+    "vehicle_id": "1170",
+    "origin": {
+      "stop_id": "ODSS:1"
+    },
+    "destination": {
+      "stop_id": "IT:5"
+    },
+    "is_monitored": true,
+    "is_scheduled": true,
+    "is_istop": true,
+    "scheduled": "2017-09-24T00:01:00-05:00",
+    "expected": "2017-09-24T00:03:47-05:00",
+    "expected_mins": 2,
+    "location": {
+      "lat": 40.098357,
+      "lon": -88.214333
+    }
+  }, {
+    "stop_id": "PAR:2",
+    "headsign": "130N Silver",
+    "route": {
+      "route_color": "cccccc",
+      "route_id": "SILVER EVENING SATURDAY",
+      "route_long_name": "Silver Evening Saturday",
+      "route_short_name": "130",
+      "route_text_color": "000000"
+    },
+    "trip": {
+      "trip_id": "[@124.0.98444912@][1500568652964]\/64__SV1UISA_V1",
+      "trip_headsign": "Lincoln Square",
+      "route_id": "SILVER EVENING SATURDAY",
+      "block_id": "SV1UISA V1",
+      "direction": "North",
+      "service_id": "SV1UISA V1",
+      "shape_id": "[@124.0.98444912@]130N SILVER EVENING 2"
+    },
+    "vehicle_id": "1181",
+    "origin": {
+      "stop_id": "PAR:2"
+    },
+    "destination": {
+      "stop_id": "LSE:8"
+    },
+    "is_monitored": true,
+    "is_scheduled": true,
+    "is_istop": true,
+    "scheduled": "2017-09-24T00:06:00-05:00",
+    "expected": "2017-09-24T00:06:00-05:00",
+    "expected_mins": 4,
+    "location": {
+      "lat": 40.101587,
+      "lon": -88.221833
+    }
+  }, {
+    "stop_id": "PAR:2",
+    "headsign": "220N Illini",
+    "route": {
+      "route_color": "5a1d5a",
+      "route_id": "ILLINI EVENING SATURDAY",
+      "route_long_name": "Illini Evening Saturday",
+      "route_short_name": "220",
+      "route_text_color": "ffffff"
+    },
+    "trip": {
+      "trip_id": "[@124.0.98424461@][1500565066967]\/12__I1UISA_V1",
+      "trip_headsign": "Lincoln & Killarney",
+      "route_id": "ILLINI EVENING SATURDAY",
+      "block_id": "I1UISA V1",
+      "direction": "North",
+      "service_id": "I1UISA V1",
+      "shape_id": "[@124.0.98424461@]220N ILLINI 10"
+    },
+    "vehicle_id": "1719",
+    "origin": {
+      "stop_id": "PAR:2"
+    },
+    "destination": {
+      "stop_id": "LNCLNKLRNY:1"
+    },
+    "is_monitored": true,
+    "is_scheduled": true,
+    "is_istop": true,
+    "scheduled": "2017-09-24T00:08:00-05:00",
+    "expected": "2017-09-24T00:08:00-05:00",
+    "expected_mins": 6,
+    "location": {
+      "lat": 40.099497,
+      "lon": -88.220833
+    }
+  }, {
+    "stop_id": "PAR:2",
+    "headsign": "220N Illini",
+    "route": {
+      "route_color": "5a1d5a",
+      "route_id": "ILLINI EVENING SATURDAY",
+      "route_long_name": "Illini Evening Saturday",
+      "route_short_name": "220",
+      "route_text_color": "ffffff"
+    },
+    "trip": {
+      "trip_id": "[@124.0.98424461@][1500565066967]\/19__I3UISA_V1",
+      "trip_headsign": "Lincoln & Killarney",
+      "route_id": "ILLINI EVENING SATURDAY",
+      "block_id": "I3UISA V1",
+      "direction": "North",
+      "service_id": "I3UISA V1",
+      "shape_id": "[@124.0.98424461@]220N ILLINI 10"
+    },
+    "vehicle_id": "1184",
+    "origin": {
+      "stop_id": "PAR:2"
+    },
+    "destination": {
+      "stop_id": "LNCLNKLRNY:1"
+    },
+    "is_monitored": true,
+    "is_scheduled": true,
+    "is_istop": true,
+    "scheduled": "2017-09-24T00:18:00-05:00",
+    "expected": "2017-09-24T00:18:00-05:00",
+    "expected_mins": 16,
+    "location": {
+      "lat": 40.10146,
+      "lon": -88.23425
+    }
+  }, {
+    "stop_id": "PAR:2",
+    "headsign": "120W Teal",
+    "route": {
+      "route_color": "006991",
+      "route_id": "TEAL LATE NIGHT SATURDAY",
+      "route_long_name": "Teal Late Night Saturday",
+      "route_short_name": "120",
+      "route_text_color": "ffffff"
+    },
+    "trip": {
+      "trip_id": "[@124.0.98416589@][1500564541162]\/13__T1UISA_V1",
+      "trip_headsign": "Illinois Terminal",
+      "route_id": "TEAL LATE NIGHT SATURDAY",
+      "block_id": "T1UISA V1",
+      "direction": "West",
+      "service_id": "T1UISA V1",
+      "shape_id": "[@124.0.98416589@]120W TEAL LATE 12"
+    },
+    "vehicle_id": "1726",
+    "origin": {
+      "stop_id": "ODSS:1"
+    },
+    "destination": {
+      "stop_id": "IT:5"
+    },
+    "is_monitored": true,
+    "is_scheduled": true,
+    "is_istop": true,
+    "scheduled": "2017-09-24T00:21:00-05:00",
+    "expected": "2017-09-24T00:21:00-05:00",
+    "expected_mins": 19,
+    "location": {
+      "lat": 40.114443,
+      "lon": -88.23075
+    }
+  }, {
+    "stop_id": "PAR:2",
+    "headsign": "130N Silver",
+    "route": {
+      "route_color": "cccccc",
+      "route_id": "SILVER EVENING SATURDAY",
+      "route_long_name": "Silver Evening Saturday",
+      "route_short_name": "130",
+      "route_text_color": "000000"
+    },
+    "trip": {
+      "trip_id": "[@124.0.98444912@][1500568652964]\/54__SV2UISA_V1",
+      "trip_headsign": "Lincoln Square",
+      "route_id": "SILVER EVENING SATURDAY",
+      "block_id": "SV2UISA V1",
+      "direction": "North",
+      "service_id": "SV2UISA V1",
+      "shape_id": "[@124.0.98444912@]130N SILVER EVENING 1"
+    },
+    "vehicle_id": "1165",
+    "origin": {
+      "stop_id": "VETMED:1"
+    },
+    "destination": {
+      "stop_id": "LSE:8"
+    },
+    "is_monitored": true,
+    "is_scheduled": true,
+    "is_istop": true,
+    "scheduled": "2017-09-24T00:26:00-05:00",
+    "expected": "2017-09-24T00:26:00-05:00",
+    "expected_mins": 24,
+    "location": {
+      "lat": 40.11172,
+      "lon": -88.207833
+    }
+  }, {
+    "stop_id": "PAR:2",
+    "headsign": "220N Illini",
+    "route": {
+      "route_color": "5a1d5a",
+      "route_id": "ILLINI EVENING SATURDAY",
+      "route_long_name": "Illini Evening Saturday",
+      "route_short_name": "220",
+      "route_text_color": "ffffff"
+    },
+    "trip": {
+      "trip_id": "[@124.0.98424461@][1500565066967]\/8__I5UISA_V1",
+      "trip_headsign": "Lincoln & Killarney",
+      "route_id": "ILLINI EVENING SATURDAY",
+      "block_id": "I5UISA V1",
+      "direction": "North",
+      "service_id": "I5UISA V1",
+      "shape_id": "[@124.0.98424461@]220N ILLINI 10"
+    },
+    "vehicle_id": "1176",
+    "origin": {
+      "stop_id": "PAR:2"
+    },
+    "destination": {
+      "stop_id": "LNCLNKLRNY:1"
+    },
+    "is_monitored": true,
+    "is_scheduled": true,
+    "is_istop": true,
+    "scheduled": "2017-09-24T00:28:00-05:00",
+    "expected": "2017-09-24T00:28:00-05:00",
+    "expected_mins": 26,
+    "location": {
+      "lat": 40.108997,
+      "lon": -88.228833
+    }
+  }]
+}
