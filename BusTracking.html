@@ -1,44 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-6446351801889542",
-    enable_page_level_ads: true
-  });
-</script>
-<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-6446351801889542",
+      enable_page_level_ads: true
+    });
+  </script>
+  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<!-- JS file -->
-<script src="jquery.easy-autocomplete.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- JS file -->
+  <script src="jquery.easy-autocomplete.min.js"></script>
 
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-<!-- CSS file -->
-<link rel="stylesheet" href="easy-autocomplete.min.css">
+  <!-- CSS file -->
+  <link rel="stylesheet" href="easy-autocomplete.min.css">
 
-<!-- Additional CSS Themes file - not required-->
-<link rel="stylesheet" href="easy-autocomplete.themes.min.css">
+  <!-- Additional CSS Themes file - not required-->
+  <link rel="stylesheet" href="easy-autocomplete.themes.min.css">
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<style>
-  .table td {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    font-size: 20px;
-    border-top: none;
-    font-family: 'Lato', sans-serif;
-  }
-</style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <style>
+    .table td {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      font-size: 20px;
+      border-top: none;
+      font-family: 'Lato', sans-serif;
+    }
+  </style>
   <title>Live Bus Tracker</title>
 
   <!-- Bootstrap -->
@@ -54,8 +55,8 @@
 <body>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script>
-    var google_api="";
-    var cumtd_api="";
+    var google_api = "";
+    var cumtd_api = "";
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
       vars[key] = value;
@@ -65,28 +66,34 @@
       var count = 60;
       var interval = setInterval(function() {
         count--;
-        document.getElementById("change").innerHTML=`<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
+        document.getElementById("change").innerHTML = `<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
       }, 1000);
       console.log('refresh');
       $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=${cumtd_api}&pt=60&stop_id=` + vars["id"], function(data) {
-        var body = `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><input id="provider-remote" /><br/><br/></center>`
+        var body =
+          `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><input id="provider-remote" /><br/><br/></center>`
         if (data.departures.length == 0) {
           body += `<center><h4>No buses are coming to this stop within the next hour.</h4></center>`
         } else {
           body += `<table class='table'><thead><tr><th>Bus Name</th><th>Estimated Time Left</th><th>ETA</th><th>Last Location</th></thead><tbody>`;
           for (i = 0; i < data.departures.length; i++) {
             var current = data.departures[i];
-            if(current.expected_mins==0)
-              current.expected_mins="Arriving Now";
+            if (current.expected_mins == 0)
+              current.expected_mins = "Arriving Now";
             else {
-              current.expected_mins+="m";
+              current.expected_mins += "m";
             }
             var date = new Date(current.expected.toString());
-            var hour = date.getHours()%12;
+            var hour = date.getHours() % 12;
+            if (hour == 0) hour = 12;
             var minute = date.getMinutes();
-            if(minute<10){minute = "0"+minute}
+            if (minute < 10) {
+              minute = "0" + minute
+            }
             var seconds = date.getSeconds();
-            if(seconds<10){seconds="0"+seconds}
+            if (seconds < 10) {
+              seconds = "0" + seconds
+            }
             body +=
               `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td><b>${current.headsign}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon})">Location</button></td></tr>`;
             //"<div style='color:#" + current.route.route_color +
@@ -118,18 +125,21 @@
     };
     getInfo();
 
-    setInterval(function(){
+    setInterval(function() {
       location.reload();
-    },60000);
+    }, 60000);
 
-    function directToMaps(lat,long){
+    function directToMaps(lat, long) {
 
-        //window.open(`https://www.google.com/maps/place/${lat},${long}`,'mywindow');
-        window.open(`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=16&size=600x600&maptype=roadmap
+      //window.open(`https://www.google.com/maps/place/${lat},${long}`,'mywindow');
+      window.open(
+        `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=16&size=600x600&maptype=roadmap
 &markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318
 &markers=color:red%7Clabel:C%7C40.718217,-73.998284
-&key=${google_api}`,"mywindow","width=500,height=500");
+&key=${google_api}`,
+        "mywindow", "width=500,height=500");
     }
     //directToMaps(40.098357, -88.214333);
   </script>
+
 </html>
