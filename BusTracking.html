@@ -2,10 +2,9 @@
 <html lang="en">
 
 <head>
-  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <meta charset="utf-8">
@@ -36,25 +35,56 @@
 <body>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
 
-<script>
-  var vars = {};
-  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
-    vars[key] = value;
-  });
-  $.getJSON("http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=fd4fb84bbbb34acfae890f17144ee131&pt=60&stop_id=" + vars["id"], function(data) {
-    var body = `<center><h1>${decodeURIComponent(vars['name'])}</h1></center><table class='table'><thead><tr><th>Bus Name</th><th>Minutes Until Arrival</th><th>Destination</th></thead><tbody>`;
-    for (i = 0; i < data.departures.length; i++) {
-      var current = data.departures[i];
-      console.log(current.headsign);
-      console.log(current.route.route_color);
-      body +=
-        `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td><b>${current.headsign}</b></td><td>${current.expected_mins}</td><td>${current.trip.trip_headsign}</tr>`;
-      //"<div style='color:#" + current.route.route_color +
-      //";'>" + current.headsign + current.expected_mins + "</div><br/>";
-    }
-    body += " </tr></tbody></table>"
-    document.body.innerHTML += body;
-  });
-</script>
+  <script>
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+      vars[key] = value;
+    });
+
+
+    function getInfo() {
+      var count = 30;
+      var interval = setInterval(function() {
+        count--;
+        document.getElementById("change").innerHTML=`<h4>Refreshing in ${count}s</h4><br/><h6>The time is now: ${new Date().toLocaleTimeString()}</h6>`;
+      }, 1000);
+      console.log('refresh');
+      $.getJSON("http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=fd4fb84bbbb34acfae890f17144ee131&pt=60&stop_id=" + vars["id"], function(data) {
+        var body = `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in 30s</h4><br/><h6>The time is now: ${new Date().toLocaleTimeString()}</h6></div><br/><div id="newlocation"><button type="button" class="btn btn-danger">Change Location</button></div><br/></center>`
+        if (data.departures.length == 0) {
+          body += `<h4>No buses are coming to this stop within the next hour.</h4>`
+        } else {
+          body += `<table class='table'><thead><tr><th>Bus Name</th><th>Minutes Until Arrival</th><th>Arrival Time</th></thead><tbody>`;
+          for (i = 0; i < data.departures.length; i++) {
+            var current = data.departures[i];
+            if(current.expected_mins==0)
+              current.expected_mins="Arriving Now";
+            var date = new Date(current.expected.toString());
+            var hour = date.getHours()%12;
+            var minute = date.getMinutes();
+            if(minute<10){minute = "0"+minute}
+            var seconds = date.getSeconds();
+            if(seconds<10){seconds="0"+seconds}
+            console.log(current.expected);
+            console.log(seconds);
+            body +=
+              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td><b>${current.headsign}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}</tr>`;
+            //"<div style='color:#" + current.route.route_color +
+            //";'>" + current.headsign + current.expected_mins + "</div><br/>";
+          }
+          body += " </tr></tbody></table>"
+        }
+
+        document.body.innerHTML += body;
+
+      });
+    };
+    getInfo();
+
+    setInterval(function(){
+      location.reload();
+    },30000);
+
+  </script>
 
 </html>
