@@ -4,19 +4,23 @@
 <head>
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+    < script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" >
+  </script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <!-- JS file -->
-<script src="jquery.easy-autocomplete.min.js"></script>
+  <script src="jquery.easy-autocomplete.min.js"></script>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-<!-- CSS file -->
-<link rel="stylesheet" href="easy-autocomplete.min.css">
+  <!-- CSS file -->
+  <link rel="stylesheet" href="easy-autocomplete.min.css">
 
-<!-- Additional CSS Themes file - not required-->
-<link rel="stylesheet" href="easy-autocomplete.themes.min.css">
+  <!-- Additional CSS Themes file - not required-->
+  <link rel="stylesheet" href="easy-autocomplete.themes.min.css">
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,6 +48,28 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">UIUC Bus Tracker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="BusTracking.html?id=PLAZA&name=Transit%20Plaza">Transit Plaza <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="BusTracking.html?id=PAR&name=Pennsylvania%20Ave.%20Residence%20Hall">PAR</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="BusTracking.html?id=KRANNERT&name=Krannert%20Center">Krannert Center</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="BusTracking.html?id=1STSTDM&name=First%20and%20Stadium">First & Stadium</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <!--<form class="navbar-form" role="search">
     <div class="input-group add-on">
@@ -53,31 +79,36 @@
       </div>
     </div>
   </form>-->
-
-  <center><h1>Welcome!</h1></br>
-  <h4>Enter your location:</h4>
-  <input id="provider-remote" />
-</center>
+  <!-- Image and text -->
+  <div class='container' style='margin-top:80px;'>
+    <center>
+      <h1>Welcome!</h1></br>
+      <h4>Enter your location:</h4>
+      <form>
+        <input id='provider-remote'>
+      </form>
+    </center>
+  </div>
 </body>
 <script>
-var options = {
-	url: function(phrase) {
-		return "https://www.cumtd.com/autocomplete/stops/v1.0/json/search?query=" + phrase + "&format=json";
-	},
+  var options = {
+    url: function(phrase) {
+      return "https://www.cumtd.com/autocomplete/stops/v1.0/json/search?query=" + phrase + "&format=json";
+    },
 
-	getValue: "n",
+    getValue: "n",
 
-  list: {
+    list: {
 
-		onChooseEvent: function() {
-			var id = $("#provider-remote").getSelectedItemData().i;
-      var name = $("#provider-remote").getSelectedItemData().n;
-      window.location = `BusTracking.html?id=${id}&name=${name}`
-		}
-	}
-};
+      onChooseEvent: function() {
+        var id = $("#provider-remote").getSelectedItemData().i;
+        var name = $("#provider-remote").getSelectedItemData().n;
+        window.location = `BusTracking.html?id=${id}&name=${name}`
+      }
+    }
+  };
 
-$("#provider-remote").easyAutocomplete(options);
-
+  $("#provider-remote").easyAutocomplete(options);
 </script>
+
 </html>

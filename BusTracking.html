@@ -66,7 +66,7 @@
       console.log('refresh');
       $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=${cumtd_api}&pt=60&stop_id=` + vars["id"], function(data) {
         var body =
-          `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><input id="provider-remote" /><br/><br/></center>`
+          `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><h6>Enter new location here:</h6><input id="provider-remote" /><br/><br/></center>`
         if (data.departures.length == 0) {
           body += `<center><h4>No buses are coming to this stop within the next hour.</h4></center>`;
         } else {
