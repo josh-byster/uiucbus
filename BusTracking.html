@@ -50,14 +50,41 @@
 <body>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script>
+    function calcCrow(lat1, lon1, lat2, lon2) {
+      var R = 6371; // km
+      var dLat = toRad(lat2 - lat1);
+      var dLon = toRad(lon2 - lon1);
+      var lat1 = toRad(lat1);
+      var lat2 = toRad(lat2);
+
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+      console.log(lat1, lon1, lat2, lon2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = R * c;
+      console.log(d);
+
+      return d * 0.62137119; //to miles
+    }
+
+    // Converts numeric degrees to radians
+    function toRad(Value) {
+      return Value * Math.PI / 180;
+    }
     var google_api = "";
     var cumtd_api = "";
     var vars = {};
+    var stop_lat = 0;
+    var stop_long = 0;
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
       vars[key] = value;
     });
 
     function getInfo() {
+      $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=` + vars["id"], function(data) {
+        stop_lat = data.stops[0].stop_points[0].stop_lat;
+        stop_long = data.stops[0].stop_points[0].stop_lon;
+      });
       var count = 60;
       var interval = setInterval(function() {
         count--;
@@ -129,14 +156,40 @@
     }
 
     function directToMaps(lat, long) {
-
+      console.log(calcCrow(stop_lat, stop_long, lat, long));
       //window.open(`https://www.google.com/maps/place/${lat},${long}`,'mywindow');
-      window.open(
-        `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=16&size=600x600&maptype=roadmap
-&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318
-&markers=color:red%7Clabel:C%7C40.718217,-73.998284
-&key=${google_api}`,
-        "mywindow", "width=500,height=500");
+      if (!document.getElementById("location")) {
+        document.body.innerHTML +=
+          `<div class="modal fade" id="location">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Current Bus Location</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>`;
+      }
+      $("#location").modal("show");
+      modalBody = document.getElementById("modalBody");
+      modalBody.innerHTML =
+        `<center><img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=15&size=300x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}"></img>`
+      dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
+      if (dist < .05)
+        modalBody.innerHTML += `<br>The bus has arrived.</center>`
+      else
+        modalBody.innerHTML += `<center><br>The bus is ${calcCrow(stop_lat, stop_long, lat, long).toFixed(2)} miles away.</center>`
+      //window.open(`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=16&size=600x600&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}`,
+      //  "mywindow", "width=500,height=500");
     }
     //directToMaps(40.098357, -88.214333);
   </script>
