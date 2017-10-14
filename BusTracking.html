@@ -50,6 +50,27 @@
 <body>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script>
+    function setOptions() { //Does all the autocomplete setup.
+      var options = {
+        url: function(phrase) {
+          return "https://www.cumtd.com/autocomplete/stops/v1.0/json/search?query=" + phrase + "&format=json";
+        },
+
+        getValue: "n",
+
+        list: {
+
+          onChooseEvent: function() {
+            var id = $("#provider-remote").getSelectedItemData().i;
+            var name = $("#provider-remote").getSelectedItemData().n;
+            window.location = `BusTracking.html?id=${id}&name=${name}`
+          }
+        }
+      };
+
+      $("#provider-remote").easyAutocomplete(options);
+    }
+
     function calcCrow(lat1, lon1, lat2, lon2) {
       var R = 6371; // km
       var dLat = toRad(lat2 - lat1);
@@ -125,24 +146,7 @@
         }
 
         document.body.innerHTML += body;
-        var options = {
-          url: function(phrase) {
-            return "https://www.cumtd.com/autocomplete/stops/v1.0/json/search?query=" + phrase + "&format=json";
-          },
-
-          getValue: "n",
-
-          list: {
-
-            onChooseEvent: function() {
-              var id = $("#provider-remote").getSelectedItemData().i;
-              var name = $("#provider-remote").getSelectedItemData().n;
-              window.location = `BusTracking.html?id=${id}&name=${name}`
-            }
-          }
-        };
-
-        $("#provider-remote").easyAutocomplete(options);
+        setOptions();
       });
     };
 
@@ -188,6 +192,8 @@
         modalBody.innerHTML += `<br>The bus has arrived.</center>`
       else
         modalBody.innerHTML += `<center><br>The bus is ${calcCrow(stop_lat, stop_long, lat, long).toFixed(2)} miles away.</center>`
+
+      setOptions();
       //window.open(`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=16&size=600x600&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}`,
       //  "mywindow", "width=500,height=500");
     }
