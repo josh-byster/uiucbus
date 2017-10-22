@@ -12,15 +12,15 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <!-- JS file -->
-  <script src="jquery.easy-autocomplete.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
 
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
   <!-- CSS file -->
-  <link rel="stylesheet" href="easy-autocomplete.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css">
 
   <!-- Additional CSS Themes file - not required-->
-  <link rel="stylesheet" href="easy-autocomplete.themes.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.themes.css">
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -185,14 +185,17 @@
       }
       $("#location").modal("show");
       modalBody = document.getElementById("modalBody");
-      modalBody.innerHTML =
-        `<center><img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=15&size=300x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}"></img>`
-      dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
-      if (dist < .05)
-        modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
-      else
-        modalBody.innerHTML += `<center><br>The bus is ${calcCrow(stop_lat, stop_long, lat, long).toFixed(2)} miles away.</center>`
-
+      if (lat != 0 && long != 0) {
+        modalBody.innerHTML =
+          `<center><img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=15&size=300x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}"></img>`
+        dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
+        if (dist < .05)
+          modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
+        else
+          modalBody.innerHTML += `<center><br>The bus is ${calcCrow(stop_lat, stop_long, lat, long).toFixed(2)} miles away.</center>`
+      } else {
+        modalBody.innerHTML = `<center><br>The bus isn't reporting a location.</center>`
+      }
       setOptions();
       //window.open(`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=16&size=600x600&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}`,
       //  "mywindow", "width=500,height=500");
