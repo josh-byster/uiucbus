@@ -4,9 +4,8 @@
 <head>
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-  </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -75,6 +74,18 @@
           onChooseEvent: function() {
             var id = $("#provider-remote").getSelectedItemData().i;
             var name = $("#provider-remote").getSelectedItemData().n;
+            var storedAry = Cookies.get("storedAry");
+            if (!storedAry) {
+              storedAry = [];
+            } else {
+              storedAry = JSON.parse(storedAry);
+            }
+            storedAry.push([id, name]);
+            console.log(storedAry);
+            Cookies.set("storedAry", storedAry, {
+              path: '/',
+              expires: 10
+            });
             window.location = `BusTracking.html?id=${id}&name=${name}`
           }
         }
@@ -122,11 +133,18 @@
       var interval = setInterval(function() {
         count--;
         if (count == 50) {
+          ga('create', 'UA-109186351-1', 'auto');
           ga('set', 'dimension1', vars['id']);
           ga('set', 'dimension2', vars['name']);
+          ga('send', 'HIT');
+          ga('send', 'event', 'Stayed on page', vars['name']);
         }
         document.getElementById("change").innerHTML = `<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
       }, 1000);
+      //set cookies
+      //var myAry = [1, 2, 3];
+      //Cookies.set('name', JSON.stringify(myAry));
+      //var storedAry = JSON.parse(Cookies.get('name'));
       console.log('refresh');
       $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=${cumtd_api}&pt=60&stop_id=` + vars["id"], function(data) {
         var body =

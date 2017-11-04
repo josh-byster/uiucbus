@@ -5,9 +5,7 @@
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-    < script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" >
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
@@ -68,16 +66,19 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="BusTracking.html?id=PLAZA&name=Transit%20Plaza">Transit Plaza <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="javascript:navbarFunc(0);">Transit Plaza <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="BusTracking.html?id=PAR&name=Pennsylvania%20Ave.%20Residence%20Hall">PAR</a>
+          <a class="nav-link" href="javascript:navbarFunc(1);">PAR</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="BusTracking.html?id=KRANNERT&name=Krannert%20Center">Krannert Center</a>
+          <a class="nav-link" href="javascript:navbarFunc(2);">Krannert Center</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="BusTracking.html?id=1STSTDM&name=First%20and%20Stadium">First & Stadium</a>
+          <a class="nav-link" href="javascript:navbarFunc(3);">First & Stadium</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:navbarFunc(4);">Goodwin & Nevada</a>
         </li>
       </ul>
     </div>
@@ -99,10 +100,57 @@
       <form>
         <input id='provider-remote'>
       </form>
+      <div id='recents' style='margin-top:20px;'>
+
+      </div>
     </center>
+
+
+
   </div>
 </body>
 <script>
+  //set cookies
+  //var myAry = [1, 2, 3];
+  //Cookies.set('name', JSON.stringify(myAry));
+  function navbarFunc(index) {
+    var arr = [
+      ["PLAZA", "Transit Plaza"],
+      ["PAR", "Pennsylvania Ave. Residence Hall"],
+      ["KRANNERT", "Krannert Center"],
+      ["1STSTDM", "First and Stadium"],
+      ['GWNNV', 'Goodwin and Nevada']
+    ];
+    storedAry.push(arr[index]);
+    Cookies.set('storedAry', JSON.stringify(storedAry), {
+      expires: 10
+    });
+    window.location = `BusTracking.html?id=${arr[index][0]}&name=${encodeURIComponent(arr[index][1])}`
+  }
+
+  var storedAry = Cookies.get("storedAry");
+  if (storedAry !== undefined && storedAry.length > 2) {
+    console.log(storedAry);
+    storedAry = JSON.parse(storedAry);
+    document.getElementById('recents').innerHTML = "<h3>Recently Viewed:</h3>"
+    console.log(storedAry);
+    for (i = storedAry.length - 1; i >= Math.max(storedAry.length, 3) - 3; i--) {
+      var currentElementName = storedAry[i][1];
+      var currentElementName_encoded = encodeURIComponent(currentElementName);
+      var currentElementID = storedAry[i][0];
+      var window_location = `BusTracking.html?id=${currentElementID}&name=${currentElementName_encoded}`;
+      console.log(window_location);
+      document.getElementById('recents').innerHTML += `<button type="button" class="btn btn-success" style='margin-bottom:20px;' onclick="window.location = '${window_location}';">${currentElementName}</button><br/>`;
+
+    }
+    document.getElementById('recents').innerHTML +=
+      `<button type="button" class="btn btn-primary" style='margin-bottom:20px;' onclick="storedAry=[];Cookies.set('storedAry',[],{expires:10});document.getElementById('recents').innerHTML='';">Clear</button><br/>`;
+  } else {
+    storedAry = [];
+  }
+  console.log(storedAry);
+
+
   var options = {
     url: function(phrase) {
       return "https://www.cumtd.com/autocomplete/stops/v1.0/json/search?query=" + phrase + "&format=json";
@@ -115,6 +163,10 @@
       onChooseEvent: function() {
         var id = $("#provider-remote").getSelectedItemData().i;
         var name = $("#provider-remote").getSelectedItemData().n;
+        storedAry.push([id, name])
+        Cookies.set('storedAry', JSON.stringify(storedAry), {
+          expires: 10
+        });
         window.location = `BusTracking.html?id=${id}&name=${name}`
       }
     }
