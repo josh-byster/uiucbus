@@ -200,6 +200,9 @@
 </div>`;
     }
     $("#location").modal("show");
+    $('#location').on('hidden.bs.modal', function() {
+      $("#provider-remote").easyAutocomplete(options);
+    })
   }
 </script>
 
