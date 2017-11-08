@@ -132,16 +132,13 @@
 
   var storedAry = Cookies.get("storedAry");
   if (storedAry !== undefined && storedAry.length > 2) {
-    console.log(storedAry);
     storedAry = JSON.parse(storedAry);
     document.getElementById('recents').innerHTML = "<h3>Recently Viewed:</h3>"
-    console.log(storedAry);
     for (i = storedAry.length - 1; i >= Math.max(storedAry.length, 3) - 3; i--) {
       var currentElementName = storedAry[i][1];
       var currentElementName_encoded = encodeURIComponent(currentElementName);
       var currentElementID = storedAry[i][0];
       var window_location = `BusTracking.html?id=${currentElementID}&name=${currentElementName_encoded}`;
-      console.log(window_location);
       document.getElementById('recents').innerHTML += `<button type="button" class="btn btn-success" style='margin-bottom:20px;' onclick="window.location = '${window_location}';">${currentElementName}</button><br/>`;
 
     }
@@ -150,7 +147,6 @@
   } else {
     storedAry = [];
   }
-  console.log(storedAry);
 
 
 

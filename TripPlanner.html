@@ -131,8 +131,6 @@
       $("#location").modal("show");
       modalBody = document.getElementById("modalBody");
       if (lat != 0 && long != 0) {
-        console.log(lat);
-        console.log(long);
         modalBody.innerHTML =
           `<center><img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=15&size=300x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}"></img>`
         document.getElementById("modal_title").innerHTML = name;
@@ -142,7 +140,6 @@
     function toModalLink(begin) {
       var lat = begin.lat;
       var long = begin.lon;
-      console.log(`<a href="#" onclick="showModal(${lat},${long},'${begin.name}')">${begin.name}</a>`);
       return `<a href="#" onclick="showModal(${lat},${long},'${begin.name}')">${begin.name}</a>`;
     }
 
@@ -164,7 +161,6 @@
               for (j in current_plan.legs) {
 
                 current_leg = current_plan.legs[j];
-                console.log(current_leg);
                 if (current_leg.type == "Walk") {
                   var walk = current_leg.walk;
                   var begin_time = new Date(walk.begin.time);
@@ -176,13 +172,11 @@
                 }
                 if (current_leg.type == "Service") {
                   var bus_info = current_leg.services[0];
-                  console.log(bus_info);
                   var begin_time = new Date(bus_info.begin.time);
                   var end_time = new Date(bus_info.end.time);
                   var ride_time = (end_time - begin_time) / 1000 / 60;
                   document.getElementById('info').innerHTML +=
                     `At ${toTime(bus_info.begin.time)}: Take the <span style='background-color:#${bus_info.route.route_color};color:#${bus_info.route.route_text_color}'>${bus_info.route.route_short_name+bus_info.trip.direction[0]}</span> from ${toModalLink(bus_info.begin)} to ${toModalLink(bus_info.end)}. This should take about ${ride_time} minutes.`;
-                  console.log(bus_info.route.route_color);
                 }
                 document.getElementById('info').innerHTML += "</br>";
               }

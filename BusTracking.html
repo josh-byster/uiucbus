@@ -81,7 +81,6 @@
               storedAry = JSON.parse(storedAry);
             }
             storedAry.push([id, name]);
-            console.log(storedAry);
             Cookies.set("storedAry", storedAry, {
               path: '/',
               expires: 10
@@ -103,10 +102,8 @@
 
       var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-      console.log(lat1, lon1, lat2, lon2);
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var d = R * c;
-      console.log(d);
 
       return d * 0.62137119; //to miles
     }
@@ -145,7 +142,6 @@
       //var myAry = [1, 2, 3];
       //Cookies.set('name', JSON.stringify(myAry));
       //var storedAry = JSON.parse(Cookies.get('name'));
-      console.log('refresh');
       $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=${cumtd_api}&pt=60&stop_id=` + vars["id"], function(data) {
         var body =
           `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><h6>Enter new location here:</h6><input id="provider-remote" /><br/><br/></center>`
@@ -194,7 +190,6 @@
     }
 
     function directToMaps(lat, long) {
-      console.log(calcCrow(stop_lat, stop_long, lat, long));
       //window.open(`https://www.google.com/maps/place/${lat},${long}`,'mywindow');
       if (!document.getElementById("location")) {
         document.body.innerHTML +=
