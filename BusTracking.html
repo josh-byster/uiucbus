@@ -228,16 +228,17 @@
             $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${prev_stop}`, function(data) {
               if (data.stops[0]) {
                 modalBody.innerHTML += `<center><br><b>Previous stop:</b>  ${data.stops[0].stop_name}</center>`
+                console.log(`<center><br><b>Previous stop:</b>  ${data.stops[0].stop_name}</center>`);
               }
-
+              $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${next_stop}`, function(data) { //this is nested because I wanted to avoid the async call
+                if (data.stops[0]) {
+                  modalBody.innerHTML += `<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`
+                  console.log(`<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`);
+                }
+              });
             });
 
-            $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${next_stop}`, function(data) {
-              if (data.stops[0]) {
-                modalBody.innerHTML += `<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`
-              }
 
-            });
 
           });
         }
