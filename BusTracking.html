@@ -168,7 +168,7 @@
               seconds = "0" + seconds
             }
             body +=
-              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td><b>${current.headsign}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon},'${current.trip.trip_id}',${current.vehicle_id})">Location</button></td></tr>`;
+              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td><b>${current.headsign}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon},'${current.trip.trip_id}','${current.vehicle_id}')">Location</button></td></tr>`;
             //"<div style='color:#" + current.route.route_color +
             //";'>" + current.headsign + current.expected_mins + "</div><br/>";
           }
@@ -190,6 +190,7 @@
     }
 
     function directToMaps(lat, long, trip, vehicle) {
+      console.log(vehicle);
       //window.open(`https://www.google.com/maps/place/${lat},${long}`,'mywindow');
       if (!document.getElementById("location")) {
         document.body.innerHTML +=
@@ -218,13 +219,20 @@
         modalBody.innerHTML =
           `<center><img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=15&size=300x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}"></img>`
         dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
-        if (dist < .05)
+        if (dist < .05) {
           modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
-        else {
+          $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
+            trip_id = data.vehicles[0].trip.trip_id;
+            modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip_id}'>View Trip Info</a></center>`
+            console.log(`<a href='TripInfo.html?trip_id=${trip_id}'>View Trip Info</a>`);
+          });
+        } else {
           modalBody.innerHTML += `<center><br>The bus is ${calcCrow(stop_lat, stop_long, lat, long).toFixed(2)} miles away.</center>`
+          console.log(vehicle);
           $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
             prev_stop = data.vehicles[0].previous_stop_id;
             next_stop = data.vehicles[0].next_stop_id;
+            trip_id = data.vehicles[0].trip.trip_id;
             $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${prev_stop}`, function(data) {
               if (data.stops[0]) {
                 modalBody.innerHTML += `<center><br><b>Previous stop:</b>  ${data.stops[0].stop_name}</center>`
@@ -235,10 +243,10 @@
                   modalBody.innerHTML += `<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`
                   console.log(`<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`);
                 }
+                modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip_id}'>View Trip Info</a></center>`
+                console.log(`<a href='TripInfo?trip_id=${trip_id}'>View Trip Info</a>`);
               });
             });
-
-
 
           });
         }
