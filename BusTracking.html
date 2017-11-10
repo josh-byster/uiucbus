@@ -223,8 +223,8 @@
           modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
           $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
             trip_id = data.vehicles[0].trip.trip_id;
-            modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip_id}'>View Trip Info</a></center>`
-            console.log(`<a href='TripInfo.html?trip_id=${trip_id}'>View Trip Info</a>`);
+            modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a></center>`
+            console.log(`<a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a>`);
           });
         } else {
           modalBody.innerHTML += `<center><br>The bus is ${calcCrow(stop_lat, stop_long, lat, long).toFixed(2)} miles away.</center>`
@@ -232,7 +232,6 @@
           $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
             prev_stop = data.vehicles[0].previous_stop_id;
             next_stop = data.vehicles[0].next_stop_id;
-            trip_id = data.vehicles[0].trip.trip_id;
             $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${prev_stop}`, function(data) {
               if (data.stops[0]) {
                 modalBody.innerHTML += `<center><br><b>Previous stop:</b>  ${data.stops[0].stop_name}</center>`
@@ -243,8 +242,8 @@
                   modalBody.innerHTML += `<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`
                   console.log(`<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`);
                 }
-                modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip_id}'>View Trip Info</a></center>`
-                console.log(`<a href='TripInfo?trip_id=${trip_id}'>View Trip Info</a>`);
+                modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a></center>`
+                console.log(`<a href='TripInfo?trip_id=${trip}'>View Trip Info</a>`);
               });
             });
 
