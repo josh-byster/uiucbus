@@ -133,7 +133,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
           </div>
-          <div class="modal-body" id="modalBody">
+          <div class="modal-body" id="modalBody2">
             <p>Modal body text goes here.</p>
           </div>
           <div class="modal-footer">
@@ -278,7 +278,7 @@
 
   function showModalBefore() {
     $('#myModal').modal('show');
-    document.getElementById("modalBody").innerHTML = "Loading stops...";
+    document.getElementById("modalBody2").innerHTML = "Loading stops...";
   }
   function getLocation() {
     if (navigator.geolocation) {
@@ -293,7 +293,7 @@
     console.log(position)
     $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon?key=${cumtd_api}&pt=60&lat=${position.coords.latitude}&lon=${position.coords.longitude}`, function(data) {
       console.log(data);
-      modalBody = document.getElementById("modalBody");
+      modalBody = document.getElementById("modalBody2");
       modalBody.innerHTML = "";
       for (i = 0; i < 3; i++) {
         redirectURL = `BusTracking.html?id=${data.stops[i].stop_id}&name=${encodeURIComponent(data.stops[i].stop_name)}`;
@@ -306,7 +306,7 @@
   
   function removeColors(str){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      var colors = ["Yellow","hopper","Red","Lavender","Blue","Green Express","Green","Orange", "Grey","Bronze","Brown","Gold","Ruby","Teal","Silver","Navy","Pink","Raven","Illini"]
+      var colors = ["Yellow","hopper","Red","Lavender","Blue","Green","Orange", "Grey","Bronze","Brown","Gold","Ruby","Teal","Silver","Navy","Pink","Raven","Illini"]
       for (var i = 0; i < colors.length; i++) {
         str = str.split(colors[i]).join('');
       }
