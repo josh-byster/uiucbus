@@ -188,7 +188,7 @@
               seconds = "0" + seconds
             }
             body +=
-              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td style="word-wrap:break-word;"><b>${current.headsign}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon},'${current.trip.trip_id}','${current.vehicle_id}')">Location</button></td></tr>`;
+              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td style="word-wrap:break-word;"><b>${removeColors(current.headsign)}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon},'${current.trip.trip_id}','${current.vehicle_id}')">Location</button></td></tr>`;
             //"<div style='color:#" + current.route.route_color +
             //";'>" + current.headsign + current.expected_mins + "</div><br/>";
           }
@@ -302,6 +302,16 @@
         console.log(data.stops[i]);
       }
     });
+  }
+  
+  function removeColors(str){
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      var colors = ["Yellow","hopper","Red","Lavender","Blue","Green Express","Green","Orange", "Grey","Bronze","Brown","Gold","Ruby","Teal","Silver","Navy","Pink","Raven","Illini"]
+      for (var i = 0; i < colors.length; i++) {
+        str = str.split(colors[i]).join('');
+      }
+    }
+  return str;
   }
   </script>
 
