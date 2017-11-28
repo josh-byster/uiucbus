@@ -122,7 +122,7 @@
     });
 
     function getInfo() {
-      $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=` + vars["id"], function(data) {
+      $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=` + vars["id"], function(data) {
         stop_lat = data.stops[0].stop_points[0].stop_lat;
         stop_long = data.stops[0].stop_points[0].stop_lon;
       });
@@ -142,7 +142,7 @@
       //var myAry = [1, 2, 3];
       //Cookies.set('name', JSON.stringify(myAry));
       //var storedAry = JSON.parse(Cookies.get('name'));
-      $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=${cumtd_api}&pt=60&stop_id=` + vars["id"], function(data) {
+      $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=${cumtd_api}&pt=60&stop_id=` + vars["id"], function(data) {
         var body =
           `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><h6>Enter new location here:</h6><input id="provider-remote" /><br/><br/></center>`
         if (data.departures.length == 0) {
@@ -168,7 +168,7 @@
               seconds = "0" + seconds
             }
             body +=
-              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td><b>${current.headsign}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon},'${current.trip.trip_id}','${current.vehicle_id}')">Location</button></td></tr>`;
+              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td style="word-wrap:break-word;"><b>${current.headsign}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon},'${current.trip.trip_id}','${current.vehicle_id}')">Location</button></td></tr>`;
             //"<div style='color:#" + current.route.route_color +
             //";'>" + current.headsign + current.expected_mins + "</div><br/>";
           }
@@ -221,7 +221,7 @@
         dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
         if (dist < .05) {
           modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
-          $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
+          $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
             trip_id = data.vehicles[0].trip.trip_id;
             modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a></center>`
             console.log(`<a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a>`);
@@ -229,15 +229,15 @@
         } else {
           modalBody.innerHTML += `<center><br>The bus is ${calcCrow(stop_lat, stop_long, lat, long).toFixed(2)} miles away.</center>`
           console.log(vehicle);
-          $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
+          $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
             prev_stop = data.vehicles[0].previous_stop_id;
             next_stop = data.vehicles[0].next_stop_id;
-            $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${prev_stop}`, function(data) {
+            $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${prev_stop}`, function(data) {
               if (data.stops[0]) {
                 modalBody.innerHTML += `<center><br><b>Previous stop:</b>  ${data.stops[0].stop_name}</center>`
                 console.log(`<center><br><b>Previous stop:</b>  ${data.stops[0].stop_name}</center>`);
               }
-              $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${next_stop}`, function(data) { //this is nested because I wanted to avoid the async call
+              $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=${next_stop}`, function(data) { //this is nested because I wanted to avoid the async call
                 if (data.stops[0]) {
                   modalBody.innerHTML += `<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`
                   console.log(`<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`);
