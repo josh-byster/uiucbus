@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <!-- JS file -->
+  <script src="api-keys.js"></script>  
   <script src="jquery.easy-autocomplete.min.js"></script>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
@@ -104,13 +105,33 @@
       <form>
         <input id='provider-remote'>
       </form>
+      <h4>Or</h4>
+      <button type="button" onclick="getLocation()" class="btn btn-primary">Get Nearest Stop</button>
       <div id='recents' style='margin-top:20px;'>
 
       </div>
       Data provided by Champaign-Urbana Mass Transit District.
     </center>
 
-
+    <center>
+    <div class="modal fade" id='myModal'>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Where would you like to go?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body" id="modalBody">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </center>
 
   </div>
 
@@ -131,6 +152,7 @@
   //set cookies
   //var myAry = [1, 2, 3];
   //Cookies.set('name', JSON.stringify(myAry));
+  var cumtd_api = my_api_keys.CUMTD_API_KEY;
   function navbarFunc(index) {
     var arr = [
       ["PLAZA", "Transit Plaza"],
@@ -218,6 +240,32 @@
     $('#location').on('hidden.bs.modal', function() {
       $("#provider-remote").easyAutocomplete(options);
     })
+  }
+
+  function showModalBefore() {
+    $('#myModal').modal('show');
+    document.getElementById("modalBody").innerHTML = "Loading stops...";
+  }
+  function getLocation() {
+    if (navigator.geolocation) {
+      showModalBefore();
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      window.alert("We could not get your location.");
+    }
+  }
+  function showPosition(position) {
+    $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon?key=${cumtd_api}&pt=60&lat=${position.coords.latitude}&lon=${position.coords.longitude}`, function(data) {
+      console.log(data);
+      modalBody = document.getElementById("modalBody");
+      modalBody.innerHTML = "";
+      for (i = 0; i < 3; i++) {
+        redirectURL = `BusTracking.html?id=${data.stops[i].stop_id}&name=${encodeURIComponent(data.stops[i].stop_name)}`;
+        modalBody.innerHTML += `<a href=${redirectURL}>${data.stops[i].stop_name} (${(data.stops[i].distance*0.00018939).toFixed(2)} mi.)</a></br>`
+        modalBody.innerHTML += ``;
+        console.log(data.stops[i]);
+      }
+    });
   }
 </script>
 

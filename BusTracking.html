@@ -122,6 +122,26 @@
     });
 
     function getInfo() {
+      document.body.innerHTML+=`
+    <center>
+    <div class="modal fade" id='myModal'>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Where would you like to go?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body" id="modalBody">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </center>`
       $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstop?key=${cumtd_api}&stop_id=` + vars["id"], function(data) {
         stop_lat = data.stops[0].stop_points[0].stop_lat;
         stop_long = data.stops[0].stop_points[0].stop_lon;
@@ -144,7 +164,7 @@
       //var storedAry = JSON.parse(Cookies.get('name'));
       $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=${cumtd_api}&pt=60&stop_id=` + vars["id"], function(data) {
         var body =
-          `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><h6>Enter new location here:</h6><input id="provider-remote" /><br/><br/></center>`
+          `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><h6>Enter new location here:</h6><input id="provider-remote" /><br/><button type="button" onclick="getLocation()" class="btn btn-primary">Get Nearest Stop</button><br/></br></center>`
         if (data.departures.length == 0) {
           body += `<center><h4>No buses are coming to this stop within the next hour.</h4></center>`;
         } else {
@@ -255,6 +275,34 @@
       }
     }
     //directToMaps(40.098357, -88.214333);
+
+  function showModalBefore() {
+    $('#myModal').modal('show');
+    document.getElementById("modalBody").innerHTML = "Loading stops...";
+  }
+  function getLocation() {
+    if (navigator.geolocation) {
+      showModalBefore();
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      window.alert("We could not get your location.");
+    }
+  }
+  function showPosition(position) {
+    console.log("Got position!")
+    console.log(position)
+    $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon?key=${cumtd_api}&pt=60&lat=${position.coords.latitude}&lon=${position.coords.longitude}`, function(data) {
+      console.log(data);
+      modalBody = document.getElementById("modalBody");
+      modalBody.innerHTML = "";
+      for (i = 0; i < 3; i++) {
+        redirectURL = `BusTracking.html?id=${data.stops[i].stop_id}&name=${encodeURIComponent(data.stops[i].stop_name)}`;
+        modalBody.innerHTML += `<a href=${redirectURL}>${data.stops[i].stop_name} (${(data.stops[i].distance*0.00018939).toFixed(2)} mi.)</a></br>`
+        modalBody.innerHTML += ``;
+        console.log(data.stops[i]);
+      }
+    });
+  }
   </script>
 
 </html>
