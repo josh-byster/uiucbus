@@ -189,7 +189,7 @@
               seconds = "0" + seconds
             }
             body +=
-              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td style="word-wrap:break-word;"><b>${removeColors(current.headsign)}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon},'${current.trip.trip_id}','${current.vehicle_id}')">Location</button></td></tr>`;
+              `<tr style='background-color:#${current.route.route_color};color:#${current.route.route_text_color}'><td style="word-wrap:break-word;"><b>${removeColors(current.headsign)}</b></td><td>${current.expected_mins}</td><td>${hour}:${minute}:${seconds}<td><button type="button" class="btn btn-success" onclick="directToMaps(${current.location.lat},${current.location.lon},'${current.trip.trip_id}','${current.trip.shape_id}','${current.route.route_color}','${current.vehicle_id}')">Location</button></td></tr>`;
             //"<div style='color:#" + current.route.route_color +
             //";'>" + current.headsign + current.expected_mins + "</div><br/>";
           }
@@ -210,7 +210,7 @@
       document.body.innerHTML = `<center><h4>Please provide a valid URL.</h4></center>`
     }
 
-    function directToMaps(lat, long, trip, vehicle) {
+    function directToMaps(lat, long, trip, shape, color, vehicle) {
       console.log(vehicle);
       //window.open(`https://www.google.com/maps/place/${lat},${long}`,'mywindow');
       if (!document.getElementById("location")) {
@@ -238,13 +238,14 @@
       modalBody = document.getElementById("modalBody");
       if (lat != 0 && long != 0) {
         modalBody.innerHTML =
-          `<center><img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=15&size=300x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${google_api}"></img>`
+          `<center><img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&size=300x300&maptype=roadmap&markers=color:blue%7Clabel:A%7C${lat},${long}&markers=color:green%7Clabel:G%7C${stop_lat},${stop_long}&key=${google_api}"></img>`
         dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
         if (dist < .05) {
           modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
           $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getvehicle?key=${cumtd_api}&vehicle_id=` + vehicle, function(data) {
             trip_id = data.vehicles[0].trip.trip_id;
-            modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a></center>`
+            modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a></center>`;
+            modalBody.innerHTML += `<center><a href='shapeViewer.html?shape_id=${shape}&color=${color}'>View Bus Route Map</a></center>`;
             console.log(`<a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a>`);
           });
         } else {
@@ -264,6 +265,7 @@
                   console.log(`<center><b>Next stop:</b> ${data.stops[0].stop_name}</center>`);
                 }
                 modalBody.innerHTML += `<center><a href='TripInfo.html?trip_id=${trip}'>View Trip Info</a></center>`
+                modalBody.innerHTML += `<center><a href='shapeViewer.html?shape_id=${shape}&color=${color}'>View Bus Route Map</a></center>`;
                 console.log(`<a href='TripInfo?trip_id=${trip}'>View Trip Info</a>`);
               });
             });
