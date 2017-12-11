@@ -169,7 +169,7 @@
         if (data.departures.length == 0) {
           body += `<center><h4>No buses are coming to this stop within the next hour.</h4></center>`;
         } else {
-          body += `<table class='table'><thead><tr><th>Bus Name</th><th>Mins Left</th><th>ETA</th><th>Last Location</th></thead><tbody>`;
+          body += `<table class='table' id="bustable"><thead><tr><th>Bus Name</th><th>Mins Left</th><th>ETA</th><th>Last Location</th></thead><tbody>`;
           for (i = 0; i < data.departures.length; i++) {
             var current = data.departures[i];
             if (current.expected_mins == 0)
@@ -307,7 +307,7 @@
   
   function removeColors(str){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      var colors = ["Yellow","hopper","Red","Lavender","Blue","Green","Orange", "Grey","Bronze","Brown","Gold","Ruby","Teal","Silver","Navy","Pink","Raven","Illini"]
+      var colors = ["Yellow","Red","Lavender","Blue","Green","Orange", "Grey","Bronze","Brown","Gold","Ruby","Teal","Silver","Navy","Pink","Raven","Illini","YELLOW","RED","LAVENDER","BLUE","GREEN","ORANGE", "GREY","BRONZE","BROWN","GOLD","RUBY","TEAL","SILVER","NAVY","PINK","RAVEN","ILLINI"]
       for (var i = 0; i < colors.length; i++) {
         str = str.split(colors[i]).join('');
       }

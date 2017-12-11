@@ -145,7 +145,7 @@
 
     function getTrips() {
       $.getJSON(
-        `http://developer.cumtd.com/api/v2.2/json/getplannedtripsbystops?key=${cumtd_api}&origin_stop_id=${vars['origin']}&destination_stop_id=${vars['destination']}`,
+        `https://developer.cumtd.com/api/v2.2/json/getplannedtripsbystops?key=${cumtd_api}&origin_stop_id=${vars['origin']}&destination_stop_id=${vars['destination']}`,
         function(data) {
           if (data.status.msg != "ok")
             document.getElementById('info').innerHTML += data.status.msg;
