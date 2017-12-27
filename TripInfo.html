@@ -106,7 +106,7 @@
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
       vars[key] = value;
     });
-    $.getJSON(`http://developer.cumtd.com/api/v2.2/json/getstoptimesbytrip?key=${cumtd_api}&trip_id=` +
+    $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstoptimesbytrip?key=${cumtd_api}&trip_id=` +
       vars["trip_id"], displayData);
 
     function displayData(data) {
