@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <!-- JS file -->
-  <script src="api-keys.js"></script>  
+  <script src="api-keys.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
@@ -87,6 +87,9 @@
         <li class="nav-item">
           <a class="nav-link" href="javascript:navbarFunc(6);">Springfield & Mathews</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:navbarFunc(7);">ARC</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -117,54 +120,56 @@
     </center>
 
     <center>
-    <div class="modal fade" id='myModal'>
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Where would you like to go?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <div class="modal fade" id='myModal'>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Where would you like to go?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          </div>
-          <div class="modal-body" id="modalBody">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
-      </div>
     </center>
 
-  </div>
+    </div>
 
-  <script type="text/javascript">
-    window._urq = window._urq || [];
-    _urq.push(['initSite', '96cc2c62-7395-4573-8001-5b852e8d380b']);
-    (function() {
-      var ur = document.createElement('script');
-      ur.type = 'text/javascript';
-      ur.async = true;
-      ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : 'http://cdn.userreport.com/userreport.js');
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(ur, s);
-    })();
-  </script>
+    <script type="text/javascript">
+      window._urq = window._urq || [];
+      _urq.push(['initSite', '96cc2c62-7395-4573-8001-5b852e8d380b']);
+      (function() {
+        var ur = document.createElement('script');
+        ur.type = 'text/javascript';
+        ur.async = true;
+        ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : 'http://cdn.userreport.com/userreport.js');
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ur, s);
+      })();
+    </script>
 </body>
 <script>
   //set cookies
   //var myAry = [1, 2, 3];
   //Cookies.set('name', JSON.stringify(myAry));
   var cumtd_api = my_api_keys.CUMTD_API_KEY;
+
   function navbarFunc(index) {
     var arr = [
       ["PLAZA", "Transit Plaza"],
-      ["IU","Illini Union"],
+      ["IU", "Illini Union"],
       ["PAR", "Pennsylvania Ave. Residence Hall"],
       ["KRANNERT", "Krannert Center"],
       ["1STSTDM", "First and Stadium"],
       ['GWNNV', 'Goodwin and Nevada'],
       ['SPFLDMAT', 'Springfield and Mathews']
+      ['ARC', 'Activities and Recreation']
     ];
     storedAry.push(arr[index]);
     Cookies.set('storedAry', JSON.stringify(storedAry), {
@@ -250,6 +255,7 @@
     $('#myModal').modal('show');
     document.getElementById("modalBody").innerHTML = "Loading stops...";
   }
+
   function getLocation() {
     if (navigator.geolocation) {
       showModalBefore();
@@ -258,6 +264,7 @@
       window.alert("We could not get your location.");
     }
   }
+
   function showPosition(position) {
     $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon?key=${cumtd_api}&pt=60&lat=${position.coords.latitude}&lon=${position.coords.longitude}`, function(data) {
       console.log(data);
