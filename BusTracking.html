@@ -167,6 +167,8 @@
         }
         if(document.getElementById("change") != null){
           document.getElementById("change").innerHTML = `<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
+        } else {
+          Raven.captureMessage("User loading null with time t= " + count + " seconds left.");
         }
 
       }, 1000);
