@@ -155,13 +155,20 @@
       var interval = setInterval(function() {
         count--;
         if (count == 50) {
-          ga('create', 'UA-109186351-1', 'auto');
-          ga('set', 'dimension1', vars['id']);
-          ga('set', 'dimension2', vars['name']);
-          ga('send', 'HIT');
-          ga('send', 'event', 'Stayed on page', vars['name']);
+          try {
+            ga('create', 'UA-109186351-1', 'auto');
+            ga('set', 'dimension1', vars['id']);
+            ga('set', 'dimension2', vars['name']);
+            ga('send', 'HIT');
+            ga('send', 'event', 'Stayed on page', vars['name']);
+          } catch(e) {
+            console.log("Google Analytics could not load.");
+          }
         }
-        document.getElementById("change").innerHTML = `<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
+        if(document.getElementById("change") != null){
+          document.getElementById("change").innerHTML = `<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
+        }
+
       }, 1000);
       //set cookies
       //var myAry = [1, 2, 3];
