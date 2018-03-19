@@ -157,6 +157,7 @@
   Raven.config('https://a3cd776e555b4f62b9215dee5e11a886@sentry.io/306037').install();
 
   var cumtd_api = my_api_keys.CUMTD_API_KEY;
+  var storedAry = [];
 
   function navbarFunc(index) {
     Raven.context(function() {
@@ -178,11 +179,11 @@
   }
 
 
-  Raven.context( function() {
+function setUpStoredAry(){
     var storedAry = Cookies.get("storedAry");
-  if (storedAry !== undefined && storedAry.length > 2) {
-    storedAry = JSON.parse(storedAry);
-    document.getElementById('recents').innerHTML = "<h3>Recently Viewed:</h3>"
+    if (storedAry !== undefined && storedAry.length > 2) {
+      storedAry = JSON.parse(storedAry);
+      document.getElementById('recents').innerHTML = "<h3>Recently Viewed:</h3>"
     for (i = storedAry.length - 1; i >= Math.max(storedAry.length, 3) - 3; i--) {
       var currentElementName = storedAry[i][1];
       var currentElementName_encoded = encodeURIComponent(currentElementName);
@@ -193,9 +194,11 @@
     }
     document.getElementById('recents').innerHTML +=
       `<button type="button" class="btn btn-primary" style='margin-bottom:20px;' onclick="storedAry=[];Cookies.set('storedAry',[],{expires:10});document.getElementById('recents').innerHTML='';">Clear</button><br/>`;
-  } else {
-    storedAry = [];
   }
+}
+
+  Raven.context( function() {
+    setUpStoredAry();
   });
   
   var options = {
