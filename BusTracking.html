@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-  
-    <meta name="description" content="A fast, lightweight way to track CUMTD buses in Urbana-Champaign. Built with location tracking, recent stops, and more.">
+
+  <meta name="description" content="A fast, lightweight way to track CUMTD buses in Urbana-Champaign. Built with location tracking, recent stops, and more.">
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -23,7 +23,7 @@
   <!-- Additional CSS Themes file - not required-->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.themes.css">
   <script src="https://cdn.ravenjs.com/3.23.3/raven.min.js" crossorigin="anonymous"></script>
-  
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -127,7 +127,7 @@
     });
 
     function getInfo() {
-      document.body.innerHTML+=`
+      document.body.innerHTML += `
     <center>
     <div class="modal fade" id='myModal'>
       <div class="modal-dialog" role="document">
@@ -206,10 +206,10 @@
     };
 
     if ("id" in vars) {
-      Raven.context(function () { 
-        getInfo(); 
+      Raven.context(function() {
+        getInfo();
       });
-      
+
       setInterval(function() {
         location.reload();
       }, 60000);
@@ -286,58 +286,61 @@
     }
     //directToMaps(40.098357, -88.214333);
 
-  function showModalBefore() {
-    $('#myModal').modal('show');
-    document.getElementById("modalBody2").innerHTML = "Loading stops...";
-  }
-  function getLocation() {
-    if (navigator.geolocation) {
-      showModalBefore();
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      window.alert("We could not get your location.");
+    function showModalBefore() {
+      $('#myModal').modal('show');
+      document.getElementById("modalBody2").innerHTML = "Loading stops...";
     }
-  }
-  function showPosition(position) {
-    console.log("Got position!")
-    console.log(position)
-    $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon?key=${cumtd_api}&pt=60&lat=${position.coords.latitude}&lon=${position.coords.longitude}`, function(data) {
-      console.log(data);
-      modalBody = document.getElementById("modalBody2");
-      modalBody.innerHTML = "";
-      for (i = 0; i < 3; i++) {
-        redirectURL = `BusTracking.html?id=${data.stops[i].stop_id}&name=${encodeURIComponent(data.stops[i].stop_name)}`;
-        modalBody.innerHTML += `<a href=${redirectURL} onclick="addLocationToHistory('${data.stops[i].stop_name}\',\'${data.stops[i].stop_id}');">${data.stops[i].stop_name} (${(data.stops[i].distance*0.00018939).toFixed(2)} mi.)</a></br>`
-        modalBody.innerHTML += ``;
 
-        console.log(data.stops[i]);
+    function getLocation() {
+      if (navigator.geolocation) {
+        showModalBefore();
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        window.alert("We could not get your location.");
       }
-    });
-  }
-  
-  function addLocationToHistory(name,id){
-    var storedAry = Cookies.get("storedAry");
-    if (!storedAry) {
-          storedAry = [];
-    } else {
+    }
+
+    function showPosition(position) {
+      console.log("Got position!")
+      console.log(position)
+      $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon?key=${cumtd_api}&pt=60&lat=${position.coords.latitude}&lon=${position.coords.longitude}`, function(data) {
+        console.log(data);
+        modalBody = document.getElementById("modalBody2");
+        modalBody.innerHTML = "";
+        for (i = 0; i < 3; i++) {
+          redirectURL = `BusTracking.html?id=${data.stops[i].stop_id}&name=${encodeURIComponent(data.stops[i].stop_name)}`;
+          modalBody.innerHTML += `<a href=${redirectURL} onclick="addLocationToHistory('${data.stops[i].stop_name}\',\'${data.stops[i].stop_id}');">${data.stops[i].stop_name} (${(data.stops[i].distance*0.00018939).toFixed(2)} mi.)</a></br>`
+          modalBody.innerHTML += ``;
+
+          console.log(data.stops[i]);
+        }
+      });
+    }
+
+    function addLocationToHistory(name, id) {
+      var storedAry = Cookies.get("storedAry");
+      if (!storedAry) {
+        storedAry = [];
+      } else {
         storedAry = JSON.parse(storedAry);
-    }
-    storedAry.push([id, name]);
-    Cookies.set("storedAry", storedAry, {
-      path: '/',
-      expires: 10
-    });
-
-  }
-  function removeColors(str){
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      var colors = ["Yellow","Red","Lavender","Blue","Green","Orange", "Grey","Bronze","Brown","Gold","Ruby","Teal","Silver","Navy","Pink","Raven","Illini","YELLOW","RED","LAVENDER","BLUE","GREEN","ORANGE", "GREY","BRONZE","BROWN","GOLD","RUBY","TEAL","SILVER","NAVY","PINK","RAVEN","ILLINI"]
-      for (var i = 0; i < colors.length; i++) {
-        str = str.split(colors[i]).join('');
       }
+      storedAry.push([id, name]);
+      Cookies.set("storedAry", storedAry, {
+        path: '/',
+        expires: 10
+      });
+
     }
-  return str;
-  }
+
+    function removeColors(str) {
+      if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        var colors = ["Yellow", "Red", "Lavender", "Blue", "Green", "Orange", "Grey", "Bronze", "Brown", "Gold", "Ruby", "Teal", "Silver", "Navy", "Pink", "Raven", "Illini", "YELLOW", "RED", "LAVENDER", "BLUE", "GREEN", "ORANGE", "GREY", "BRONZE", "BROWN", "GOLD", "RUBY", "TEAL", "SILVER", "NAVY", "PINK", "RAVEN", "ILLINI"]
+        for (var i = 0; i < colors.length; i++) {
+          str = str.split(colors[i]).join('');
+        }
+      }
+      return str;
+    }
   </script>
 
 </html>
