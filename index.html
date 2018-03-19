@@ -153,7 +153,6 @@
     </script>
 </body>
 <script>
-
   Raven.config('https://a3cd776e555b4f62b9215dee5e11a886@sentry.io/306037').install();
 
   var cumtd_api = my_api_keys.CUMTD_API_KEY;
@@ -162,45 +161,45 @@
   function navbarFunc(index) {
     Raven.context(function() {
       var arr = [
-      ["PLAZA", "Transit Plaza"],
-      ["IU", "Illini Union"],
-      ["PAR", "Pennsylvania Ave. Residence Hall"],
-      ["KRANNERT", "Krannert Center"],
-      ["1STSTDM", "First and Stadium"],
-      ['GWNNV', 'Goodwin and Nevada'],
-      ['ARC', 'Activities and Recreation']
-    ];
-    storedAry.push(arr[index]);
-    Cookies.set('storedAry', JSON.stringify(storedAry), {
-      expires: 10
+        ["PLAZA", "Transit Plaza"],
+        ["IU", "Illini Union"],
+        ["PAR", "Pennsylvania Ave. Residence Hall"],
+        ["KRANNERT", "Krannert Center"],
+        ["1STSTDM", "First and Stadium"],
+        ['GWNNV', 'Goodwin and Nevada'],
+        ['ARC', 'Activities and Recreation']
+      ];
+      storedAry.push(arr[index]);
+      Cookies.set('storedAry', JSON.stringify(storedAry), {
+        expires: 10
+      });
+      window.location = `BusTracking.html?id=${arr[index][0]}&name=${encodeURIComponent(arr[index][1])}`
     });
-    window.location = `BusTracking.html?id=${arr[index][0]}&name=${encodeURIComponent(arr[index][1])}`
-    }); 
   }
 
 
-function setUpStoredAry(){
+  function setUpStoredAry() {
     var storedAry = Cookies.get("storedAry");
     if (storedAry !== undefined && storedAry.length > 2) {
       storedAry = JSON.parse(storedAry);
       document.getElementById('recents').innerHTML = "<h3>Recently Viewed:</h3>"
-    for (i = storedAry.length - 1; i >= Math.max(storedAry.length, 3) - 3; i--) {
-      var currentElementName = storedAry[i][1];
-      var currentElementName_encoded = encodeURIComponent(currentElementName);
-      var currentElementID = storedAry[i][0];
-      var window_location = `BusTracking.html?id=${currentElementID}&name=${currentElementName_encoded}`;
-      document.getElementById('recents').innerHTML += `<button type="button" class="btn btn-success" style='margin-bottom:20px;' onclick="window.location = '${window_location}';">${currentElementName}</button><br/>`;
+      for (i = storedAry.length - 1; i >= Math.max(storedAry.length, 3) - 3; i--) {
+        var currentElementName = storedAry[i][1];
+        var currentElementName_encoded = encodeURIComponent(currentElementName);
+        var currentElementID = storedAry[i][0];
+        var window_location = `BusTracking.html?id=${currentElementID}&name=${currentElementName_encoded}`;
+        document.getElementById('recents').innerHTML += `<button type="button" class="btn btn-success" style='margin-bottom:20px;' onclick="window.location = '${window_location}';">${currentElementName}</button><br/>`;
 
+      }
+      document.getElementById('recents').innerHTML +=
+        `<button type="button" class="btn btn-primary" style='margin-bottom:20px;' onclick="storedAry=[];Cookies.set('storedAry',[],{expires:10});document.getElementById('recents').innerHTML='';">Clear</button><br/>`;
     }
-    document.getElementById('recents').innerHTML +=
-      `<button type="button" class="btn btn-primary" style='margin-bottom:20px;' onclick="storedAry=[];Cookies.set('storedAry',[],{expires:10});document.getElementById('recents').innerHTML='';">Clear</button><br/>`;
   }
-}
 
-  Raven.context( function() {
+  Raven.context(function() {
     setUpStoredAry();
   });
-  
+
   var options = {
     url: function(phrase) {
       return "https://www.cumtd.com/autocomplete/stops/v1.0/json/search?query=" + phrase + "&format=json";
@@ -213,19 +212,19 @@ function setUpStoredAry(){
       onChooseEvent: function() {
         Raven.context(function() {
           var id = $("#provider-remote").getSelectedItemData().i;
-        var name = $("#provider-remote").getSelectedItemData().n;
-        try {
-          storedAry.push([id, name]);
-          Cookies.set('storedAry', JSON.stringify(storedAry), {
-          expires: 10
-          });
-        } catch(e) {
-          Raven.captureException(new Error("Browser cannot to store cookies. Not necessarily error."));
-          console.log("Hello");
-        }
-        
-        window.location = `BusTracking.html?id=${id}&name=${name}`
-      });
+          var name = $("#provider-remote").getSelectedItemData().n;
+          try {
+            storedAry.push([id, name]);
+            Cookies.set('storedAry', JSON.stringify(storedAry), {
+              expires: 10
+            });
+          } catch (e) {
+            Raven.captureException(new Error("Browser cannot to store cookies. Not necessarily error."));
+            console.log("Hello");
+          }
+
+          window.location = `BusTracking.html?id=${id}&name=${name}`
+        });
       }
     }
   };
