@@ -152,6 +152,7 @@
         stop_long = data.stops[0].stop_points[0].stop_lon;
       });
       var count = 60;
+
       var interval = setInterval(function() {
         count--;
         if (count == 50) {
@@ -165,10 +166,12 @@
             console.log("Google Analytics could not load.");
           }
         }
+
         if(document.getElementById("change") != null){
           document.getElementById("change").innerHTML = `<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
         } else {
-          Raven.captureMessage("User loading null with time t= " + count + " seconds left.");
+          if(count < 55)
+            Raven.captureMessage("Info hasn't loaded in " + 60 - count + " seconds."); // will execute only if the async call below takes >5s
         }
 
       }, 1000);
