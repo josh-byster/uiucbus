@@ -152,29 +152,30 @@
         stop_long = data.stops[0].stop_points[0].stop_lon;
       });
       var count = 60;
-
-      var interval = setInterval(function() {
-        count--;
-        if (count == 50) {
-          try {
-            ga('create', 'UA-109186351-1', 'auto');
-            ga('set', 'dimension1', vars['id']);
-            ga('set', 'dimension2', vars['name']);
-            ga('send', 'HIT');
-            ga('send', 'event', 'Stayed on page', vars['name']);
-          } catch(e) {
-            console.log("Google Analytics could not load.");
+      if(vars['refreshcount'] && decodeURIComponent(vars['refreshcount']) < 5){
+        var interval = setInterval(function() {
+          count--;
+          if (count == 50) {
+            try {
+              ga('create', 'UA-109186351-1', 'auto');
+              ga('set', 'dimension1', vars['id']);
+              ga('set', 'dimension2', vars['name']);
+              ga('send', 'HIT');
+              ga('send', 'event', 'Stayed on page', vars['name']);
+            } catch(e) {
+              console.log("Google Analytics could not load.");
+            }
           }
-        }
 
-        if(document.getElementById("change") != null){
-          document.getElementById("change").innerHTML = `<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
-        } else {
-          if(count < 55)
-            Raven.captureMessage("Info hasn't loaded in " + 60 - count + " seconds."); // will execute only if the async call below takes >5s
-        }
+          if(document.getElementById("change") != null){
+            document.getElementById("change").innerHTML = `<h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6>`;
+          } else {
+            if(count < 55)
+              Raven.captureMessage("Info hasn't loaded in " + 60 - count + " seconds."); // will execute only if the async call below takes >5s
+          }
 
-      }, 1000);
+        }, 1000);
+      }
       //set cookies
       //var myAry = [1, 2, 3];
       //Cookies.set('name', JSON.stringify(myAry));
@@ -182,6 +183,8 @@
       $.getJSON(`https://developer.cumtd.com/api/v2.2/json/getdeparturesbystop?key=${cumtd_api}&pt=60&stop_id=` + vars["id"], function(data) {
         var body =
           `<center><h1>${decodeURIComponent(vars['name'])}</h1><br/><div id="change"><h4>Refreshing in ${count}s</h4><br/><h6>The current time is ${new Date().toLocaleTimeString()}</h6></div><br/><h6>Enter new location here:</h6><input id="provider-remote" /><br/><button type="button" onclick="getLocation()" class="btn btn-primary">Get Nearest Stop</button><br/></br></center>`
+
+          
         if (data.departures.length == 0) {
           body += `<center><h4>No buses are coming to this stop within the next hour.</h4></center>`;
         } else {
@@ -213,6 +216,14 @@
         }
 
         document.body.innerHTML += body;
+
+        // in case the page has been inactive, stop refresh
+        if(!(vars['refreshcount'] && decodeURIComponent(vars['refreshcount']) < 10)){
+              console.log(document.getElementById("change"));
+              if(document.getElementById("change") != null){
+            document.getElementById("change").innerHTML = `<h4>Will not refresh page due to inactivity.</h4><br/>`;
+            }
+          }
         setOptions();
       });
     };
@@ -221,10 +232,12 @@
       Raven.context(function() {
         getInfo();
       });
-
-      setInterval(function() {
-        location.reload();
-      }, 60000);
+      if(vars['refreshcount'] && decodeURIComponent(vars['refreshcount']) < 5){
+        setInterval(function() {
+        window.location.href = window.location.href.substring(0,window.location.href.length -15) + "&refreshcount="+parseInt(parseInt(decodeURIComponent(vars['refreshcount']))+1);
+      }, 60000); 
+      }
+      
     } else {
       document.body.innerHTML = `<center><h4>Please provide a valid URL.</h4></center>`
     }
