@@ -2,107 +2,110 @@
 <html>
 
 <head>
-  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109186351-1"></script>
-  <script src="gtag.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <!-- JS file -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109186351-1"></script>
+    <script src="gtag.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- JS file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
 
-  <script type='text/javascript' src="js/api-keys.js"></script>
-  <script src="https://cdn.ravenjs.com/3.23.3/raven.min.js" crossorigin="anonymous"></script>
+    <script type='text/javascript' src="js/api-keys.js"></script>
+    <script src="https://cdn.ravenjs.com/3.23.3/raven.min.js" crossorigin="anonymous"></script>
 
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
-  <!-- CSS file -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css">
+    <!-- CSS file -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css">
 
-  <!-- Additional CSS Themes file - not required-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.themes.css">
+    <!-- Additional CSS Themes file - not required-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.themes.css">
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-  <meta charset="utf-8">
-  <title>Simple Polylines</title>
-  <style>
-    /* Always set the map height explicitly to define the size of the div
-   * element that contains the map. */
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polylines</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
 
-    #map {
-      height: 100%;
-    }
+        #map {
+            height: 100%;
+        }
 
-    /* Optional: Makes the sample page fill the window. */
+        /* Optional: Makes the sample page fill the window. */
 
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body>
-  <div id="map"></div>
-  <script>
+<div id="map"></div>
+<script>
     Raven.config('https://a3cd776e555b4f62b9215dee5e11a886@sentry.io/306037').install()
     // This example creates a 2-pixel-wide red polyline showing the path of
     // the first trans-Pacific flight between Oakland, CA, and Brisbane,
     // Australia which was made by Charles Kingsford Smith.
 
     function initMap() {
-      var google_api = my_api_keys.GOOGLE_API_KEY;
-      var cumtd_api = my_api_keys.CUMTD_API_KEY;
-      var vars = {};
-      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
-        vars[key] = value;
-      });
-      var dict = []; // create an empty array
-      $.getJSON(
-        `https://developer.cumtd.com/api/v2.2/json/getshape?key=${cumtd_api}&shape_id=${vars['shape_id']}`,
-        function(data) {
+        var google_api = my_api_keys.GOOGLE_API_KEY;
+        var cumtd_api = my_api_keys.CUMTD_API_KEY;
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            vars[key] = value;
+        });
+        var dict = []; // create an empty array
+        $.getJSON(
+            `https://developer.cumtd.com/api/v2.2/json/getshape?key=${cumtd_api}&shape_id=${vars['shape_id']}`,
+            function (data) {
 
 
-          for (j in data.shapes) {
-            console.log(data.shapes[j].shape_pt_lat)
-            var d = {
-              lat: data.shapes[j].shape_pt_lat,
-              lng: data.shapes[j].shape_pt_lon
+                for (j in data.shapes) {
+                    console.log(data.shapes[j].shape_pt_lat)
+                    var d = {
+                        lat: data.shapes[j].shape_pt_lat,
+                        lng: data.shapes[j].shape_pt_lon
+                    }
+                    dict[j] = d
+                }
+                console.log(dict)
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 13,
+                    center: dict[Math.floor(dict.length / 2)],
+                    mapTypeId: 'terrain'
+                });
+                console.log(`#${vars['color']}`);
+                var busPath = new google.maps.Polyline({
+                    path: dict,
+                    geodesic: true,
+                    strokeColor: `#${vars['color']}`,
+                    strokeOpacity: .9,
+                    strokeWeight: 6
+                });
+
+                busPath.setMap(map);
             }
-            dict[j] = d
-          }
-          console.log(dict)
-          var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
-            center: dict[Math.floor(dict.length / 2)],
-            mapTypeId: 'terrain'
-          });
-          console.log(`#${vars['color']}`);
-          var busPath = new google.maps.Polyline({
-            path: dict,
-            geodesic: true,
-            strokeColor: `#${vars['color']}`,
-            strokeOpacity: .9,
-            strokeWeight: 6
-          });
-
-          busPath.setMap(map);
-        }
-      );
+        );
     }
-  </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmKUqlhPsKUlLx-UhfgldqtaPqpVWR2KI&callback=initMap">
-  </script>
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmKUqlhPsKUlLx-UhfgldqtaPqpVWR2KI&callback=initMap">
+</script>
 </body>
 
 </html>
