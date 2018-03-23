@@ -264,7 +264,7 @@ function showPosition(position) {
     modalBody = document.getElementById("modalBody2");
     modalBody.innerHTML = "";
     for (i = 0; i < 3; i++) {
-      redirectURL = `BusTracking.html?id=${data.stops[i].stop_id}&name=${encodeURIComponent(data.stops[i].stop_name)}&refreshcount=0`;
+      redirectURL = `BusTracking.html?id=${data.stops[i].stop_id}&name=${encodeURIComponent(data.stops[i].stop_name)}`;
       modalBody.innerHTML += `<a href=${redirectURL} onclick="addLocationToHistory('${data.stops[i].stop_name}\',\'${data.stops[i].stop_id}');">${data.stops[i].stop_name} (${(data.stops[i].distance*0.00018939).toFixed(2)} mi.)</a></br>`
       modalBody.innerHTML += ``;
 
