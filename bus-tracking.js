@@ -153,7 +153,7 @@ function getInfo() {
         document.body.innerHTML += body;
 
         // in case the page has been inactive, stop refresh
-        if (!(vars['refreshcount'] && decodeURIComponent(vars['refreshcount']) < 10)) {
+        if (!(vars['refreshcount'] && decodeURIComponent(vars['refreshcount']) < 45)) {
             console.log(document.getElementById("change"));
             if (document.getElementById("change") != null) {
                 document.getElementById("change").innerHTML = `<h4>Will not refresh page due to inactivity.</h4><br/>`;
@@ -167,7 +167,7 @@ if ("id" in vars) {
     Raven.context(function () {
         getInfo();
     });
-    if (vars['refreshcount'] && decodeURIComponent(vars['refreshcount']) < 5) {
+    if (vars['refreshcount'] && decodeURIComponent(vars['refreshcount']) < 45) {
         setInterval(function () {
             window.location.href = window.location.href.substring(0, window.location.href.length - 15) + "&refreshcount=" + parseInt(parseInt(decodeURIComponent(vars['refreshcount'])) + 1);
         }, 60000);
