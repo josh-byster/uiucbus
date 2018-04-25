@@ -73,23 +73,28 @@ var options = {
         }
     }
 };
-
-if (window.jQuery) {  
-        // jQuery is loaded  
-        alert("Jquery loaded!");
-    } else {
-        // jQuery is not loaded
-        alert("JQuery not loaded");
-    }
-
-if ($.fn.easyAutocomplete) {  
-        // jQuery is loaded  
-        alert("autocomplete loaded!");
-    } else {
-        // jQuery is not loaded
-        alert("autocomplete not loaded");
-    }
-$("#provider-remote").easyAutocomplete(options);
+console.log("HI");
+if (!$.fn.easyAutocomplete) { 
+    console.log("HI");
+    $.getScript( "cdn-backup/popper.min.js"); 
+    $('<link/>', {
+   rel: 'stylesheet',
+   type: 'text/css',
+   href: 'cdn-backup/easy-autocomplete.themes.css'
+    }).appendTo('head');
+    $('<link/>', {
+   rel: 'stylesheet',
+   type: 'text/css',
+   href: 'cdn-backup/easy-autocomplete.min.css'
+    }).appendTo('head');
+    
+    $.getScript( "cdn-backup/jquery.easy-autocomplete.min.js",function(){
+        $("#provider-remote").easyAutocomplete(options);   
+        console.log($.fn.easyAutocomplete);
+    });
+} else {
+    $("#provider-remote").easyAutocomplete(options);   
+}
 
 
 
