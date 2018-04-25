@@ -81,6 +81,14 @@ if (window.jQuery) {
         // jQuery is not loaded
         alert("JQuery not loaded");
     }
+
+if ($.fn.easyAutocomplete) {  
+        // jQuery is loaded  
+        alert("autocomplete loaded!");
+    } else {
+        // jQuery is not loaded
+        alert("autocomplete not loaded");
+    }
 $("#provider-remote").easyAutocomplete(options);
 
 
