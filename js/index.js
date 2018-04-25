@@ -74,21 +74,15 @@ var options = {
     }
 };
 
-$.getScript("https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js", function () {
-    console.log("Autocomplete loaded successfully");
-    function setUpAutocomplete(){
-        $("#provider-remote").easyAutocomplete(options);
+if (window.jQuery) {  
+        // jQuery is loaded  
+        alert("Jquery loaded!");
+    } else {
+        // jQuery is not loaded
+        alert("JQuery not loaded");
     }
-    //regularly check after 100ms whether autocomplete is loaded or not
-    var interval = setInterval(function() {
-        if($.fn.easyAutocomplete !== undefined) {
-            //once we have reference to autocomplete clear this interval
-            clearInterval(interval);
-            setUpAutocomplete();
-        }       
-    },100);
+$("#provider-remote").easyAutocomplete(options);
 
-});
 
 
 function showModal() {
