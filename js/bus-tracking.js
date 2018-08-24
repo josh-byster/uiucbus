@@ -3,16 +3,19 @@ Raven.config('https://a3cd776e555b4f62b9215dee5e11a886@sentry.io/306037').instal
 function setOptions() { //Does all the autocomplete setup.
     var options = {
         url: function (phrase) {
-            return "https://www.cumtd.com/autocomplete/stops/v1.0/json/search?query=" + phrase + "&format=json";
+            return "js/allstops.json"
         },
 
-        getValue: "n",
-
+        getValue: "stop_name",
+        placeholder: "Enter stop name",
         list: {
-
+            maxNumberOfElements: 10,
+            match: {
+                enabled: true
+            },
             onChooseEvent: function () {
-                var id = $("#provider-remote").getSelectedItemData().i;
-                var name = $("#provider-remote").getSelectedItemData().n;
+                var id = $("#provider-remote").getSelectedItemData().stop_id;
+                var name = $("#provider-remote").getSelectedItemData().stop_name;
                 var storedAry = Cookies.get("storedAry");
                 if (!storedAry) {
                     storedAry = [];
@@ -29,7 +32,7 @@ function setOptions() { //Does all the autocomplete setup.
         }
     };
 
-    $.getScript("https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js", function () {
+    $.getScript("easyautocomplete-clone.js", function () {
         console.log("Autocomplete loaded successfully");
         function setUpAutocomplete(){
             $("#provider-remote").easyAutocomplete(options);
