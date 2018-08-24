@@ -221,7 +221,7 @@ function directToMaps(lat, long, trip, shape, color, vehicle) {
     modalBody = document.getElementById("modalBody");
     if (lat != 0 && long != 0) {
         modalBody.innerHTML =
-            `<center><img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&size=300x300&maptype=roadmap&markers=color:blue%7Clabel:B%7C${lat},${long}&markers=color:green%7Clabel:GBB%7C${stop_lat},${stop_long}&key=${google_api}"></img>`
+            `<center><img src="https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s-a+3498db(${lat},${long}),pin-s-b+e74c3c(${stop_lat},${stop_long})/auto/500x500@2x?access_token=${MAPBOX_API_KEY}"></img>`
         dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
         if (dist < .05) {
             modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
