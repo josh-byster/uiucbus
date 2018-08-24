@@ -32,20 +32,7 @@ function setOptions() { //Does all the autocomplete setup.
         }
     };
 
-    $.getScript("easyautocomplete-clone.js", function () {
-        console.log("Autocomplete loaded successfully");
-        function setUpAutocomplete(){
-            $("#provider-remote").easyAutocomplete(options);
-        }
-        //regularly check after 100ms whether autocomplete is loaded or not
-        var interval = setInterval(function() {
-            if($.fn.easyAutocomplete !== undefined) {
-                //once we have reference to autocomplete clear this interval
-                clearInterval(interval);
-                setUpAutocomplete();
-            }       
-        },100);
-    });
+    $("#provider-remote").easyAutocomplete(options);
 }
 
 function calcCrow(lat1, lon1, lat2, lon2) {

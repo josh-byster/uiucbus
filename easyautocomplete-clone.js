@@ -1448,8 +1448,9 @@ var EasyAutocomplete = (function(scope) {
 					.keydown(function(event) {
                         // react to pressing of the enter key
 						if (event.keyCode === 13) {
-                            if(selectedElement == -1){
+                            if(selectedElement == -1 && elementsList.length > 0){
                                 // nothing is selected, so just autofill the first selection
+								console.log(elementsList)
                                 selectedElement = 0;
                             }
                             $field.val(config.get("getValue")(elementsList[selectedElement]));

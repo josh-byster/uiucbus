@@ -43,83 +43,86 @@ function setUpStoredAry() {
 
 Raven.context(function () {
     setUpStoredAry();
+    setOptions();
 });
 
-var options = {
-    url: function (phrase) {
-        return "https://www.cumtd.com/autocomplete/stops/v1.0/json/search?query=" + phrase + "&format=json";
-    },
+function setOptions() { //Does all the autocomplete setup.
+    var options = {
+        url: function (phrase) {
+            return "js/allstops.json"
+        },
 
-    getValue: "n",
-
-    list: {
-
-        onChooseEvent: function () {
-            Raven.context(function () {
-                var id = $("#provider-remote").getSelectedItemData().i;
-                var name = $("#provider-remote").getSelectedItemData().n;
-                try {
-                    storedAry.push([id, name]);
-                    Cookies.set('storedAry', JSON.stringify(storedAry), {
-                        expires: 10
-                    });
-                } catch (e) {
-                    Raven.captureException(new Error("Browser cannot to store cookies. Not necessarily error."));
-                    console.log("Hello");
+        getValue: "stop_name",
+        placeholder: "Enter stop name",
+        list: {
+            maxNumberOfElements: 10,
+            match: {
+                enabled: true
+            },
+            onChooseEvent: function () {
+                var id = $("#provider-remote").getSelectedItemData().stop_id;
+                var name = $("#provider-remote").getSelectedItemData().stop_name;
+                var storedAry = Cookies.get("storedAry");
+                if (!storedAry) {
+                    storedAry = [];
+                } else {
+                    storedAry = JSON.parse(storedAry);
                 }
-
+                storedAry.push([id, name]);
+                Cookies.set("storedAry", storedAry, {
+                    path: '/',
+                    expires: 10
+                });
                 window.location = `BusTracking.html?id=${id}&name=${name}`
-            });
+            }
         }
-    }
-};
-console.log("HI");
-if (!$.fn.easyAutocomplete) { 
-    console.log("HI");
-    $.getScript( "cdn-backup/popper.min.js"); 
-    $('<link/>', {
-   rel: 'stylesheet',
-   type: 'text/css',
-   href: 'cdn-backup/easy-autocomplete.themes.css'
-    }).appendTo('head');
-    $('<link/>', {
-   rel: 'stylesheet',
-   type: 'text/css',
-   href: 'cdn-backup/easy-autocomplete.min.css'
-    }).appendTo('head');
-    
-    $.getScript( "cdn-backup/jquery.easy-autocomplete.min.js",function(){
-        $("#provider-remote").easyAutocomplete(options);   
-        console.log($.fn.easyAutocomplete);
-    });
-} else {
-    $("#provider-remote").easyAutocomplete(options);   
-}
+    };
 
+    $.getScript("easyautocomplete-clone.js", function () {
+        console.log("Autocomplete loaded successfully");
+
+        function setUpAutocomplete() {
+            $("#provider-remote").easyAutocomplete(options);
+        }
+
+        //regularly check after 100ms whether autocomplete is loaded or not
+        var interval = setInterval(function () {
+            if ($.fn.easyAutocomplete !== undefined) {
+                //once we have reference to autocomplete clear this interval
+                clearInterval(interval);
+                setUpAutocomplete();
+            }
+        }, 100);
+    });
+}
 
 
 function showModal() {
     if (!document.getElementById("location")) {
         document.body.innerHTML +=
-            `<div class="modal fade" id="location">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="modal_title">Trip Planner</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+`<div class="modal fade" id="location">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_title">Trip Planner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <center>
+                    <iframe src="planner_search.html" id='frame' frameborder="0"
+                            style="position:relative;width:100%;height:300px;" width=''></iframe>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        onclick="document.getElementById('frame').src='planner_search.html'">New Route
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-    <div class="modal-body" id="modalBody">
-    <center><iframe src="planner_search.html" id='frame' frameborder="0" style="position:relative;width:100%;height:300px;" width=''></iframe>
-    </center>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" onclick="document.getElementById('frame').src='planner_search.html'">New Route</button>
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-  </div>
-</div>
 </div>`;
     }
     $("#location").modal("show");
