@@ -55,7 +55,7 @@ function toRad(Value) {
     return Value * Math.PI / 180;
 }
 
-var google_api = my_api_keys.GOOGLE_API_KEY;
+var mapbox_api = my_api_keys.MAPBOX_API_KEY;
 var cumtd_api = my_api_keys.CUMTD_API_KEY;
 var vars = {};
 var stop_lat = 0;
@@ -208,7 +208,7 @@ function directToMaps(lat, long, trip, shape, color, vehicle) {
     modalBody = document.getElementById("modalBody");
     if (lat != 0 && long != 0) {
         modalBody.innerHTML =
-            `<center><img src="https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s-a+3498db(${lat},${long}),pin-s-b+e74c3c(${stop_lat},${stop_long})/auto/500x500@2x?access_token=${MAPBOX_API_KEY}"></img>`
+            `<center><img class='img-fluid' src="https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s-a+3498db(${long},${lat}),pin-s-b+e74c3c(${stop_long},${stop_lat})/auto/500x500@2x?access_token=${mapbox_api}"></img>`
         dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
         if (dist < .05) {
             modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
