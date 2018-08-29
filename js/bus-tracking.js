@@ -208,7 +208,7 @@ function directToMaps(lat, long, trip, shape, color, vehicle) {
     modalBody = document.getElementById("modalBody");
     if (lat != 0 && long != 0) {
         modalBody.innerHTML =
-            `<center><img class='img-fluid' src="https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s-a+3498db(${long},${lat}),pin-s-b+e74c3c(${stop_long},${stop_lat})/auto/500x500@2x?access_token=${mapbox_api}"></img>`
+            `<center><img class='img-fluid' style='border-radius:20px;' src="https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s-bus+3498db(${long},${lat}),pin-s-information+e74c3c(${stop_long},${stop_lat})/auto/500x500@2x?access_token=${mapbox_api}"></img>`
         dist = calcCrow(stop_lat, stop_long, lat, long).toFixed(2)
         if (dist < .05) {
             modalBody.innerHTML += `<center><br>The bus has arrived.</center>`
