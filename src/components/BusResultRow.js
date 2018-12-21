@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import { removeColors } from "./HelperFunctions";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
+import BusInfoModal from "./BusInfoModal";
 class BusResultRow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalOpen: false
+    };
+  }
+
   computeHMS = expected_date => {
     var date = new Date(expected_date.toString());
     var hour = date.getHours() % 12;
@@ -26,6 +34,7 @@ class BusResultRow extends Component {
       color: "#" + this.props.info.route.route_text_color
     };
   };
+
   render() {
     return (
       <tr style={this.getTRStyle()}>
@@ -39,7 +48,12 @@ class BusResultRow extends Component {
         </td>
         <td>{this.computeHMS(this.props.info.expected)}</td>
         <td>
-          <Button color="success">Location</Button>
+          <Button
+            color="success"
+            onClick={e => this.props.toggleModal(this.props.info)}
+          >
+            Location
+          </Button>
         </td>
       </tr>
     );
@@ -47,7 +61,8 @@ class BusResultRow extends Component {
 }
 
 BusResultRow.propTypes = {
-  info: PropTypes.object
+  info: PropTypes.object.isRequired,
+  toggleModal: PropTypes.func.isRequired
 };
 
 export default BusResultRow;

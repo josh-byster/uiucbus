@@ -41,6 +41,10 @@ class BusNavbar extends Component {
     {
       name: "Krannert Center",
       id: "KRANNERT"
+    },
+    {
+      name: "First & Stadium",
+      id: "1STSTDM"
     }
   ];
   render() {
