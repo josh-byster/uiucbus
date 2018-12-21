@@ -15,13 +15,15 @@ class BusResults extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.stop_id !== this.props.stop_id) {
+      console.log("Updating again");
       this.getData(this.props.stop_id);
     }
   }
   getData = async stop_id => {
     const { status, rqst, departures } = await getBuses(stop_id);
-    console.log("hello");
-    if (rqst === 200) {
+    console.log(status);
+    if (status.code === 200) {
+      this.setState({ validRequest: true });
       this.setState({ departures: departures });
     } else {
       this.setState({ validRequest: false });
@@ -30,7 +32,7 @@ class BusResults extends Component {
   render() {
     return (
       <div>
-        {this.state.validRequest && (
+        {this.state.validRequest ? (
           <Table>
             <thead>
               <tr>
@@ -46,6 +48,8 @@ class BusResults extends Component {
               })}
             </tbody>
           </Table>
+        ) : (
+          <h4>Can't load the page.</h4>
         )}
       </div>
     );

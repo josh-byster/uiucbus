@@ -7,12 +7,16 @@ function getBuses(stop_id) {
   return fetch(
     `${API_URL}/getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=${stop_id}`,
     {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
+      method: "GET"
     }
   ).then(res => res.json());
 }
 
-export { getBuses };
+// Get the stop name and additional info
+function getStop(stop_id) {
+  return fetch(`${API_URL}/getstop?key=${CUMTD_API_KEY}&stop_id=${stop_id}`, {
+    method: "GET"
+  }).then(res => res.json());
+}
+
+export { getBuses, getStop };

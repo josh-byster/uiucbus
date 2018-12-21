@@ -24,6 +24,25 @@ class BusNavbar extends Component {
       isOpen: !this.state.isOpen
     });
   };
+
+  defaultStops = [
+    {
+      name: "Transit Plaza",
+      id: "PLAZA"
+    },
+    {
+      name: "Illini Union",
+      id: "IU"
+    },
+    {
+      name: "PAR",
+      id: "PAR"
+    },
+    {
+      name: "Krannert Center",
+      id: "KRANNERT"
+    }
+  ];
   render() {
     return (
       <div>
@@ -34,11 +53,15 @@ class BusNavbar extends Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink tag={Link} to="/track/PLAZA">
-                  Transit Plaza
-                </NavLink>
-              </NavItem>
+              {this.defaultStops.map((value, key) => {
+                return (
+                  <NavItem key={key}>
+                    <NavLink tag={Link} to={`/track/${value.id}`}>
+                      {value.name}
+                    </NavLink>
+                  </NavItem>
+                );
+              })}
             </Nav>
           </Collapse>
         </Navbar>

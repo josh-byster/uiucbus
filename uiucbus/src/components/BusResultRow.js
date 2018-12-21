@@ -29,7 +29,7 @@ class BusResultRow extends Component {
   render() {
     return (
       <tr style={this.getTRStyle()}>
-        <td>
+        <td width="40%">
           <b>{removeColors(this.props.info.headsign)}</b>
         </td>
         <td>
