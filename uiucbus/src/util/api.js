@@ -5,13 +5,14 @@ var CUMTD_API_KEY = "fd4fb84bbbb34acfae890f17144ee131";
 
 function getBuses(stop_id) {
   return fetch(
-    `${API_URL}/getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=PAR`,
+    `${API_URL}/getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=${stop_id}`,
     {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
+      }
     }
   ).then(res => res.json());
 }
+
+export { getBuses };
