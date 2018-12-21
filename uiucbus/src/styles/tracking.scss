@@ -1,11 +1,13 @@
-.table td {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  font-size: 20px;
-  border-top: none;
-  font-family: "Lato", sans-serif;
-}
-
-h1 {
-  text-align: center;
+.tracking-page {
+  h1 {
+    text-align: center;
+  }
+  .table td {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    font-size: 20px;
+    border-top: none;
+    font-family: "Lato", sans-serif;
+    word-wrap: break-word;
+  }
 }

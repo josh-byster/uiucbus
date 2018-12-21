@@ -4,7 +4,7 @@ import "../styles/tracking.scss";
 class TrackingPage extends Component {
   render() {
     return (
-      <div>
+      <div className="tracking-page">
         <h1>{this.props.match.params.id}</h1>
         <BusResults stop_id={this.props.match.params.id} />
       </div>

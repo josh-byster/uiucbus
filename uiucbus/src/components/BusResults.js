@@ -12,6 +12,12 @@ class BusResults extends Component {
     };
     this.getData(props.stop_id);
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.stop_id !== this.props.stop_id) {
+      this.getData(this.props.stop_id);
+    }
+  }
   getData = async stop_id => {
     const { status, rqst, departures } = await getBuses(stop_id);
     console.log("hello");

@@ -7,7 +7,7 @@ import {
   Route,
   Switch
 } from "react-router-dom";
-import Home from "./pages/Home.js";
+import HomePage from "./pages/HomePage.js";
 import TrackingPage from "./pages/TrackingPage";
 import BusNavbar from "./components/BusNavbar";
 
@@ -18,7 +18,7 @@ class App extends Component {
         <div>
           <BusNavbar />
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={HomePage} />
             <Route path="/track/:id" component={TrackingPage} />
             {/* <Route path='/contact' component={Contact}></Route> */}
           </Switch>
