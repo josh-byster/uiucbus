@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import BusResults from "../components/BusResults";
-
+import "../styles/tracking.scss";
 class TrackingPage extends Component {
   render() {
     return (
