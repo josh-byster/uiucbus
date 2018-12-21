@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { removeColors } from "./HelperFunctions";
 import { Button } from "reactstrap";
+import PropTypes from "prop-types";
 class BusResultRow extends Component {
   computeHMS = expected_date => {
     var date = new Date(expected_date.toString());
@@ -19,14 +20,15 @@ class BusResultRow extends Component {
     return `${hour}:${minute}:${seconds}`;
   };
 
+  getTRStyle = () => {
+    return {
+      backgroundColor: "#" + this.props.info.route.route_color,
+      color: "#" + this.props.info.route.route_text_color
+    };
+  };
   render() {
     return (
-      <tr
-        style={{
-          backgroundColor: "#" + this.props.info.route.route_color,
-          color: "#" + this.props.info.route.route_text_color
-        }}
-      >
+      <tr style={this.getTRStyle()}>
         <td style={{ wordWrap: "break-word" }}>
           <b>{removeColors(this.props.info.headsign)}</b>
         </td>
@@ -43,5 +45,9 @@ class BusResultRow extends Component {
     );
   }
 }
+
+BusResultRow.propTypes = {
+  info: PropTypes.object
+};
 
 export default BusResultRow;
