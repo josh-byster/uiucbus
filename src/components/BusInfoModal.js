@@ -1,7 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from "reactstrap";
+import { MAPBOX_API_KEY } from "../util/api.js";
 class BusInfoModal extends Component {
+  getMapURL = () => {
+    if (this.props.busInfo.location !== undefined) {
+      var long = this.props.busInfo.location.lon;
+      var lat = this.props.busInfo.location.lat;
+      var stop_lat = 0;
+      var stop_long = 0;
+      var mapbox_api = MAPBOX_API_KEY;
+      return `https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s-bus+3498db(${long},${lat}),pin-s-information+e74c3c(${stop_long},${stop_lat})/auto/500x500@2x?access_token=${mapbox_api}`;
+    }
+  };
   render() {
     return (
       <div>
@@ -10,15 +21,15 @@ class BusInfoModal extends Component {
           toggle={e => this.props.toggle()}
           className={this.props.className}
         >
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggle}>
+            {JSON.stringify(this.props.busInfo)}
+          </ModalHeader>
           <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            <img
+              className="img-fluid"
+              alt="bus information"
+              src={this.getMapURL()}
+            />
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.props.toggle}>
@@ -36,7 +47,8 @@ class BusInfoModal extends Component {
 
 BusInfoModal.propTypes = {
   toggle: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool.isRequired,
+  busInfo: PropTypes.object.isRequired
 };
 
 export default BusInfoModal;

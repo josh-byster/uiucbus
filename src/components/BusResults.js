@@ -35,14 +35,22 @@ class BusResults extends Component {
 
   toggleModal = info => {
     this.setState(state => {
-      return { modalOpen: !state.modalOpen, modalInfo: info };
+      if (info !== undefined) {
+        return { modalOpen: !state.modalOpen, modalInfo: info };
+      }
+      // Only toggle, don't update info if there is no new info
+      return { modalOpen: !state.modalOpen };
     });
   };
 
   render() {
     return (
       <div>
-        <BusInfoModal isOpen={this.state.modalOpen} toggle={this.toggleModal} />
+        <BusInfoModal
+          busInfo={this.state.modalInfo}
+          isOpen={this.state.modalOpen}
+          toggle={this.toggleModal}
+        />
         {this.state.validRequest ? (
           <Table>
             <thead>

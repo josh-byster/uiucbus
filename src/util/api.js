@@ -19,4 +19,4 @@ function getStop(stop_id) {
   }).then(res => res.json());
 }
 
-export { getBuses, getStop };
+export { getBuses, getStop, MAPBOX_API_KEY };
