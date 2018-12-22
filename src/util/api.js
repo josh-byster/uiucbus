@@ -19,4 +19,12 @@ function getStop(stop_id) {
   }).then(res => res.json());
 }
 
-export { getBuses, getStop, MAPBOX_API_KEY };
+function getVehicleInfo(vehicle_id) {
+  return fetch(
+    `${API_URL}/getvehicle?key=${CUMTD_API_KEY}&vehicle_id=${vehicle_id}`,
+    {
+      method: "GET"
+    }
+  ).then(res => res.json());
+}
+export { getBuses, getStop, MAPBOX_API_KEY, getVehicleInfo };
