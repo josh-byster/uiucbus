@@ -1,5 +1,6 @@
 # Champaign-Urbana Mass Transit Department - Quick Bus Lookup
 
+[![Build Status](https://travis-ci.com/josh-byster/bus-tracker.svg?branch=master)](https://travis-ci.com/josh-byster/bus-tracker)
 This is a simple web app that allows you to search for a stop and find out the bus arrival times in under 5 seconds. It also features
 live updating every 60 seconds with an ability to see the last known location of any bus.
 
