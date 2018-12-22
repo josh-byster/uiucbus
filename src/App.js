@@ -12,8 +12,8 @@ class App extends Component {
         <div>
           <BusNavbar />
           <Switch>
-            <Route exact path="/bus-tracker" component={HomePage} />
-            <Route path="/bus-tracker/track/:id" component={TrackingPage} />
+            <Route exact path="/" component={HomePage} />
+            <Route path="/track/:id" component={TrackingPage} />
             {/* <Route path='/contact' component={Contact}></Route> */}
           </Switch>
         </div>

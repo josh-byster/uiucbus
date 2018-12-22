@@ -51,7 +51,7 @@ class BusNavbar extends Component {
     return (
       <div>
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand tag={Link} to="/bus-tracker">
+          <NavbarBrand tag={Link} to="/">
             uiucbus
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
@@ -60,7 +60,7 @@ class BusNavbar extends Component {
               {this.defaultStops.map((value, key) => {
                 return (
                   <NavItem key={key}>
-                    <NavLink tag={Link} to={`/bus-tracker/track/${value.id}`}>
+                    <NavLink tag={Link} to={`/track/${value.id}`}>
                       {value.name}
                     </NavLink>
                   </NavItem>

@@ -7,7 +7,7 @@ import * as serviceWorker from "./serviceWorker";
 import { HashRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <HashRouter basename="/bus-tracker">
+  <HashRouter>
     <App />
   </HashRouter>,
   document.getElementById("root")
