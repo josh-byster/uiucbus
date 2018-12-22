@@ -1,0 +1,45 @@
+.home {
+  background-image: url("https://images.unsplash.com/photo-1520105072000-f44fc083e508?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1789&q=80");
+  min-height: 92vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  @media only screen and (max-width: 600px) {
+    background-size: 200%;
+  }
+  text-align: center;
+  // display:flex;
+  // justify-content: center;
+  // align-content: center;
+  h1 {
+    padding-top: 30px;
+    color: #2c3e50;
+  }
+  p {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  .info-box {
+    border-radius: 6px;
+    width: 500px;
+    max-width: 80%;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    padding-bottom: 30px;
+    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  .react-autosuggest__input {
+    max-width: 60%;
+    width: 500px;
+    height: 40px;
+  }
+  .react-autosuggest__suggestions-container--open {
+    display: block;
+    position: absolute;
+    top: 61px; // Margin + input height + 1
+    width: 500px;
+    max-width: 60%;
+  }
+}

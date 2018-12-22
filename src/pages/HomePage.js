@@ -1,10 +1,21 @@
 import React, { Component } from "react";
-
+import "../styles/home.scss";
+import StopSearch from "../components/StopSearch";
 class HomePage extends Component {
   render() {
     return (
-      <div>
-        <h1>Welcome to UIUC Bus!</h1>
+      <div className="home d-flex">
+        <div className="info-box">
+          <h1>UIUC Bus Tracker</h1>
+          <StopSearch />
+          <p>
+            Data provided by{" "}
+            <a href="https://mtd.org/">
+              Champaign—Urbana Mass Transit District
+            </a>
+            .
+          </p>
+        </div>
       </div>
     );
   }

@@ -27,8 +27,8 @@ class TrackingPage extends Component {
   render() {
     return (
       <div className="tracking-page">
-        <div class="info">
-          <h1 class="stop_name">{this.state.stopInfo.stop_name}</h1>
+        <div className="info">
+          <h1 className="stop_name">{this.state.stopInfo.stop_name}</h1>
           <StopSearch />
         </div>
         <BusResults stopInfo={this.state.stopInfo} />
