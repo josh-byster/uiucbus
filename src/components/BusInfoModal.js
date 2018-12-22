@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from "reactstrap";
 import { MAPBOX_API_KEY, getVehicleInfo, getStop } from "../util/api.js";
+import "../styles/InfoModal.scss";
 class BusInfoModal extends Component {
   constructor(props) {
     super(props);
@@ -62,7 +63,7 @@ class BusInfoModal extends Component {
       var stop_lat = this.props.stopInfo.stop_points[0].stop_lat;
       var stop_long = this.props.stopInfo.stop_points[0].stop_lon;
       var mapbox_api = MAPBOX_API_KEY;
-      return `https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s-bus+3498db(${long},${lat}),pin-s-information+e74c3c(${stop_long},${stop_lat})/auto/500x500@2x?access_token=${mapbox_api}`;
+      return `https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s-bus+3498db(${long},${lat}),pin-s-information+e74c3c(${stop_long},${stop_lat})/auto/400x400@2x?access_token=${mapbox_api}`;
     }
   };
 
@@ -72,32 +73,29 @@ class BusInfoModal extends Component {
         <Modal
           isOpen={this.props.isOpen}
           toggle={e => this.props.toggle()}
-          className={this.props.className}
+          className="info-modal"
         >
           <ModalHeader toggle={this.toggle}>
             {this.props.busInfo.headsign}
           </ModalHeader>
           <ModalBody>
             <img
-              className="img-fluid"
+              className="img-fluid map-image"
               alt="bus information"
               src={this.state.mapURL}
               style={this.state.imgLoaded ? {} : { visibility: "hidden" }} // Toggle visibility based on the image loaded
               onLoad={() => this.setState({ imgLoaded: true })}
             />
 
-            <p>
+            <p className="stop-info">
               <b>Next Stop:</b> {this.state.nextStop}
               <br />
               <b>Previous Stop</b> {this.state.previousStop}
             </p>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.props.toggle}>
-              Do Something
-            </Button>{" "}
-            <Button color="secondary" onClick={this.props.toggle}>
-              Cancel
+            <Button color="secondary" onClick={e => this.props.toggle()}>
+              Exit
             </Button>
           </ModalFooter>
         </Modal>

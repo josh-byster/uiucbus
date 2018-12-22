@@ -52,12 +52,12 @@
   .react-autosuggest__suggestions-container--open {
     display: block;
     position: absolute;
-    top: 61px; // Margin + input height + 1
+    top: 51px; // Margin + input height + 1
     width: 500px;
     max-width: 60%;
   }
 }
 footer {
   padding-top: 1.5rem;
-  padding-bottom: 3rem;
+  padding-bottom: 1rem;
 }
