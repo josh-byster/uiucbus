@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Form, Input } from "reactstrap";
 import Autosuggest from "react-autosuggest";
 import stops from "../util/allstops.js";
 import { Redirect } from "react-router-dom";
@@ -104,7 +102,5 @@ class StopSearch extends Component {
     );
   }
 }
-
-StopSearch.propTypes = {};
 
 export default StopSearch;
