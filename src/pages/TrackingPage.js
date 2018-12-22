@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import BusResults from "../components/BusResults";
 import "../styles/tracking.scss";
 import { getStop } from "../util/api";
+import StopSearch from "../components/StopSearch";
 class TrackingPage extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +28,7 @@ class TrackingPage extends Component {
     return (
       <div className="tracking-page">
         <h1>{this.state.stopInfo.stop_name}</h1>
+        <StopSearch />
         <BusResults stopInfo={this.state.stopInfo} />
       </div>
     );
