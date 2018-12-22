@@ -42,7 +42,7 @@ class StopSearch extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.state.shouldRedirect) {
-      this.setState({ shouldRedirect: false });
+      this.setState({ shouldRedirect: false, value: "" });
     }
   }
 
@@ -79,7 +79,7 @@ class StopSearch extends Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: "Type a programming language",
+      placeholder: "Type the name of a stop",
       value,
       onChange: this.onChange
     };
