@@ -3,6 +3,10 @@
   h4 {
     text-align: center;
   }
+  h4 {
+    @import url("https://fonts.googleapis.com/css?family=Rubik:300");
+    font-family: "Rubik", sans-serif;
+  }
   .table td {
     padding-top: 2rem;
     padding-bottom: 2rem;
@@ -11,4 +15,10 @@
     font-family: "Lato", sans-serif;
     word-wrap: break-word;
   }
+  .stop_name {
+    margin-top: 20px;
+  }
+}
+
+body {
 }

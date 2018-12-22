@@ -9,7 +9,7 @@ class BusResults extends Component {
     super(props);
     this.state = {
       departures: [],
-      validRequest: true,
+      validRequest: null,
       modalInfo: {},
       modalOpen: false
     };
@@ -43,6 +43,20 @@ class BusResults extends Component {
   };
 
   render() {
+    if (this.state.validRequest === null) {
+      // On first time don't swap out elements unnecessarily. Just render div.
+      return <div />;
+    }
+    if (this.state.validRequest === false) {
+      return <h4>This page cannot be loaded.</h4>;
+    }
+
+    if (
+      this.state.validRequest === true &&
+      this.state.departures.length === 0
+    ) {
+      return <h4>No buses coming in the next hour.</h4>;
+    }
     return (
       <div>
         <BusInfoModal
@@ -51,31 +65,27 @@ class BusResults extends Component {
           toggle={this.toggleModal}
           stopInfo={this.props.stopInfo}
         />
-        {this.state.validRequest ? (
-          <Table>
-            <thead>
-              <tr>
-                <th>Bus Name</th>
-                <th>Mins Left</th>
-                <th>ETA</th>
-                <th>Last Location</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.departures.map((element, key) => {
-                return (
-                  <BusResultRow
-                    info={element}
-                    toggleModal={this.toggleModal}
-                    key={key}
-                  />
-                );
-              })}
-            </tbody>
-          </Table>
-        ) : (
-          <h4>Can't load the page.</h4>
-        )}
+        <Table>
+          <thead>
+            <tr>
+              <th>Bus Name</th>
+              <th>Mins Left</th>
+              <th>ETA</th>
+              <th>Last Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.departures.map((element, key) => {
+              return (
+                <BusResultRow
+                  info={element}
+                  toggleModal={this.toggleModal}
+                  key={key}
+                />
+              );
+            })}
+          </tbody>
+        </Table>
       </div>
     );
   }
