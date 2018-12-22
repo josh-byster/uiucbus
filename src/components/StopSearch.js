@@ -84,7 +84,7 @@ class StopSearch extends Component {
 
     if (this.state.shouldRedirect) {
       console.log("REDIRECTING...");
-      return <Redirect to={`/track/${this.state.selectionID}`} />;
+      return <Redirect push to={`/track/${this.state.selectionID}`} />;
     }
 
     // Finally, render it!
