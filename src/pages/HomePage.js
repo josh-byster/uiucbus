@@ -11,8 +11,8 @@ class HomePage extends Component {
             <StopSearch />
           </div>
         </div>
-        <footer class="text-muted">
-          <div class="container">
+        <footer className="text-muted">
+          <div className="container">
             <p>
               Copyright © 2019 UIUCBus.com
               <br />

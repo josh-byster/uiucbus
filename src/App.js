@@ -12,9 +12,11 @@ class App extends Component {
         <div>
           <BusNavbar />
           <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/track/:id" component={TrackingPage} />
-            {/* <Route path='/contact' component={Contact}></Route> */}
+            <Route exact path="/bus-tracker/build/" component={HomePage} />
+            <Route
+              path="/bus-tracker/build/track/:id"
+              component={TrackingPage}
+            />
           </Switch>
         </div>
       </Router>
