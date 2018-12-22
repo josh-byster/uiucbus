@@ -13,13 +13,12 @@ class BusResults extends Component {
       modalInfo: {},
       modalOpen: false
     };
-    this.getData(props.stop_id);
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.stop_id !== this.props.stop_id) {
-      console.log("Updating again");
-      this.getData(this.props.stop_id);
+    if (prevProps.stopInfo.stop_id !== this.props.stopInfo.stop_id) {
+      console.info("Getting buses...");
+      this.getData(this.props.stopInfo.stop_id);
     }
   }
   getData = async stop_id => {
@@ -50,6 +49,7 @@ class BusResults extends Component {
           busInfo={this.state.modalInfo}
           isOpen={this.state.modalOpen}
           toggle={this.toggleModal}
+          stopInfo={this.props.stopInfo}
         />
         {this.state.validRequest ? (
           <Table>
@@ -82,6 +82,6 @@ class BusResults extends Component {
 }
 
 BusResults.propTypes = {
-  stop_id: PropTypes.string
+  stopInfo: PropTypes.object.isRequired
 };
 export default BusResults;

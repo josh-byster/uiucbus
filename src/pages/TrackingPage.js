@@ -6,7 +6,7 @@ class TrackingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stop_name: ""
+      stopInfo: {}
     };
     this.getStopName(this.props.match.params.id);
   }
@@ -19,15 +19,15 @@ class TrackingPage extends Component {
   getStopName = async stop_id => {
     const { status, rqst, stops } = await getStop(stop_id);
     if (status.code === 200 && stops.length > 0) {
-      this.setState({ stop_name: stops[0].stop_name });
+      this.setState({ stopInfo: stops[0] });
     }
   };
 
   render() {
     return (
       <div className="tracking-page">
-        <h1>{this.state.stop_name}</h1>
-        <BusResults stop_id={this.props.match.params.id} />
+        <h1>{this.state.stopInfo.stop_name}</h1>
+        <BusResults stopInfo={this.state.stopInfo} />
       </div>
     );
   }

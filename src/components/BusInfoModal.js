@@ -48,7 +48,8 @@ class BusInfoModal extends Component {
 BusInfoModal.propTypes = {
   toggle: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  busInfo: PropTypes.object.isRequired
+  busInfo: PropTypes.object.isRequired,
+  stopInfo: PropTypes.object.isRequired
 };
 
 export default BusInfoModal;
