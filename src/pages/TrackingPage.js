@@ -17,7 +17,7 @@ class TrackingPage extends Component {
     }
   }
   getStopName = async stop_id => {
-    const { status, rqst, stops } = await getStop(stop_id);
+    const { status, stops } = await getStop(stop_id);
     if (status.code === 200 && stops.length > 0) {
       this.setState({ stopInfo: stops[0] });
     }

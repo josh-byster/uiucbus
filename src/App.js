@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import {
-  NavLink,
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./pages/HomePage.js";
 import TrackingPage from "./pages/TrackingPage";
 import BusNavbar from "./components/BusNavbar";

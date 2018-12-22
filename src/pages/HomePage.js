@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import BusNavbar from "../components/BusNavbar";
 
 class HomePage extends Component {
   render() {

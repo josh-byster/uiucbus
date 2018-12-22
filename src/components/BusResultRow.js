@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { removeColors } from "./HelperFunctions";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
-import BusInfoModal from "./BusInfoModal";
 class BusResultRow extends Component {
   constructor(props) {
     super(props);

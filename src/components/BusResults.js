@@ -22,7 +22,7 @@ class BusResults extends Component {
     }
   }
   getData = async stop_id => {
-    const { status, rqst, departures } = await getBuses(stop_id);
+    const { status, departures } = await getBuses(stop_id);
     console.log(status);
     if (status.code === 200) {
       this.setState({ validRequest: true });
