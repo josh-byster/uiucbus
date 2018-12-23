@@ -17,12 +17,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "make-cname": "cd build && echo uiucbus.com > CNAME"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "homepage": "http://josh-byster.github.io/bus-tracker",
+  "homepage": "http://uiucbus.com",
   "browserslist": [
     ">0.2%",
     "not dead",
