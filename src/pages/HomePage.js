@@ -3,7 +3,6 @@ import "../styles/home.scss";
 import StopSearch from "../components/StopSearch";
 class HomePage extends Component {
   render() {
-    console.log(this.props);
     return (
       <div>
         <div className="home d-flex">

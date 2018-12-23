@@ -17,13 +17,11 @@ class BusResults extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.stopInfo.stop_id !== this.props.stopInfo.stop_id) {
-      console.info("Getting buses...");
       this.getData(this.props.stopInfo.stop_id);
     }
   }
   getData = async stop_id => {
     const { status, departures } = await getBuses(stop_id);
-    console.log(status);
     if (status.code === 200) {
       this.setState({ validRequest: true });
       this.setState({ departures: departures });
