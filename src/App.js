@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./pages/HomePage.js";
 import TrackingPage from "./pages/TrackingPage";
 import BusNavbar from "./components/BusNavbar";
@@ -12,11 +12,8 @@ class App extends Component {
         <div>
           <BusNavbar />
           <Switch>
-            <Route exact path="/bus-tracker/build/" component={HomePage} />
-            <Route
-              path="/bus-tracker/build/track/:id"
-              component={TrackingPage}
-            />
+            <Route exact path="/" component={HomePage} />
+            <Route path="/track/:id" component={TrackingPage} />
           </Switch>
         </div>
       </Router>

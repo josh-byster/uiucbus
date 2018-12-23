@@ -25,6 +25,7 @@ class TrackingPage extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div className="tracking-page">
         <div className="info">
