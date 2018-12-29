@@ -7,20 +7,28 @@ class TrackingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      stopInfo: {}
+      stopInfo: {},
+      stopNameLoaded: false,
+      stopResultsLoaded: false
     };
     this.getStopName(this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.setState({ stopNameLoaded: false, stopResultsLoaded: false });
       this.getStopName(this.props.match.params.id);
     }
   }
+
+  finishedLoadingResults = () => {
+    this.setState({ stopResultsLoaded: true });
+  };
+
   getStopName = async stop_id => {
     const { status, stops } = await getStop(stop_id);
     if (status.code === 200 && stops.length > 0) {
-      this.setState({ stopInfo: stops[0] });
+      this.setState({ stopInfo: stops[0], stopNameLoaded: true });
     }
   };
 
@@ -31,7 +39,10 @@ class TrackingPage extends Component {
           <h1 className="stop_name">{this.state.stopInfo.stop_name}</h1>
           <StopSearch />
         </div>
-        <BusResults stopInfo={this.state.stopInfo} />
+        <BusResults
+          resultCallback={this.finishedLoadingResults}
+          stopInfo={this.state.stopInfo}
+        />
       </div>
     );
   }

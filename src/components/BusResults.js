@@ -17,6 +17,13 @@ class BusResults extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.stopInfo.stop_id !== this.props.stopInfo.stop_id) {
+      console.log("Hot reload" + new Date());
+      this.setState({
+        departures: [],
+        validRequest: null,
+        modalInfo: {},
+        modalOpen: false
+      });
       this.getData(this.props.stopInfo.stop_id);
     }
   }
@@ -28,6 +35,7 @@ class BusResults extends Component {
     } else {
       this.setState({ validRequest: false });
     }
+    this.props.resultCallback();
   };
 
   toggleModal = info => {
@@ -90,6 +98,7 @@ class BusResults extends Component {
 }
 
 BusResults.propTypes = {
-  stopInfo: PropTypes.object.isRequired
+  stopInfo: PropTypes.object.isRequired,
+  resultCallback: PropTypes.func.isRequired
 };
 export default BusResults;
