@@ -9,6 +9,7 @@
     "pretty-quick": "^1.8.0",
     "react": "^16.7.0",
     "react-autosuggest": "^9.4.2",
+    "react-cookie": "^3.0.8",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",

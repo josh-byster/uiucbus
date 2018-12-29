@@ -1,13 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {
+  appendRecentStop,
+  getRecentStops,
+  clearAllRecents
+} from "../util/CookieHandler";
+import {
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from "reactstrap";
 
 class BusNavbar extends Component {
@@ -15,16 +24,21 @@ class BusNavbar extends Component {
     super(props);
 
     this.state = {
-      isOpen: false
+      isOpen: false,
+      recentStops: []
     };
   }
 
   toggle = () => {
+    console.log(getRecentStops());
     this.setState({
       isOpen: !this.state.isOpen
     });
   };
 
+  updateRecents = () => {
+    this.setState({ recentStops: getRecentStops() });
+  };
   defaultStops = [
     {
       name: "Transit Plaza",
@@ -63,13 +77,47 @@ class BusNavbar extends Component {
                     <NavLink
                       tag={Link}
                       to={`/track/${value.id}`}
-                      onClick={e => e.target.blur()}
+                      onClick={e => {
+                        appendRecentStop({ name: value.name, id: value.id });
+                        e.target.blur();
+                      }}
                     >
                       {value.name}
                     </NavLink>
                   </NavItem>
                 );
               })}
+
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret onClick={this.updateRecents}>
+                  Options
+                </DropdownToggle>
+                <DropdownMenu right>
+                  {this.state.recentStops.map((value, key) => {
+                    return (
+                      <DropdownItem key={key}>
+                        <NavLink
+                          tag={Link}
+                          to={`/track/${value.id}`}
+                          onClick={e => e.target.blur()}
+                          style={{ color: "#000000" }}
+                        >
+                          {value.name}
+                        </NavLink>
+                      </DropdownItem>
+                    );
+                  })}
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    <NavLink
+                      onClick={e => clearAllRecents()}
+                      style={{ color: "#000000" }}
+                    >
+                      Reset
+                    </NavLink>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>
