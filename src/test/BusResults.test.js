@@ -19,7 +19,10 @@ describe("Bus Result Component:", () => {
   it("starts with a modal closed", () => {
     expect(
       shallow(<BusResults stopInfo={stopInfo} />)
-        .setProps({ stopInfo: { stop_id: "PLAZA" } })
+        .setProps({
+          stopInfo: { stop_id: "PLAZA" },
+          resultCallback: function() {}
+        })
         .state().modalOpen
     ).toBeFalsy();
   });

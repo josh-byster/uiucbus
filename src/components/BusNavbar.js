@@ -60,7 +60,11 @@ class BusNavbar extends Component {
               {this.defaultStops.map((value, key) => {
                 return (
                   <NavItem key={key}>
-                    <NavLink tag={Link} to={`/track/${value.id}`}>
+                    <NavLink
+                      tag={Link}
+                      to={`/track/${value.id}`}
+                      onClick={e => e.target.blur()}
+                    >
                       {value.name}
                     </NavLink>
                   </NavItem>
