@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Button,
-  ModalFooter,
-  Card
-} from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from "reactstrap";
 import { MAPBOX_API_KEY, getVehicleInfo, getStop } from "../util/api.js";
 import "../styles/InfoModal.scss";
 class BusInfoModal extends Component {
