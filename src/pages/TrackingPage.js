@@ -23,9 +23,7 @@ class TrackingPage extends Component {
   }
 
   finishedLoadingResults = () => {
-    setTimeout(() => {
-      this.setState({ stopResultsLoaded: true });
-    }, 500);
+    this.setState({ stopResultsLoaded: true });
   };
 
   getStopName = async stop_id => {
@@ -50,7 +48,7 @@ class TrackingPage extends Component {
       <div className="tracking-page">
         <LinearProgress
           color="secondary"
-          variant="query"
+          variant="indeterminate"
           style={progressStyle}
         />
         <div className="info" style={resultStyle}>
