@@ -3,6 +3,8 @@ import Autosuggest from "react-autosuggest";
 import stops from "../util/allstops.js";
 import { Redirect } from "react-router-dom";
 import "../styles/StopSearch.scss";
+import { appendRecentStop } from "../util/CookieHandler";
+
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
@@ -34,7 +36,9 @@ class StopSearch extends Component {
     // and they are initially empty because the Autosuggest is closed.
     this.state = {
       value: "",
-      suggestions: []
+      suggestions: [],
+      selectionID: "",
+      selectionName: ""
     };
   }
 
@@ -54,7 +58,11 @@ class StopSearch extends Component {
     e,
     { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
   ) => {
-    this.setState({ shouldRedirect: true, selectionID: suggestion.stop_id });
+    this.setState({
+      shouldRedirect: true,
+      selectionID: suggestion.stop_id,
+      selectionName: suggestion.stop_name
+    });
   };
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
@@ -82,6 +90,10 @@ class StopSearch extends Component {
     };
 
     if (this.state.shouldRedirect) {
+      appendRecentStop({
+        name: this.state.selectionName,
+        id: this.state.selectionID
+      });
       return <Redirect push to={`/track/${this.state.selectionID}`} />;
     }
 
