@@ -90,7 +90,7 @@ class BusNavbar extends Component {
 
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret onClick={this.updateRecents}>
-                  Options
+                  Recents
                 </DropdownToggle>
                 <DropdownMenu right>
                   {this.state.recentStops.map((value, key) => {
@@ -113,7 +113,7 @@ class BusNavbar extends Component {
                       onClick={e => clearAllRecents()}
                       style={{ color: "#000000" }}
                     >
-                      Reset
+                      Clear All
                     </NavLink>
                   </DropdownItem>
                 </DropdownMenu>
