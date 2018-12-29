@@ -17,6 +17,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "prettier": "prettier --write src/**/*.js",
     "eject": "react-scripts eject",
     "make-cname": "cd build && echo uiucbus.com > CNAME"
   },
