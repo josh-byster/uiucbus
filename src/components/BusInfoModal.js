@@ -18,8 +18,6 @@ class BusInfoModal extends Component {
 
       this.setState({ mapURL: mapURL, imgLoaded: false });
       this.getNextPrevStops();
-      console.log(this.props.busInfo);
-      console.log(this.props.stopInfo);
     }
   }
 

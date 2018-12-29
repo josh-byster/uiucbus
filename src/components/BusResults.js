@@ -17,7 +17,6 @@ class BusResults extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.stopInfo.stop_id !== this.props.stopInfo.stop_id) {
-      console.log("Hot reload" + new Date());
       this.setState({
         departures: [],
         validRequest: null,
@@ -64,7 +63,7 @@ class BusResults extends Component {
       return <h4>No buses coming in the next hour.</h4>;
     }
     return (
-      <div>
+      <div style={this.props.style}>
         <BusInfoModal
           busInfo={this.state.modalInfo}
           isOpen={this.state.modalOpen}
@@ -99,6 +98,7 @@ class BusResults extends Component {
 
 BusResults.propTypes = {
   stopInfo: PropTypes.object.isRequired,
-  resultCallback: PropTypes.func.isRequired
+  resultCallback: PropTypes.func.isRequired,
+  style: PropTypes.object
 };
 export default BusResults;

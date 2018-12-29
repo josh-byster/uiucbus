@@ -52,7 +52,7 @@
   .react-autosuggest__suggestions-container--open {
     display: block;
     position: absolute;
-    top: 51px; // Margin + input height + 1
+    top: 49px; // Margin + input height - 1
     width: 500px;
     max-width: 60%;
   }

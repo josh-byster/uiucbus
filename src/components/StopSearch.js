@@ -66,7 +66,6 @@ class StopSearch extends Component {
 
   // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
-    console.log("Clearing");
     this.setState({
       suggestions: []
     });
@@ -83,13 +82,13 @@ class StopSearch extends Component {
     };
 
     if (this.state.shouldRedirect) {
-      console.log("REDIRECTING...");
       return <Redirect push to={`/track/${this.state.selectionID}`} />;
     }
 
     // Finally, render it!
     return (
       <Autosuggest
+        style={this.props.style}
         onSuggestionSelected={this.onSuggestionSelected}
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
