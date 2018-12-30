@@ -25,7 +25,8 @@
     "test": "react-scripts test",
     "prettier": "prettier --write src/**/*.js",
     "eject": "react-scripts eject",
-    "make-cname": "cd build && echo uiucbus.com > CNAME"
+    "make-cname": "cd build && echo uiucbus.com > CNAME",
+    "make-404": "cp 404.html build/404.html"
   },
   "eslintConfig": {
     "extends": "react-app"
