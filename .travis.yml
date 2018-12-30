@@ -4,6 +4,7 @@ node_js:
 script:
   - npm run build
   - npm run make-cname
+  - npm run make-404
   - npm test
 deploy:
   provider: pages
