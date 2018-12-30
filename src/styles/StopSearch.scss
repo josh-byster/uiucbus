@@ -1,8 +1,15 @@
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .react-autosuggest__container {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  display: inline-block;
 }
 
 .react-autosuggest__input {

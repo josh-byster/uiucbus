@@ -11,6 +11,7 @@
     "react-autosuggest": "^9.4.2",
     "react-cookie": "^3.0.8",
     "react-dom": "^16.7.0",
+    "react-geolocated": "^2.4.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "reactstrap": "^6.5.0"
