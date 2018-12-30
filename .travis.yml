@@ -6,6 +6,7 @@ script:
   - npm run make-cname
   - npm run make-404
   - npm test
+env: TZ=America/Chicago
 deploy:
   provider: pages
   verbose: true
