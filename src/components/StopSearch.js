@@ -6,6 +6,8 @@ import { Button } from "reactstrap";
 import "../styles/StopSearch.scss";
 import { appendRecentStop } from "../util/CookieHandler";
 import NearestStop from "./NearestStop.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
@@ -131,12 +133,13 @@ class StopSearch extends Component {
           inputProps={inputProps}
         />
         <Button
+          className="location-btn"
           onClick={e => {
             this.getLocation();
             this.toggleNearestStopModal();
           }}
         >
-          Hello
+          <FontAwesomeIcon icon={faMapMarkerAlt} />
         </Button>
         <NearestStop
           isOpen={this.state.nearestStopModalOpen}
