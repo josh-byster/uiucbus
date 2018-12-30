@@ -4,6 +4,7 @@ import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from "reactstrap";
 import { getNearestStops } from "../util/api.js";
 import { Link } from "react-router-dom";
 import "../styles/NearestStopModal.scss";
+import { appendRecentStop } from "../util/CookieHandler";
 class NearestStop extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +54,13 @@ class NearestStop extends Component {
                     <div key={key} className="link">
                       <Link
                         to={`/track/${value.stop_id}`}
-                        onClick={this.props.toggle}
+                        onClick={e => {
+                          this.props.toggle();
+                          appendRecentStop({
+                            name: value.stop_name,
+                            id: value.stop_id
+                          });
+                        }}
                       >
                         {value.stop_name} (
                         {Math.round((value.distance / 5280) * 100) / 100} mi.)

@@ -30,12 +30,18 @@ class BusNavbar extends Component {
   }
 
   toggle = () => {
-    console.log(getRecentStops());
     this.setState({
       isOpen: !this.state.isOpen
     });
   };
 
+  closeNavbar = () => {
+    if (this.state.isOpen) {
+      this.setState({
+        isOpen: false
+      });
+    }
+  };
   updateRecents = () => {
     this.setState({ recentStops: getRecentStops() });
   };
@@ -79,6 +85,7 @@ class BusNavbar extends Component {
                       to={`/track/${value.id}`}
                       onClick={e => {
                         appendRecentStop({ name: value.name, id: value.id });
+                        this.closeNavbar();
                         e.target.blur();
                       }}
                     >
@@ -99,7 +106,10 @@ class BusNavbar extends Component {
                         <NavLink
                           tag={Link}
                           to={`/track/${value.id}`}
-                          onClick={e => e.target.blur()}
+                          onClick={e => {
+                            e.target.blur();
+                            this.closeNavbar();
+                          }}
                           style={{ color: "#000000" }}
                         >
                           {value.name}
