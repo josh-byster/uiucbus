@@ -7,6 +7,7 @@ script:
   - npm run make-404
   - npm test
 env: TZ=America/Chicago
+  CODECOV_TOKEN="3d9fb408-6d58-49b5-a475-5e1df67c39e9"
 deploy:
   provider: pages
   verbose: true
