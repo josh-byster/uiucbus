@@ -29,7 +29,9 @@ class TrackingPage extends Component {
   getStopName = async stop_id => {
     const { status, stops } = await getStop(stop_id);
     if (status.code === 200 && stops.length > 0) {
-      this.setState({ stopInfo: stops[0], stopNameLoaded: true });
+      const stopObj = stops[0];
+      this.setState({ stopInfo: stopObj, stopNameLoaded: true });
+      document.title = stopObj.stop_name + " - Bus Tracker";
     } else {
       this.setState({ stopInfo: {}, stopNameLoaded: false });
     }

@@ -72,7 +72,7 @@ class BusNavbar extends Component {
       <div>
         <Navbar color="dark" dark expand="md">
           <NavbarBrand tag={Link} to="/">
-            uiucbus
+            UIUC Bus Tracker
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
