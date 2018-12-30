@@ -44,8 +44,8 @@
   }
 
   .react-autosuggest__input {
-    max-width: 60%;
-    width: 500px;
+    // max-width: 60%;
+    width: 240px;
     height: 40px;
     margin: 10px 0px 10px 0px;
   }
@@ -54,7 +54,7 @@
     position: absolute;
     top: 49px; // Margin + input height - 1
     width: 500px;
-    max-width: 60%;
+    max-width: 240px;
   }
 }
 footer {

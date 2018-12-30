@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import Autosuggest from "react-autosuggest";
 import stops from "../util/allstops.js";
 import { Redirect } from "react-router-dom";
+import { Button } from "reactstrap";
 import "../styles/StopSearch.scss";
 import { appendRecentStop } from "../util/CookieHandler";
+import NearestStop from "./NearestStop.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
@@ -38,9 +42,25 @@ class StopSearch extends Component {
       value: "",
       suggestions: [],
       selectionID: "",
-      selectionName: ""
+      selectionName: "",
+      nearestStopModalOpen: false
     };
   }
+
+  toggleNearestStopModal = () => {
+    this.setState({
+      nearestStopModalOpen: !this.state.nearestStopModalOpen
+    });
+  };
+
+  innerRef;
+  getInnerRef = ref => {
+    this.innerRef = ref;
+  };
+
+  getLocation = () => {
+    this.innerRef && this.innerRef.getLocation();
+  };
 
   componentDidUpdate(prevProps) {
     if (this.state.shouldRedirect) {
@@ -99,18 +119,34 @@ class StopSearch extends Component {
 
     // Finally, render it!
     return (
-      <Autosuggest
-        style={this.props.style}
-        onSuggestionSelected={this.onSuggestionSelected}
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        highlightFirstSuggestion={true}
-        className="form-control"
-        inputProps={inputProps}
-      />
+      <div className="search-wrapper">
+        <Autosuggest
+          style={this.props.style}
+          onSuggestionSelected={this.onSuggestionSelected}
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          highlightFirstSuggestion={true}
+          className="form-control"
+          inputProps={inputProps}
+        />
+        <Button
+          className="location-btn"
+          onClick={e => {
+            this.getLocation();
+            this.toggleNearestStopModal();
+          }}
+        >
+          <FontAwesomeIcon icon={faMapMarkerAlt} />
+        </Button>
+        <NearestStop
+          isOpen={this.state.nearestStopModalOpen}
+          toggle={this.toggleNearestStopModal}
+          ref={this.getInnerRef}
+        />
+      </div>
     );
   }
 }
