@@ -15,7 +15,6 @@ class NearestStop extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.coords && this.props.coords !== prevProps.coords) {
-      console.log("Getting stops");
       this.getStops();
     }
   }
@@ -27,15 +26,16 @@ class NearestStop extends Component {
     if (status.code === 200) {
       this.setState({ validRequest: true, stops: stops });
     } else {
+      // TODO: Maybe do something with invalid requests
       this.setState({ validRequest: false });
     }
-    // this.props.resultCallback();
   };
 
   render() {
-    if (!this.props.coords) {
-      return <div />;
-    }
+    // if (!this.props.coords && this.props.isGeolocationEnabled) {
+    //   // Geolocation is enabled but hasn't loaded coordinates yet, so don't render anything.
+    //   return <div />;
+    // }
     return (
       <div>
         <Modal
@@ -45,18 +45,23 @@ class NearestStop extends Component {
         >
           <ModalHeader>Nearest Stops</ModalHeader>
           <ModalBody>
-            {this.state.stops.slice(0, 5).map((value, key) => {
-              // only get 5 items max
-              return (
-                <div key={key} className="link">
-                  <Link to={`/track/${value.stop_id}`}>
-                    {value.stop_name} (
-                    {Math.round((value.distance / 5280) * 100) / 100} mi.)
-                  </Link>
-                  <br />
-                </div>
-              );
-            })}
+            {!this.props.isGeolocationEnabled
+              ? "Location services are not enabled."
+              : this.state.stops.slice(0, 5).map((value, key) => {
+                  // only get 5 items max
+                  return (
+                    <div key={key} className="link">
+                      <Link
+                        to={`/track/${value.stop_id}`}
+                        onClick={this.props.toggle}
+                      >
+                        {value.stop_name} (
+                        {Math.round((value.distance / 5280) * 100) / 100} mi.)
+                      </Link>
+                      <br />
+                    </div>
+                  );
+                })}
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.props.toggle}>
