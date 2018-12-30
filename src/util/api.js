@@ -27,4 +27,13 @@ function getVehicleInfo(vehicle_id) {
     }
   ).then(res => res.json());
 }
-export { getBuses, getStop, MAPBOX_API_KEY, getVehicleInfo };
+
+function getNearestStops(latitude, longitude) {
+  return fetch(
+    `${API_URL}/getstopsbylatlon?key=${CUMTD_API_KEY}&lat=${latitude}&lon=${longitude}`,
+    {
+      method: "GET"
+    }
+  ).then(res => res.json());
+}
+export { getBuses, getStop, MAPBOX_API_KEY, getVehicleInfo, getNearestStops };
