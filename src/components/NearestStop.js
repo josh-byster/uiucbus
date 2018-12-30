@@ -14,7 +14,6 @@ class NearestStop extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props);
     if (this.props.coords && this.props.coords !== prevProps.coords) {
       console.log("Getting stops");
       this.getStops();
