@@ -9,7 +9,7 @@ import HomePage from "../pages/HomePage";
 
 configure({ adapter: new Adapter() });
 
-describe("Bus Info Modal Component", () => {
+describe("Homepage Component", () => {
   const elem = mount(<HomePage />);
 
   it("renders the proper page", () => {

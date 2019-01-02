@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Bus Info Modal Component renders the proper page 1`] = `
+exports[`Homepage Component renders the proper page 1`] = `
 <HomePage>
   <div>
     <div
