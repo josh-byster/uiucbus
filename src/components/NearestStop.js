@@ -46,7 +46,7 @@ class NearestStop extends Component {
         >
           <ModalHeader>Nearest Stops</ModalHeader>
           <ModalBody>
-            {!this.props.isGeolocationEnabled
+            {this.props.positionError != null
               ? "Location services are not enabled."
               : this.state.stops.slice(0, 5).map((value, key) => {
                   // only get 5 items max
