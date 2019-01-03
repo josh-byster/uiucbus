@@ -27,7 +27,8 @@
     "prettier": "prettier --write src/**/*.js",
     "eject": "react-scripts eject",
     "make-cname": "cd build && echo uiucbus.com > CNAME",
-    "make-404": "cp 404.html build/404.html"
+    "make-404": "cp 404.html build/404.html",
+    "http-server": "$(npm bin)/http-server ./build --silent -p 3000"
   },
   "eslintConfig": {
     "extends": "react-app"

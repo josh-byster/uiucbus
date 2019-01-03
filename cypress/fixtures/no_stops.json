@@ -1,0 +1,10 @@
+{
+  "time": "2019-01-03T15:46:15-06:00",
+  "new_changeset": true,
+  "status": { "code": 200, "msg": "ok" },
+  "rqst": {
+    "method": "GetDeparturesByStop",
+    "params": { "stop_id": "4THCHAL" }
+  },
+  "departures": []
+}

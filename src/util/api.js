@@ -33,4 +33,11 @@ function getNearestStops(latitude, longitude) {
     )
     .then(res => res.data);
 }
-export { getBuses, getStop, MAPBOX_API_KEY, getVehicleInfo, getNearestStops };
+export {
+  getBuses,
+  getStop,
+  MAPBOX_API_KEY,
+  CUMTD_API_KEY,
+  getVehicleInfo,
+  getNearestStops
+};
