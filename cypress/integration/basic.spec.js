@@ -5,7 +5,6 @@ context("Basic", () => {
     cy.visit("http://localhost:3000");
   });
   it("typing into the main textbox on page", () => {
-    // https://on.cypress.io/type
     cy.get(".react-autosuggest__input")
       .type("PAR")
       .should("have.value", "PAR")
@@ -19,7 +18,6 @@ context("Basic", () => {
   });
 
   it("cycling through results should work", () => {
-    // https://on.cypress.io/type
     cy.get(".react-autosuggest__input")
       .type("PAR")
       .should("have.value", "PAR")
@@ -29,8 +27,17 @@ context("Basic", () => {
       .should("have.value", "PAR");
   });
 
+  it("should autofill based on selection", () => {
+    cy.get(".react-autosuggest__input")
+      .type("PAR{downarrow}{uparrow}")
+      .should("have.value", "PAR (Pennsylvania Ave. Residence Hall)")
+
+      // .type() with special character sequences
+      .type("{downarrow}{downarrow}{downarrow}{downarrow}{downarrow}")
+      .should("have.value", "PAR");
+  });
+
   it("clicking enter should take to tracking page", () => {
-    // https://on.cypress.io/type
     cy.get(".react-autosuggest__input").type("PAR{enter}");
 
     cy.get(".stop_name").should(
@@ -40,19 +47,36 @@ context("Basic", () => {
   });
 
   it("clicking enter should take to tracking page", () => {
-    // https://on.cypress.io/type
     cy.get(".react-autosuggest__input").type("PAR{enter}");
 
-    cy.get(".stop_name").should(
-      "have.text",
-      "Pennsylvania Ave. Residence Hall"
-    );
+    cy.get(".stop_name")
+      .should("have.text", "Pennsylvania Ave. Residence Hall")
+      .should("be.visible");
   });
 
   it("picking another result should take to appropriate tracking page", () => {
-    // https://on.cypress.io/type
     cy.get(".react-autosuggest__input").type("PAR{downarrow}{enter}");
 
-    cy.get(".stop_name").should("have.text", "First and Lake Park North");
+    cy.get(".stop_name")
+      .should("have.text", "First and Lake Park North")
+      .should("be.visible");
+  });
+
+  it("invalid result takes you nowhere", () => {
+    cy.get(".react-autosuggest__input")
+      .type("ajsldk{enter}")
+      .should("have.value", "ajsldk");
+  });
+
+  it("empty result takes you nowhere", () => {
+    cy.get(".react-autosuggest__input")
+      .type("{enter}")
+      .should("have.value", "");
+  });
+
+  it("backspace to correct search gets results", () => {
+    cy.get(".react-autosuggest__input")
+      .type("PARaaa{backspace}{backspace}{backspace}")
+      .should("have.value", "PAR");
   });
 });
