@@ -4,6 +4,11 @@ context("Basic", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000");
   });
+
+  it("should have Bus Tracker title", () => {
+    cy.get(".info-box").should("have.text", "UIUC Bus Tracker");
+  });
+
   it("typing into the main textbox on page", () => {
     cy.get(".react-autosuggest__input")
       .type("PAR")
