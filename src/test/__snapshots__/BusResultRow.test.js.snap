@@ -10,9 +10,7 @@ exports[`Bus Result Row Component renders the proper h4 with invalid request 1`]
     }
   }
 >
-  <td
-    width="40%"
-  >
+  <td>
     <b>
       100N Yellow
     </b>
@@ -20,7 +18,9 @@ exports[`Bus Result Row Component renders the proper h4 with invalid request 1`]
   <td>
     5m
   </td>
-  <td>
+  <td
+    className="no-wrap"
+  >
     5:32:40
   </td>
   <td>

@@ -37,7 +37,7 @@ class BusResultRow extends Component {
   render() {
     return (
       <tr style={this.getTRStyle()} className="resultRow">
-        <td width="40%">
+        <td>
           <b>{removeColors(this.props.info.headsign)}</b>
         </td>
         <td>
@@ -45,7 +45,7 @@ class BusResultRow extends Component {
             ? this.props.info.expected_mins + "m"
             : "Arriving Now"}
         </td>
-        <td>{this.computeHMS(this.props.info.expected)}</td>
+        <td className="no-wrap">{this.computeHMS(this.props.info.expected)}</td>
         <td>
           <Button
             color="success"

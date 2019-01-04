@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-context("Basic", () => {
+context("Navbar", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000");
   });
