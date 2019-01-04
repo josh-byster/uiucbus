@@ -42,7 +42,7 @@ class TrackingPage extends Component {
       this.state.stopNameLoaded && this.state.stopResultsLoaded
         ? {}
         : { display: "none" };
-    const progressStyle =
+    const progressStyle = // mutual exclusive, when one is display none, the other is off
       this.state.stopNameLoaded && this.state.stopResultsLoaded
         ? { display: "none" }
         : {};
