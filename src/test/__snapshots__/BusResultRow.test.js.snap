@@ -2,6 +2,7 @@
 
 exports[`Bus Result Row Component renders the proper h4 with invalid request 1`] = `
 <tr
+  className="resultRow"
   style={
     Object {
       "backgroundColor": "#fcee1f",

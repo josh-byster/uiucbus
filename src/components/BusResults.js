@@ -73,10 +73,10 @@ class BusResults extends Component {
         <Table>
           <thead>
             <tr>
-              <th>Bus Name</th>
-              <th>Mins Left</th>
-              <th>ETA</th>
-              <th>Last Location</th>
+              <th id="bus-name">Bus Name</th>
+              <th id="mins-left">Mins Left</th>
+              <th id="eta">ETA</th>
+              <th id="last-location">Last Location</th>
             </tr>
           </thead>
           <tbody>

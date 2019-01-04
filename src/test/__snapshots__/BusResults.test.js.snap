@@ -8,22 +8,31 @@ exports[`Bus Result Component: renders many buses with mock data  1`] = `
   >
     <thead>
       <tr>
-        <th>
+        <th
+          id="bus-name"
+        >
           Bus Name
         </th>
-        <th>
+        <th
+          id="mins-left"
+        >
           Mins Left
         </th>
-        <th>
+        <th
+          id="eta"
+        >
           ETA
         </th>
-        <th>
+        <th
+          id="last-location"
+        >
           Last Location
         </th>
       </tr>
     </thead>
     <tbody>
       <tr
+        className="resultRow"
         style={
           Object {
             "backgroundColor": "#fcee1f",
@@ -56,6 +65,7 @@ exports[`Bus Result Component: renders many buses with mock data  1`] = `
         </td>
       </tr>
       <tr
+        className="resultRow"
         style={
           Object {
             "backgroundColor": "#cccccc",
@@ -88,6 +98,7 @@ exports[`Bus Result Component: renders many buses with mock data  1`] = `
         </td>
       </tr>
       <tr
+        className="resultRow"
         style={
           Object {
             "backgroundColor": "#cccccc",
@@ -120,6 +131,7 @@ exports[`Bus Result Component: renders many buses with mock data  1`] = `
         </td>
       </tr>
       <tr
+        className="resultRow"
         style={
           Object {
             "backgroundColor": "#5a1d5a",
@@ -152,6 +164,7 @@ exports[`Bus Result Component: renders many buses with mock data  1`] = `
         </td>
       </tr>
       <tr
+        className="resultRow"
         style={
           Object {
             "backgroundColor": "#fcee1f",
@@ -184,6 +197,7 @@ exports[`Bus Result Component: renders many buses with mock data  1`] = `
         </td>
       </tr>
       <tr
+        className="resultRow"
         style={
           Object {
             "backgroundColor": "#5a1d5a",
@@ -216,6 +230,7 @@ exports[`Bus Result Component: renders many buses with mock data  1`] = `
         </td>
       </tr>
       <tr
+        className="resultRow"
         style={
           Object {
             "backgroundColor": "#cccccc",
@@ -248,6 +263,7 @@ exports[`Bus Result Component: renders many buses with mock data  1`] = `
         </td>
       </tr>
       <tr
+        className="resultRow"
         style={
           Object {
             "backgroundColor": "#cccccc",
