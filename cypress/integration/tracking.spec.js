@@ -49,6 +49,6 @@ context("Tracking With Stops Available", () => {
   it("first row is correct", () => {
     cy.get(".resultRow:first b").should("have.text", "22N Illini Limited");
     cy.get(".resultRow:first td:nth-child(2)").should("have.text", "2m");
-    cy.get(".resultRow:first td:nth-child(2)").should("have.text", "5:24:56");
+    cy.get(".resultRow:first td:nth-child(3)").should("have.text", "5:24:56");
   });
 });

@@ -2,7 +2,7 @@
 import { CUMTD_API_KEY } from "../../src/util/api";
 context("Tracking No Stops", () => {
   beforeEach(() => {
-    cy.fixture("many_stops.json").as("stops");
+    cy.fixture("no_stops.json").as("stops");
     cy.fixture("getstop_par.json").as("PARStopInfo");
     cy.server(); // enable response stubbing
     cy.route({
