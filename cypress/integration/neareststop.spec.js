@@ -21,4 +21,11 @@ context("Nearest Stop", () => {
       .get("modal-title")
       .should("not.exist");
   });
+
+  it("should not have an empty body", () => {
+    cy.get(".location-btn")
+      .click()
+      .get(".modal-body")
+      .should("not.have.text", "");
+  });
 });

@@ -69,14 +69,16 @@ context("Basic", () => {
 
   it("invalid result takes you nowhere", () => {
     cy.get(".react-autosuggest__input")
-      .type("ajsldk{enter}")
+      .type("ajsldk{uparrow}{downarrow}{enter}")
       .should("have.value", "ajsldk");
   });
 
   it("empty result takes you nowhere", () => {
     cy.get(".react-autosuggest__input")
       .type("{enter}")
-      .should("have.value", "");
+      .should("have.value", "")
+      .get(".info-box")
+      .should("have.text", "UIUC Bus Tracker");
   });
 
   it("backspace to correct search gets results", () => {
