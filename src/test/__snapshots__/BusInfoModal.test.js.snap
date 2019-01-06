@@ -79,6 +79,7 @@ exports[`Bus Info Modal Component renders the proper modal 1`] = `
                       />
                       <p
                         class="stop-info"
+                        style="visibility: hidden;"
                       >
                         <b>
                           Next Stop:
@@ -155,6 +156,7 @@ exports[`Bus Info Modal Component renders the proper modal 1`] = `
                         />
                         <p
                           class="stop-info"
+                          style="visibility: hidden;"
                         >
                           <b>
                             Next Stop:
@@ -293,6 +295,11 @@ exports[`Bus Info Modal Component renders the proper modal 1`] = `
                           />
                           <p
                             className="stop-info"
+                            style={
+                              Object {
+                                "visibility": "hidden",
+                              }
+                            }
                           >
                             <b>
                               Next Stop:

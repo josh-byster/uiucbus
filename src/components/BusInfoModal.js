@@ -85,7 +85,10 @@ class BusInfoModal extends Component {
               onLoad={() => this.setState({ imgLoaded: true })}
             />
 
-            <p className="stop-info">
+            <p
+              className="stop-info"
+              style={this.state.imgLoaded ? {} : { visibility: "hidden" }}
+            >
               <b>Next Stop:</b> {this.state.nextStop}
               <br />
               <b>Previous Stop</b> {this.state.previousStop}
