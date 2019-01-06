@@ -91,7 +91,7 @@ class BusInfoModal extends Component {
             >
               <b>Next Stop:</b> {this.state.nextStop}
               <br />
-              <b>Previous Stop</b> {this.state.previousStop}
+              <b>Previous Stop:</b> {this.state.previousStop}
             </p>
           </ModalBody>
           <ModalFooter>

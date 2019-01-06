@@ -31,7 +31,7 @@
       "is_istop": true,
       "scheduled": "2019-01-03T17:20:00-06:00",
       "expected": "2019-01-03T17:24:56-06:00",
-      "expected_mins": 2,
+      "expected_mins": 0,
       "location": { "lat": 40.108173, "lon": -88.228917 }
     },
     {

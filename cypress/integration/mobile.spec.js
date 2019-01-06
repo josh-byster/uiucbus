@@ -83,7 +83,7 @@ context("Mobile", () => {
       .and("equal", "none"); // check that the navbar collapses on click
   });
 
-  it("has a navbar which stays open after cdlick", () => {
+  it("has a navbar which stays open after click", () => {
     cy.get(".navbar-toggler")
       .click()
       .get(".navbar-collapse")

@@ -48,7 +48,57 @@ context("Tracking With Stops Available", () => {
 
   it("first row is correct", () => {
     cy.get(".resultRow:first b").should("have.text", "22N Illini Limited");
-    cy.get(".resultRow:first td:nth-child(2)").should("have.text", "2m");
+    cy.get(".resultRow:first td:nth-child(2)").should(
+      "have.text",
+      "Arriving Now"
+    );
     cy.get(".resultRow:first td:nth-child(3)").should("have.text", "5:24:56");
+    cy.get(".resultRow:first")
+      .should("have.css", "background-color")
+      .and("equal", "rgb(90, 29, 90)");
+  });
+
+  it("should have the correct number of rows", () => {
+    cy.get(".resultRow").should("have.length", 17);
+  });
+
+  it("should have a modal title that's correct", () => {
+    cy.get(".resultRow:first td:nth-child(4) > .btn")
+      .click()
+      .get(".modal-title")
+      .should("be.visible")
+      .should("have.text", "22N Illini Limited");
+  });
+
+  it("should have a modal image", () => {
+    cy.get(".resultRow:first td:nth-child(4) > .btn")
+      .click()
+      .get(".img-fluid")
+      .should("be.visible");
+  });
+
+  it("should have space for next stop and previous stop", () => {
+    cy.get(".resultRow:first td:nth-child(4) > .btn")
+      .click()
+      .get(".modal-body")
+      .contains("Next Stop:")
+      .get(".modal-body")
+      .contains("Previous Stop:");
+  });
+
+  it("should be able to click on multiple locations ", () => {
+    cy.get(".resultRow:nth-child(2) td:nth-child(4) > .btn")
+      .click()
+      .get(".modal-title")
+      .should("be.visible")
+      .should("have.text", "4W Blue");
+
+    cy.get(".modal-footer > .btn").click();
+
+    cy.get(".resultRow:nth-child(3) td:nth-child(4) > .btn")
+      .click()
+      .get(".modal-title")
+      .should("be.visible")
+      .should("have.text", "1N YELLOWhopper");
   });
 });
