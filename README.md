@@ -1,7 +1,8 @@
 # UIUCBus.com — Quick and Painless Bus Tracking Web App
 
 [![Build Status](https://travis-ci.com/josh-byster/bus-tracker.svg?branch=master)](https://travis-ci.com/josh-byster/bus-tracker)
-[![Coverage Status](https://coveralls.io/repos/github/josh-byster/bus-tracker/badge.svg?branch=master)](https://coveralls.io/github/josh-byster/bus-tracker?branch=master)
+[![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square)](https://cypress.io)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 Designed for frequent bus riders, this web app has speed and simplicity as its top priority. The app allows for quick checking of any route, keeps track of recently viewed stops, and allows riders to see the live location of a bus.
 
