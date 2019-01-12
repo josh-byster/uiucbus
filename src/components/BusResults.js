@@ -86,6 +86,7 @@ class BusResults extends Component {
                   info={element}
                   toggleModal={this.toggleModal}
                   key={key}
+                  elementOrder={key}
                 />
               );
             })}
