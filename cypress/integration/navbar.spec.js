@@ -90,7 +90,7 @@ context("Navbar", () => {
       .should("have.text", "Clear All");
   });
 
-  it("has links that work", () => {
+  it("has recents links that work", () => {
     cy.get(".nav-item")
       .eq(0)
       .click();
@@ -105,6 +105,41 @@ context("Navbar", () => {
       .click()
       .get(".stop_name")
       .should("have.text", "Illini Union");
+  });
+
+  it("doesn't change order when clicking a recent link", () => {
+    cy.get(".nav-item")
+      .eq(0)
+      .click();
+
+    cy.get(".nav-item")
+      .eq(1)
+      .click();
+
+    cy.get(".dropdown-toggle")
+      .click()
+      .get(".dropdown-menu > :nth-child(2)")
+      .click();
+
+    cy.get(".dropdown-toggle")
+      .click()
+      .get(".dropdown-menu > :nth-child(1)")
+      .should("have.text", "Illini Union")
+      .get(".dropdown-menu > :nth-child(2)")
+      .should("have.text", "Transit Plaza");
+  });
+
+  it("clearall doesn't break on empty set", () => {
+    cy.get(".dropdown-toggle")
+      .click()
+      .get(".dropdown-menu > :nth-child(2)")
+      .should("have.text", "Clear All")
+      .click();
+
+    cy.get(".dropdown-toggle")
+      .click()
+      .get(".dropdown-menu > :nth-child(2)")
+      .should("have.text", "Clear All");
   });
 
   it("has a home button that works", () => {
