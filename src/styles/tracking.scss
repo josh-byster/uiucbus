@@ -12,6 +12,12 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
     font-size: 20px;
+    @media screen and(max-width:768px) {
+      font-size: 14px;
+      .btn {
+        font-size: 12px;
+      }
+    }
     border-top: none;
     font-family: "Lato", sans-serif;
   }
