@@ -12,8 +12,8 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
     font-size: 20px;
-    @media screen and(max-width:768px) {
-      font-size: 14px;
+    @media screen and(max-width:500px) {
+      font-size: 5vw;
       .btn {
         font-size: 12px;
       }
