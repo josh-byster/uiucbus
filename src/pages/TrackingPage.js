@@ -4,6 +4,8 @@ import "../styles/tracking.scss";
 import { getStop } from "../util/api";
 import StopSearch from "../components/StopSearch";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import PullToRefresh from "pulltorefreshjs";
+
 class TrackingPage extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,19 @@ class TrackingPage extends Component {
     };
     this.getStopName(this.props.match.params.id);
   }
+
+  componentDidMount = () => {
+    PullToRefresh.init({
+      mainElement: ".tracking-page",
+      triggerElement: "html",
+      onRefresh: this.reloadStops.bind(this)
+    });
+  };
+
+  reloadStops = () => {
+    this.setState({ stopNameLoaded: false, stopResultsLoaded: true });
+    this.getStopName(this.props.match.params.id);
+  };
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
