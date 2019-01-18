@@ -60,7 +60,7 @@ class BusResults extends Component {
       this.state.validRequest === true &&
       this.state.departures.length === 0
     ) {
-      return <h4>No buses coming in the next hour.</h4>;
+      return <h4 className="no-bus">No buses coming in the next hour.</h4>;
     }
     return (
       <div style={this.props.style}>
