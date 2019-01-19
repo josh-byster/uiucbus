@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Autosuggest from "react-autosuggest";
-import stops from "../util/allstops.js";
+
 import { Redirect } from "react-router-dom";
 import { Button } from "reactstrap";
 import "../styles/StopSearch.scss";
@@ -8,6 +8,8 @@ import { appendRecentStop } from "../util/CookieHandler";
 import NearestStop from "./NearestStop.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+
+const stops = require("../util/allstops.json");
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
