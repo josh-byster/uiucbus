@@ -1,14 +1,14 @@
 import axios from "axios";
 
-var API_URL = "https://developer.cumtd.com/api/v2.2/json/";
-var MAPBOX_API_KEY =
+const API_URL = "https://developer.cumtd.com/api/v2.2/json/";
+const MAPBOX_API_KEY =
   "pk.eyJ1Ijoiam9zaC1ieXN0ZXIiLCJhIjoiY2psN2xyZGFoMDY5ZjNxbWtpeDE0dDlwNSJ9.AAJipEPA6e-kLi1Jv3Wpyg";
-var CUMTD_API_KEY = "fd4fb84bbbb34acfae890f17144ee131";
-
+const CUMTD_API_KEY = "fd4fb84bbbb34acfae890f17144ee131";
+const MAX_EXPECTED_MINS_AWAY = 60;
 function getBuses(stop_id) {
   return axios
     .get(
-      `${API_URL}/getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=${stop_id}`
+      `${API_URL}/getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=${stop_id}&pt=${MAX_EXPECTED_MINS_AWAY}`
     )
     .then(res => res.data);
 }
