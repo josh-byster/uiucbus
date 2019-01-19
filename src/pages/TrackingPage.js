@@ -20,7 +20,7 @@ class TrackingPage extends Component {
   componentDidMount = () => {
     PullToRefresh.init({
       mainElement: ".tracking-page",
-      triggerElement: "html",
+      triggerElement: ".info",
       onRefresh: this.reloadStops.bind(this)
     });
   };
