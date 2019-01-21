@@ -7,18 +7,15 @@ import posed, { PoseGroup } from "react-pose";
 class BusResultRow extends Component {
   TransitionWrapper = posed.tr({
     enter: {
-      y: 0,
       opacity: 1,
       delay: 100 * this.props.elementOrder,
       transition: {
-        y: { type: "spring", stiffness: 1000, damping: 15 },
-        default: { duration: 300 }
+        opacity: { ease: "easeIn", duration: 300 }
       }
     },
     exit: {
-      y: 0,
       opacity: 0,
-      transition: { duration: 150 }
+      transition: { duration: 0 }
     }
   });
 
@@ -62,7 +59,7 @@ class BusResultRow extends Component {
       <PoseGroup>
         {this.state.isVisible && (
           <this.TransitionWrapper
-            key="bus"
+            key={new Date()}
             style={this.getTRStyle()}
             className="resultRow"
           >
