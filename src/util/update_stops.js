@@ -1,6 +1,6 @@
 // import axios from "axios";
 const axios = require("axios");
-const API_URL = "https://developer.cumtd.com/api/v2.2/json/";
+const API_URL = "https://developer.mtd.org/api/v2.2/json/";
 const CUMTD_API_KEY = "fd4fb84bbbb34acfae890f17144ee131";
 
 module.exports.init = function() {

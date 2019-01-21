@@ -7,14 +7,14 @@ context("Tracking No Stops", () => {
     cy.server(); // enable response stubbing
     cy.route({
       method: "GET",
-      url: `https://developer.cumtd.com/api/v2.2/json//getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=*`, // Mock a response for a stop ID
+      url: `https://developer.mtd.org/api/v2.2/json//getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=*`, // Mock a response for a stop ID
       response: "@stops"
     }).as("getDepartures");
 
     // Using this to reduce load on MTD's API
     cy.route({
       method: "GET",
-      url: `https://developer.cumtd.com/api/v2.2/json//getstop?key=${CUMTD_API_KEY}&stop_id=PAR`, // Mock a response for getting stops
+      url: `https://developer.mtd.org/api/v2.2/json//getstop?key=${CUMTD_API_KEY}&stop_id=PAR`, // Mock a response for getting stops
       response: "@PARStopInfo"
     });
     cy.visit("http://localhost:3000/#/track/PAR");

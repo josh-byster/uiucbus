@@ -11,7 +11,7 @@ context("Mobile", () => {
     cy.server(); // enable response stubbing
     cy.route({
       method: "GET", // Route all GET requests
-      url: `https://developer.cumtd.com/api/v2.2/json//getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=*`, // Mock a response for a stop ID
+      url: `https://developer.mtd.org/api/v2.2/json//getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=*`, // Mock a response for a stop ID
       response: "@stops"
     }).as("getDepartures");
   });

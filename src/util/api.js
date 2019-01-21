@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://developer.cumtd.com/api/v2.2/json/";
+const API_URL = "https://developer.mtd.org/api/v2.2/json/";
 const MAPBOX_API_KEY =
   "pk.eyJ1Ijoiam9zaC1ieXN0ZXIiLCJhIjoiY2psN2xyZGFoMDY5ZjNxbWtpeDE0dDlwNSJ9.AAJipEPA6e-kLi1Jv3Wpyg";
 const CUMTD_API_KEY = "fd4fb84bbbb34acfae890f17144ee131";
