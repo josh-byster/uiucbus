@@ -4,6 +4,8 @@ import BusResultRow from "./BusResultRow";
 import { Table } from "reactstrap";
 import PropTypes from "prop-types";
 import BusInfoModal from "../components/BusInfoModal";
+import PullToRefresh from "pulltorefreshjs";
+
 class BusResults extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,18 @@ class BusResults extends Component {
     };
   }
 
+  componentDidMount = () => {
+    PullToRefresh.init({
+      mainElement: ".tracking-page",
+      triggerElement: ".info",
+      shouldPullToRefresh: () => {
+        console.log(this);
+        return this.props.stopInfo.stop_id !== undefined;
+      },
+      onRefresh: this.getData.bind(this)
+    });
+  };
+
   componentDidUpdate(prevProps) {
     if (prevProps.stopInfo.stop_id !== this.props.stopInfo.stop_id) {
       this.setState({
@@ -23,11 +37,12 @@ class BusResults extends Component {
         modalInfo: {},
         modalOpen: false
       });
-      this.getData(this.props.stopInfo.stop_id);
+      this.getData();
     }
   }
-  getData = async stop_id => {
-    const { status, departures } = await getBuses(stop_id);
+  getData = async () => {
+    console.log(this.props.stopInfo.stop_id);
+    const { status, departures } = await getBuses(this.props.stopInfo.stop_id);
     if (status.code === 200) {
       this.setState({ validRequest: true });
       this.setState({ departures: departures });

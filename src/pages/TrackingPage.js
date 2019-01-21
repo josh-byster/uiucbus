@@ -4,35 +4,21 @@ import "../styles/tracking.scss";
 import { getStop } from "../util/api";
 import StopSearch from "../components/StopSearch";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import PullToRefresh from "pulltorefreshjs";
 
 class TrackingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       stopInfo: {},
-      stopNameLoaded: false,
-      stopResultsLoaded: false
+      stopNameLoaded: null,
+      stopResultsLoaded: null
     };
     this.getStopName(this.props.match.params.id);
   }
 
-  componentDidMount = () => {
-    PullToRefresh.init({
-      mainElement: ".tracking-page",
-      triggerElement: ".info",
-      onRefresh: this.reloadStops.bind(this)
-    });
-  };
-
-  reloadStops = () => {
-    this.setState({ stopNameLoaded: false, stopResultsLoaded: true });
-    this.getStopName(this.props.match.params.id);
-  };
-
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.setState({ stopNameLoaded: false, stopResultsLoaded: false });
+      this.setState({ stopNameLoaded: null, stopResultsLoaded: null });
       this.getStopName(this.props.match.params.id);
     }
   }
@@ -54,11 +40,13 @@ class TrackingPage extends Component {
 
   render() {
     const resultStyle =
-      this.state.stopNameLoaded && this.state.stopResultsLoaded
+      (this.state.stopNameLoaded && this.state.stopResultsLoaded) ||
+      this.state.stopNameLoaded === false // if the stop name invalid, display the "stop invalid"
         ? {}
         : { display: "none" };
     const progressStyle = // mutual exclusive, when one is display none, the other is off
-      this.state.stopNameLoaded && this.state.stopResultsLoaded
+      (this.state.stopNameLoaded && this.state.stopResultsLoaded) ||
+      this.state.stopNameLoaded === false
         ? { display: "none" }
         : {};
     return (
@@ -73,11 +61,15 @@ class TrackingPage extends Component {
           <StopSearch />
         </div>
         <div style={resultStyle}>
-          <BusResults
-            style={resultStyle}
-            resultCallback={this.finishedLoadingResults}
-            stopInfo={this.state.stopInfo}
-          />
+          {this.state.stopNameLoaded === false ? (
+            <h4 className="no-bus">Stop does not exist</h4>
+          ) : (
+            <BusResults
+              style={resultStyle}
+              resultCallback={this.finishedLoadingResults}
+              stopInfo={this.state.stopInfo}
+            />
+          )}
         </div>
       </div>
     );
