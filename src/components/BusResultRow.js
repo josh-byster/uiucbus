@@ -8,7 +8,7 @@ class BusResultRow extends Component {
   TransitionWrapper = posed.tr({
     enter: {
       opacity: 1,
-      delay: 100 * this.props.elementOrder,
+      delay: (100 * (1 - Math.pow(0.5, this.props.elementOrder))) / (1 - 0.5),
       transition: {
         opacity: { ease: "easeIn", duration: 300 }
       }
@@ -59,7 +59,7 @@ class BusResultRow extends Component {
       <PoseGroup>
         {this.state.isVisible && (
           <this.TransitionWrapper
-            key={new Date()}
+            key={this.props.info.headsign + this.props.info.expected_mins}
             style={this.getTRStyle()}
             className="resultRow"
           >
