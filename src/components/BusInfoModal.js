@@ -47,7 +47,11 @@ class BusInfoModal extends Component {
         prevStopName = "Unknown";
       }
 
-      this.setState({ nextStop: nextStopName, previousStop: prevStopName });
+      this.setState({
+        nextStop: nextStopName,
+        previousStop: prevStopName,
+        last_updated: vehicles[0].last_updated
+      });
     }
   };
 
@@ -92,6 +96,15 @@ class BusInfoModal extends Component {
               <b>Next Stop:</b> {this.state.nextStop}
               <br />
               <b>Previous Stop:</b> {this.state.previousStop}
+              <br />
+              <br />
+              <i>
+                Position last updated{" "}
+                {Math.round(
+                  (new Date() - new Date(this.state.last_updated)) / 1000
+                )}{" "}
+                seconds ago
+              </i>
             </p>
           </ModalBody>
           <ModalFooter>
