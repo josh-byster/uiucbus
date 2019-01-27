@@ -1,3 +1,4 @@
 {
-  "projectId": "139hik"
+  "projectId": "139hik",
+  "blacklistHosts": "www.google-analytics.com"
 }
