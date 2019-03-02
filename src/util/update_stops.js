@@ -24,7 +24,7 @@ module.exports.init = function() {
 
       function(err) {
         if (err) {
-          console.error("Crap happens");
+          console.error("Something happened");
         }
       }
     );

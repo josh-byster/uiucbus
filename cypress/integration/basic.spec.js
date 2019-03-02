@@ -45,15 +45,6 @@ context("Basic", () => {
   it("clicking enter should take to tracking page", () => {
     cy.get(".react-autosuggest__input").type("PAR{enter}");
 
-    cy.get(".stop_name").should(
-      "have.text",
-      "Pennsylvania Ave. Residence Hall"
-    );
-  });
-
-  it("clicking enter should take to tracking page", () => {
-    cy.get(".react-autosuggest__input").type("PAR{enter}");
-
     cy.get(".stop_name")
       .should("have.text", "Pennsylvania Ave. Residence Hall")
       .should("be.visible");
@@ -85,5 +76,25 @@ context("Basic", () => {
     cy.get(".react-autosuggest__input")
       .type("PARaaa{backspace}{backspace}{backspace}")
       .should("have.value", "PAR");
+  });
+
+  it("fuzzy search works as expected", () => {
+    cy.get(".react-autosuggest__input").type("greg first");
+
+    cy.get(".react-autosuggest__suggestions-list").should(
+      "have.text",
+      "First and Gregory"
+    );
+  });
+
+  it("fuzzy search advanced", () => {
+    cy.get(".react-autosuggest__input").type("fo gree an");
+
+    cy.get(".react-autosuggest__suggestions-list")
+      .should("have.text", "Green and Fourth")
+      .click();
+    cy.get(".stop_name")
+      .should("have.text", "Green and Fourth")
+      .should("be.visible");
   });
 });

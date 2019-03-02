@@ -19,7 +19,16 @@ const getSuggestions = value => {
   return inputLength === 0
     ? []
     : stops
-        .filter(stop => stop.stop_name.toLowerCase().includes(inputValue))
+        .filter(stop => {
+          var words = inputValue.split(" ");
+          for (var idx in words) {
+            if (!stop.stop_name.toLowerCase().includes(words[idx])) {
+              return false;
+            }
+          }
+
+          return true;
+        })
         .slice(0, 5);
 };
 
