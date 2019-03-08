@@ -22,7 +22,6 @@ class BusResults extends Component {
       mainElement: ".tracking-page",
       triggerElement: ".info",
       shouldPullToRefresh: () => {
-        console.log(this);
         return this.props.stopInfo.stop_id !== undefined;
       },
       onRefresh: this.getData.bind(this)
@@ -41,7 +40,6 @@ class BusResults extends Component {
     }
   }
   getData = async () => {
-    console.log(this.props.stopInfo.stop_id);
     const { status, departures } = await getBuses(this.props.stopInfo.stop_id);
     if (status.code === 200) {
       this.setState({ validRequest: true });

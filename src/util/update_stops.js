@@ -28,6 +28,5 @@ module.exports.init = function() {
         }
       }
     );
-    console.log(allstops);
   });
 };
