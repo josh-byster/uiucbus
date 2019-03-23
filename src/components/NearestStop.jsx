@@ -1,10 +1,13 @@
+/* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import { geolocated } from 'react-geolocated';
+import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from 'reactstrap';
-import { getNearestStops } from '../util/api.js';
 import { Link } from 'react-router-dom';
+import { getNearestStops } from '../util/api';
 import '../styles/NearestStopModal.scss';
 import { appendRecentStop } from '../util/CookieHandler';
+
 class NearestStop extends Component {
   constructor(props) {
     super(props);
@@ -15,17 +18,20 @@ class NearestStop extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.coords && this.props.coords !== prevProps.coords) {
+    const { coords } = this.props;
+    if (coords && coords !== prevProps.coords) {
       this.getStops();
     }
   }
-  getStops = async () => {
-    const { latitude, longitude } = this.props.coords;
 
+  getStops = async () => {
+    const {
+      coords: { latitude, longitude }
+    } = this.props;
     const { status, stops } = await getNearestStops(latitude, longitude);
 
     if (status.code === 200) {
-      this.setState({ validRequest: true, stops: stops });
+      this.setState({ validRequest: true, stops });
     } else {
       // TODO: Maybe do something with invalid requests
       this.setState({ validRequest: false });
@@ -33,29 +39,23 @@ class NearestStop extends Component {
   };
 
   render() {
-    // if (!this.props.coords && this.props.isGeolocationEnabled) {
-    //   // Geolocation is enabled but hasn't loaded coordinates yet, so don't render anything.
-    //   return <div />;
-    // }
+    const { isOpen, toggle, positionError } = this.props;
+    const { stops } = this.state;
     return (
       <div>
-        <Modal
-          isOpen={this.props.isOpen}
-          toggle={this.props.toggle}
-          className="nearest-stop-modal"
-        >
+        <Modal isOpen={isOpen} toggle={toggle} className="nearest-stop-modal">
           <ModalHeader>Nearest Stops</ModalHeader>
           <ModalBody>
-            {this.props.positionError != null
+            {positionError != null
               ? 'Location services are not enabled.'
-              : this.state.stops.slice(0, 5).map((value, key) => {
+              : stops.slice(0, 5).map((value, key) => {
                   // only get 5 items max
                   return (
                     <div key={key} className="link">
                       <Link
                         to={`/track/${value.stop_id}`}
-                        onClick={e => {
-                          this.props.toggle();
+                        onClick={() => {
+                          toggle();
                           appendRecentStop({
                             name: value.stop_name,
                             id: value.stop_id
@@ -71,7 +71,7 @@ class NearestStop extends Component {
                 })}
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={this.props.toggle}>
+            <Button color="secondary" onClick={toggle}>
               Exit
             </Button>
           </ModalFooter>
@@ -80,6 +80,13 @@ class NearestStop extends Component {
     );
   }
 }
+
+NearestStop.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+  positionError: PropTypes.object,
+  coords: PropTypes.object
+};
 
 export default geolocated({
   positionOptions: {
