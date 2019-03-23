@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { removeColors } from "./HelperFunctions";
-import { Button } from "reactstrap";
-import PropTypes from "prop-types";
-import posed, { PoseGroup } from "react-pose";
+import React, { Component } from 'react';
+import { removeColors } from './HelperFunctions';
+import { Button } from 'reactstrap';
+import PropTypes from 'prop-types';
+import posed, { PoseGroup } from 'react-pose';
 
 class BusResultRow extends Component {
   TransitionWrapper = posed.tr({
@@ -10,7 +10,7 @@ class BusResultRow extends Component {
       opacity: 1,
       delay: (100 * (1 - Math.pow(0.5, this.props.elementOrder))) / (1 - 0.5),
       transition: {
-        opacity: { ease: "easeIn", duration: 300 }
+        opacity: { ease: 'easeIn', duration: 300 }
       }
     },
     exit: {
@@ -38,19 +38,19 @@ class BusResultRow extends Component {
     }
     var minute = date.getMinutes();
     if (minute < 10) {
-      minute = "0" + minute;
+      minute = '0' + minute;
     }
     var seconds = date.getSeconds();
     if (seconds < 10) {
-      seconds = "0" + seconds;
+      seconds = '0' + seconds;
     }
     return `${hour}:${minute}:${seconds}`;
   };
 
   getTRStyle = () => {
     return {
-      backgroundColor: "#" + this.props.info.route.route_color,
-      color: "#" + this.props.info.route.route_text_color
+      backgroundColor: '#' + this.props.info.route.route_color,
+      color: '#' + this.props.info.route.route_text_color
     };
   };
 
@@ -68,8 +68,8 @@ class BusResultRow extends Component {
             </td>
             <td>
               {this.props.info.expected_mins !== 0
-                ? this.props.info.expected_mins + "m"
-                : "Arriving Now"}
+                ? this.props.info.expected_mins + 'm'
+                : 'Arriving Now'}
             </td>
             <td className="no-wrap">
               {this.computeHMS(this.props.info.expected)}

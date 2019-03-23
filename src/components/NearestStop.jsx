@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { geolocated } from "react-geolocated";
-import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from "reactstrap";
-import { getNearestStops } from "../util/api.js";
-import { Link } from "react-router-dom";
-import "../styles/NearestStopModal.scss";
-import { appendRecentStop } from "../util/CookieHandler";
+import React, { Component } from 'react';
+import { geolocated } from 'react-geolocated';
+import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from 'reactstrap';
+import { getNearestStops } from '../util/api.js';
+import { Link } from 'react-router-dom';
+import '../styles/NearestStopModal.scss';
+import { appendRecentStop } from '../util/CookieHandler';
 class NearestStop extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +47,7 @@ class NearestStop extends Component {
           <ModalHeader>Nearest Stops</ModalHeader>
           <ModalBody>
             {this.props.positionError != null
-              ? "Location services are not enabled."
+              ? 'Location services are not enabled.'
               : this.state.stops.slice(0, 5).map((value, key) => {
                   // only get 5 items max
                   return (

@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import BusResults from "../components/BusResults";
-import "../styles/tracking.scss";
-import { getStop } from "../util/api";
-import StopSearch from "../components/StopSearch";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import React, { Component } from 'react';
+import BusResults from '../components/BusResults';
+import '../styles/tracking.scss';
+import { getStop } from '../util/api';
+import StopSearch from '../components/StopSearch';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 class TrackingPage extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class TrackingPage extends Component {
     if (status.code === 200 && stops.length > 0) {
       const stopObj = stops[0];
       this.setState({ stopInfo: stopObj, stopNameLoaded: true });
-      document.title = stopObj.stop_name + " - Bus Tracker";
+      document.title = stopObj.stop_name + ' - Bus Tracker';
     } else {
       this.setState({ stopInfo: {}, stopNameLoaded: false });
     }
@@ -43,11 +43,11 @@ class TrackingPage extends Component {
       (this.state.stopNameLoaded && this.state.stopResultsLoaded) ||
       this.state.stopNameLoaded === false // if the stop name invalid, display the "stop invalid"
         ? {}
-        : { display: "none" };
+        : { display: 'none' };
     const progressStyle = // mutual exclusive, when one is display none, the other is off
       (this.state.stopNameLoaded && this.state.stopResultsLoaded) ||
       this.state.stopNameLoaded === false
-        ? { display: "none" }
+        ? { display: 'none' }
         : {};
     return (
       <div className="tracking-page">

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { getBuses } from "../util/api";
-import BusResultRow from "./BusResultRow";
-import { Table } from "reactstrap";
-import PropTypes from "prop-types";
-import BusInfoModal from "../components/BusInfoModal";
-import PullToRefresh from "pulltorefreshjs";
+import React, { Component } from 'react';
+import { getBuses } from '../util/api';
+import BusResultRow from './BusResultRow';
+import { Table } from 'reactstrap';
+import PropTypes from 'prop-types';
+import BusInfoModal from '../components/BusInfoModal';
+import PullToRefresh from 'pulltorefreshjs';
 
 class BusResults extends Component {
   constructor(props) {
@@ -19,8 +19,8 @@ class BusResults extends Component {
 
   componentDidMount = () => {
     PullToRefresh.init({
-      mainElement: ".tracking-page",
-      triggerElement: ".info",
+      mainElement: '.tracking-page',
+      triggerElement: '.info',
       shouldPullToRefresh: () => {
         return this.props.stopInfo.stop_id !== undefined;
       },

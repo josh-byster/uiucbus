@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import Autosuggest from "react-autosuggest";
+import React, { Component } from 'react';
+import Autosuggest from 'react-autosuggest';
 
-import { Redirect } from "react-router-dom";
-import { Button } from "reactstrap";
-import "../styles/StopSearch.scss";
-import { appendRecentStop } from "../util/CookieHandler";
-import NearestStop from "./NearestStop.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { Redirect } from 'react-router-dom';
+import { Button } from 'reactstrap';
+import '../styles/StopSearch.scss';
+import { appendRecentStop } from '../util/CookieHandler';
+import NearestStop from './NearestStop';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
-const stops = require("../util/allstops.json");
+const stops = require('../util/allstops.json');
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = value => {
@@ -20,7 +20,7 @@ const getSuggestions = value => {
     ? []
     : stops
         .filter(stop => {
-          var words = inputValue.split(" ");
+          var words = inputValue.split(' ');
           for (var idx in words) {
             if (!stop.stop_name.toLowerCase().includes(words[idx])) {
               return false;
@@ -50,10 +50,10 @@ class StopSearch extends Component {
     // Suggestions also need to be provided to the Autosuggest,
     // and they are initially empty because the Autosuggest is closed.
     this.state = {
-      value: "",
+      value: '',
       suggestions: [],
-      selectionID: "",
-      selectionName: "",
+      selectionID: '',
+      selectionName: '',
       nearestStopModalOpen: false
     };
   }
@@ -75,7 +75,7 @@ class StopSearch extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.state.shouldRedirect) {
-      this.setState({ shouldRedirect: false, value: "" });
+      this.setState({ shouldRedirect: false, value: '' });
     }
   }
 
@@ -115,7 +115,7 @@ class StopSearch extends Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: "Type the name of a stop",
+      placeholder: 'Type the name of a stop',
       value,
       onChange: this.onChange
     };

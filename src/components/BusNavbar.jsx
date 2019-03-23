@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   appendRecentStop,
   getRecentStops,
   clearAllRecents
-} from "../util/CookieHandler";
+} from '../util/CookieHandler';
 import {
   Collapse,
   Navbar,
@@ -17,7 +17,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem
-} from "reactstrap";
+} from 'reactstrap';
 
 class BusNavbar extends Component {
   constructor(props) {
@@ -47,24 +47,24 @@ class BusNavbar extends Component {
   };
   defaultStops = [
     {
-      name: "Transit Plaza",
-      id: "PLAZA"
+      name: 'Transit Plaza',
+      id: 'PLAZA'
     },
     {
-      name: "Illini Union",
-      id: "IU"
+      name: 'Illini Union',
+      id: 'IU'
     },
     {
-      name: "PAR",
-      id: "PAR"
+      name: 'PAR',
+      id: 'PAR'
     },
     {
-      name: "Krannert Center",
-      id: "KRANNERT"
+      name: 'Krannert Center',
+      id: 'KRANNERT'
     },
     {
-      name: "First & Stadium",
-      id: "1STSTDM"
+      name: 'First & Stadium',
+      id: '1STSTDM'
     }
   ];
   render() {
@@ -110,7 +110,7 @@ class BusNavbar extends Component {
                             e.target.blur();
                             this.closeNavbar();
                           }}
-                          style={{ color: "#000000" }}
+                          style={{ color: '#000000' }}
                         >
                           {value.name}
                         </NavLink>
@@ -121,7 +121,7 @@ class BusNavbar extends Component {
                   <DropdownItem>
                     <NavLink
                       onClick={e => clearAllRecents()}
-                      style={{ color: "#000000" }}
+                      style={{ color: '#000000' }}
                     >
                       Clear All
                     </NavLink>

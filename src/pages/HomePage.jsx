@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import "../styles/home.scss";
-import StopSearch from "../components/StopSearch";
+import React, { Component } from 'react';
+import '../styles/home.scss';
+import StopSearch from '../components/StopSearch';
 class HomePage extends Component {
   componentDidMount() {
-    document.title = "Home - Bus Tracker";
+    document.title = 'Home - Bus Tracker';
   }
 
   render() {
@@ -20,13 +20,13 @@ class HomePage extends Component {
             <p>
               Copyright © 2019 UIUCBus.com
               <br />
-              Data provided by{" "}
+              Data provided by{' '}
               <a href="https://mtd.org/">
                 Champaign—Urbana Mass Transit District
               </a>
               .
               <br />
-              Suggestions, comments, or want to help contribute?{" "}
+              Suggestions, comments, or want to help contribute?{' '}
               <a href="https://github.com/josh-byster/bus-tracker">
                 Check it out on GitHub!
               </a>
