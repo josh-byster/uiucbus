@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { getBuses } from '../util/api';
-import BusResultRow from './BusResultRow';
 import { Table } from 'reactstrap';
 import PropTypes from 'prop-types';
-import BusInfoModal from '../components/BusInfoModal';
 import PullToRefresh from 'pulltorefreshjs';
+import { getBuses } from '../util/api';
+import BusResultRow from './BusResultRow';
+import BusInfoModal from './BusInfoModal';
 
 class BusResults extends Component {
   constructor(props) {
@@ -18,18 +18,21 @@ class BusResults extends Component {
   }
 
   componentDidMount = () => {
+    const { stopInfo } = this.props;
     PullToRefresh.init({
       mainElement: '.tracking-page',
       triggerElement: '.info',
       shouldPullToRefresh: () => {
-        return this.props.stopInfo.stop_id !== undefined;
+        return stopInfo.stop_id !== undefined;
       },
       onRefresh: this.getData.bind(this)
     });
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.stopInfo.stop_id !== this.props.stopInfo.stop_id) {
+    const { stopInfo } = this.props;
+    if (prevProps.stopInfo.stop_id !== stopInfo.stop_id) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         departures: [],
         validRequest: null,
@@ -39,15 +42,17 @@ class BusResults extends Component {
       this.getData();
     }
   }
+
   getData = async () => {
-    const { status, departures } = await getBuses(this.props.stopInfo.stop_id);
+    const { stopInfo, resultCallback } = this.props;
+    const { status, departures } = await getBuses(stopInfo.stop_id);
     if (status.code === 200) {
       this.setState({ validRequest: true });
-      this.setState({ departures: departures });
+      this.setState({ departures });
     } else {
       this.setState({ validRequest: false });
     }
-    this.props.resultCallback();
+    resultCallback();
   };
 
   toggleModal = info => {

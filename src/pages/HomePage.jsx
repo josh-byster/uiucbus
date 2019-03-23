@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/home.scss';
 import StopSearch from '../components/StopSearch';
+
 class HomePage extends Component {
   componentDidMount() {
     document.title = 'Home - Bus Tracker';

@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  appendRecentStop,
-  getRecentStops,
-  clearAllRecents
-} from '../util/CookieHandler';
-import {
   Collapse,
   Navbar,
   NavbarToggler,
@@ -18,33 +13,13 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
+import {
+  appendRecentStop,
+  getRecentStops,
+  clearAllRecents
+} from '../util/CookieHandler';
 
 class BusNavbar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isOpen: false,
-      recentStops: []
-    };
-  }
-
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
-
-  closeNavbar = () => {
-    if (this.state.isOpen) {
-      this.setState({
-        isOpen: false
-      });
-    }
-  };
-  updateRecents = () => {
-    this.setState({ recentStops: getRecentStops() });
-  };
   defaultStops = [
     {
       name: 'Transit Plaza',
@@ -67,7 +42,38 @@ class BusNavbar extends Component {
       id: '1STSTDM'
     }
   ];
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false,
+      recentStops: []
+    };
+  }
+
+  toggle = () => {
+    const { isOpen } = this.state;
+    this.setState({
+      isOpen: !isOpen
+    });
+  };
+
+  closeNavbar = () => {
+    const { isOpen } = this.state;
+    if (isOpen) {
+      this.setState({
+        isOpen: false
+      });
+    }
+  };
+
+  updateRecents = () => {
+    this.setState({ recentStops: getRecentStops() });
+  };
+
   render() {
+    const { isOpen, recentStops } = this.state;
     return (
       <div>
         <Navbar color="dark" dark expand="md">
@@ -75,7 +81,7 @@ class BusNavbar extends Component {
             UIUC Bus Tracker
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
+          <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
               {this.defaultStops.map((value, key) => {
                 return (
@@ -100,7 +106,7 @@ class BusNavbar extends Component {
                   Recents
                 </DropdownToggle>
                 <DropdownMenu right>
-                  {this.state.recentStops.map((value, key) => {
+                  {recentStops.map((value, key) => {
                     return (
                       <DropdownItem key={key}>
                         <NavLink
@@ -120,7 +126,7 @@ class BusNavbar extends Component {
                   <DropdownItem divider />
                   <DropdownItem>
                     <NavLink
-                      onClick={e => clearAllRecents()}
+                      onClick={() => clearAllRecents()}
                       style={{ color: '#000000' }}
                     >
                       Clear All

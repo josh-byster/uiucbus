@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { removeColors } from './HelperFunctions';
 import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import posed, { PoseGroup } from 'react-pose';
+import { removeColors } from './HelperFunctions';
 
 class BusResultRow extends Component {
   TransitionWrapper = posed.tr({
     enter: {
       opacity: 1,
-      delay: (100 * (1 - Math.pow(0.5, this.props.elementOrder))) / (1 - 0.5),
+      // eslint-disable-next-line react/destructuring-assignment
+      delay: (100 * (1 - 0.5 ** this.props.elementOrder)) / (1 - 0.5),
       transition: {
         opacity: { ease: 'easeIn', duration: 300 }
       }
@@ -22,63 +23,61 @@ class BusResultRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: false,
-      modalOpen: false
+      isVisible: false
     };
   }
 
   componentDidMount() {
     this.setState({ isVisible: true });
   }
-  computeHMS = expected_date => {
-    var date = new Date(expected_date.toString());
-    var hour = date.getHours() % 12;
+
+  computeHMS = expectedDate => {
+    const date = new Date(expectedDate.toString());
+    let hour = date.getHours() % 12;
     if (hour === 0) {
       hour = 12;
     }
-    var minute = date.getMinutes();
+    let minute = date.getMinutes();
     if (minute < 10) {
-      minute = '0' + minute;
+      minute = `0${minute}`;
     }
-    var seconds = date.getSeconds();
+    let seconds = date.getSeconds();
     if (seconds < 10) {
-      seconds = '0' + seconds;
+      seconds = `0${seconds}`;
     }
     return `${hour}:${minute}:${seconds}`;
   };
 
   getTRStyle = () => {
+    const { info } = this.props;
     return {
-      backgroundColor: '#' + this.props.info.route.route_color,
-      color: '#' + this.props.info.route.route_text_color
+      backgroundColor: `#${info.route.route_color}`,
+      color: `#${info.route.route_text_color}`
     };
   };
 
   render() {
+    const { isVisible } = this.state;
+    const { info, toggleModal } = this.props;
     return (
       <PoseGroup>
-        {this.state.isVisible && (
+        {isVisible && (
           <this.TransitionWrapper
-            key={this.props.info.headsign + this.props.info.expected_mins}
+            key={info.headsign + info.expected_mins}
             style={this.getTRStyle()}
             className="resultRow"
           >
             <td>
-              <b>{removeColors(this.props.info.headsign)}</b>
+              <b>{removeColors(info.headsign)}</b>
             </td>
             <td>
-              {this.props.info.expected_mins !== 0
-                ? this.props.info.expected_mins + 'm'
+              {info.expected_mins !== 0
+                ? `${info.expected_mins}m`
                 : 'Arriving Now'}
             </td>
-            <td className="no-wrap">
-              {this.computeHMS(this.props.info.expected)}
-            </td>
+            <td className="no-wrap">{this.computeHMS(info.expected)}</td>
             <td>
-              <Button
-                color="success"
-                onClick={e => this.props.toggleModal(this.props.info)}
-              >
+              <Button color="success" onClick={() => toggleModal(info)}>
                 Location
               </Button>
             </td>
