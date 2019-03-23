@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import posed, { PoseGroup } from 'react-pose';
-import { removeColors } from './HelperFunctions';
+import removeColors from './HelperFunctions';
 
 class BusResultRow extends Component {
   TransitionWrapper = posed.tr({

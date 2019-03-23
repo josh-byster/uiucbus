@@ -66,27 +66,26 @@ class BusResults extends Component {
   };
 
   render() {
-    if (this.state.validRequest === null) {
+    const { validRequest, departures, modalInfo, modalOpen } = this.state;
+    const { style, stopInfo } = this.props;
+    if (validRequest === null) {
       // On first time don't swap out elements unnecessarily. Just render div.
       return <div />;
     }
-    if (this.state.validRequest === false) {
+    if (validRequest === false) {
       return <h4>This page cannot be loaded.</h4>;
     }
 
-    if (
-      this.state.validRequest === true &&
-      this.state.departures.length === 0
-    ) {
+    if (validRequest === true && departures.length === 0) {
       return <h4 className="no-bus">No buses coming in the next hour.</h4>;
     }
     return (
-      <div style={this.props.style}>
+      <div style={style}>
         <BusInfoModal
-          busInfo={this.state.modalInfo}
-          isOpen={this.state.modalOpen}
+          busInfo={modalInfo}
+          isOpen={modalOpen}
           toggle={this.toggleModal}
-          stopInfo={this.props.stopInfo}
+          stopInfo={stopInfo}
         />
         <Table>
           <thead>
@@ -98,7 +97,7 @@ class BusResults extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.departures.map((element, key) => {
+            {departures.map((element, key) => {
               return (
                 <BusResultRow
                   info={element}
@@ -118,6 +117,6 @@ class BusResults extends Component {
 BusResults.propTypes = {
   stopInfo: PropTypes.object.isRequired,
   resultCallback: PropTypes.func.isRequired,
-  style: PropTypes.object
+  style: PropTypes.object.isRequired
 };
 export default BusResults;

@@ -4,7 +4,7 @@ function removeColors(str) {
       navigator.userAgent
     )
   ) {
-    var colors = [
+    const colors = [
       'Yellow',
       'Red',
       'Lavender',
@@ -40,10 +40,11 @@ function removeColors(str) {
       'RAVEN',
       'ILLINI'
     ];
-    for (var i = 0; i < colors.length; i++) {
-      str = str.split(colors[i]).join('');
+    let newStr = str;
+    for (let i = 0; i < colors.length; i++) {
+      newStr = newStr.split(colors[i]).join('');
     }
   }
   return str;
 }
-export { removeColors };
+export default removeColors;
