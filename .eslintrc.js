@@ -6,10 +6,12 @@ module.exports = {
     'react/no-array-index-key': 0,
     'react/no-did-update-set-state': 0,
     'no-plusplus': 0,
-    'react/require-default-props': 0
+    'react/require-default-props': 0,
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }]
   },
   parser: 'babel-eslint',
   env: {
+    jest: true,
     browser: true
   }
 };
