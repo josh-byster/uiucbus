@@ -6,6 +6,7 @@ script:
   - npm run build
   - npm run make-cname
   - npm run make-404
+  - npm run lint
   - npm run test
   - $(npm bin)/http-server ./build --silent -p 3000 &
   - $(npm bin)/cypress run --record --key 178361c2-3439-43e9-9758-863ec3627d31

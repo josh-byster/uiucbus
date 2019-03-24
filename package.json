@@ -28,6 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "lint": "eslint 'src/**.js'",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "prettier": "prettier --write src/**/*.js",
@@ -48,10 +49,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": [
-        "pretty-quick --staged",
-        "eslint 'src/**.js'"
-      ]
+      "pre-commit": "pretty-quick --staged && npm run lint"
     }
   },
   "devDependencies": {
