@@ -11,6 +11,7 @@
     "bootstrap": "^4.3.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.1.0",
+    "lint-staged": "^8.1.5",
     "node-sass": "^4.11.0",
     "prettier": "^1.16.4",
     "pretty-quick": "^1.10.0",
@@ -29,11 +30,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "lint": "eslint 'src/**.js'",
+    "lint-all": "eslint 'src/**/*.js'",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "prettier": "prettier --write src/**/*.js",
-    "prettier-check": "prettier -c src/**/*.js",
+    "prettier-all": "prettier --write src/**/*.js",
+    "prettier-check": "prettier -c src/**/*.{js,json,css,scss,md}",
     "eject": "react-scripts eject",
     "make-cname": "cd build && echo uiucbus.com > CNAME",
     "make-404": "cp 404.html build/404.html",
@@ -51,8 +52,15 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run lint"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": "eslint",
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "coveralls": "^3.0.3",
