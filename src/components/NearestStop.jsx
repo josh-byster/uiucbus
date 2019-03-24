@@ -39,8 +39,8 @@ class NearestStop extends Component {
   };
 
   render() {
-    const { isOpen, toggle, positionError } = this.props;
-    const { stops } = this.state;
+    const { isOpen, toggle, positionError, coords } = this.props;
+    const { stops, showMore } = this.state;
     return (
       <div>
         <Modal isOpen={isOpen} toggle={toggle} className="nearest-stop-modal">
@@ -48,7 +48,7 @@ class NearestStop extends Component {
           <ModalBody>
             {positionError != null
               ? 'Location services are not enabled.'
-              : stops.slice(0, 5).map((value, key) => {
+              : stops.slice(0, showMore ? 10 : 5).map((value, key) => {
                   // only get 5 items max
                   return (
                     <div key={key} className="link">
@@ -69,6 +69,15 @@ class NearestStop extends Component {
                     </div>
                   );
                 })}
+            {coords && (
+              <Button
+                className="showMoreBtn"
+                color="primary"
+                onClick={() => this.setState({ showMore: !showMore })}
+              >
+                Show {showMore ? 'Less' : 'More'}
+              </Button>
+            )}
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={toggle}>
