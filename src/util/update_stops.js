@@ -1,32 +1,33 @@
 // import axios from "axios";
-const axios = require("axios");
-const API_URL = "https://developer.mtd.org/api/v2.2/json/";
-const CUMTD_API_KEY = "fd4fb84bbbb34acfae890f17144ee131";
+const axios = require('axios');
 
-module.exports.init = function() {
-  axios.get(`${API_URL}/getstops?key=${CUMTD_API_KEY}`).then(res => {
-    var allstops = [
-      { stop_id: "PAR", stop_name: "PAR (Pennsylvania Ave. Residence Hall)" }
-    ];
-    for (var i in res.data.stops) {
-      if (res.data.stops[i].stop_id !== "PAR") {
-        //workaround since PAR doesn't show up on list
-        allstops.push({
-          stop_id: res.data.stops[i].stop_id,
-          stop_name: res.data.stops[i].stop_name
-        });
+const API_URL = 'https://developer.mtd.org/api/v2.2/json/';
+const CUMTD_API_KEY = 'fd4fb84bbbb34acfae890f17144ee131';
+const fs = require('fs');
+
+axios.get(`${API_URL}/getstops?key=${CUMTD_API_KEY}`).then(res => {
+  const allstops = [
+    { stop_id: 'PAR', stop_name: 'PAR (Pennsylvania Ave. Residence Hall)' }
+  ];
+  res.data.stops.forEach(element => {
+    if (element.stop_id !== 'PAR') {
+      // workaround since PAR doesn't show up on list
+      allstops.push({
+        stop_id: element.stop_id,
+        stop_name: element.stop_name
+      });
+    }
+  });
+  fs.writeFile(
+    './allstops.json',
+
+    JSON.stringify(allstops),
+
+    err => {
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.error('Something happened');
       }
     }
-    require("fs").writeFile(
-      "./allstops.json",
-
-      JSON.stringify(allstops),
-
-      function(err) {
-        if (err) {
-          console.error("Something happened");
-        }
-      }
-    );
-  });
-};
+  );
+});
