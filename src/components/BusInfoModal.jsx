@@ -95,10 +95,10 @@ class BusInfoModal extends Component {
               className="stop-info"
               style={state.imgLoaded ? {} : { visibility: 'hidden' }}
             >
-              <b>Next Stop:</b>
+              <b>Next Stop: </b>
               {state.nextStop}
               <br />
-              <b>Previous Stop:</b>
+              <b>Previous Stop: </b>
               {state.previousStop}
               <br />
               <br />
