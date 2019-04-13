@@ -60,7 +60,7 @@ class BusResultRow extends Component {
     const { isVisible } = this.state;
     const { info, toggleModal } = this.props;
     return (
-      <PoseGroup>
+      <PoseGroup flipMove={false}>
         {isVisible && (
           <this.TransitionWrapper
             key={info.headsign + info.expected_mins}
