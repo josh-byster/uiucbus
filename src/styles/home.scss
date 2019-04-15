@@ -1,17 +1,24 @@
 .home {
   background: #8a2387; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #8a2387,
-    #e94057,
-    #f27121
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #8a2387,
-    #e94057,
-    #f27121
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  @keyframes bgcolor {
+    0% {
+      background-color: #3498db;
+    }
+
+    50% {
+      background-color: #27ae60;
+    }
+
+    100% {
+      background-color: #e67e22;
+    }
+  }
+
+  -webkit-animation: bgcolor 10s infinite;
+  animation: bgcolor 10s infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
+
   min-height: calc(100vh - 56px); // subtract navbar height
   background-repeat: no-repeat;
   text-align: center;
