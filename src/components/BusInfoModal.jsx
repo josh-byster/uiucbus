@@ -27,37 +27,49 @@ class BusInfoModal extends Component {
 
   getNextPrevStops = async () => {
     const { busInfo } = this.props;
-    const { status, vehicles } = await getVehicleInfo(busInfo.vehicle_id);
+    let status;
+    let vehicles;
+    try {
+      ({ status, vehicles } = await getVehicleInfo(busInfo.vehicle_id));
+    } catch (e) {
+      this.setState({
+        nextStop: 'Unknown',
+        previousStop: 'Unknown',
+        last_updated: 'N/A',
+        mapURL: ''
+      });
+      return;
+    }
     let nextStopName;
     let prevStopName;
-    if (status.code === 200) {
-      const nextStopID = vehicles[0].next_stop_id;
-      const prevStopID = vehicles[0].previous_stop_id;
+    console.log('Hello');
+    console.log(status);
+    const nextStopID = vehicles[0].next_stop_id;
+    const prevStopID = vehicles[0].previous_stop_id;
 
-      if (nextStopID !== null) {
-        const nextStop = await getStop(nextStopID);
-        nextStopName = nextStop.stops[0].stop_points.filter(
-          obj => obj.stop_id === nextStopID
-        )[0].stop_name;
-      } else {
-        nextStopName = 'Unknown';
-      }
-
-      if (prevStopID !== null) {
-        const prevStop = await getStop(prevStopID);
-        prevStopName = prevStop.stops[0].stop_points.filter(
-          obj => obj.stop_id === prevStopID
-        )[0].stop_name;
-      } else {
-        prevStopName = 'Unknown';
-      }
-
-      this.setState({
-        nextStop: nextStopName,
-        previousStop: prevStopName,
-        last_updated: vehicles[0].last_updated
-      });
+    if (nextStopID !== null) {
+      const nextStop = await getStop(nextStopID);
+      nextStopName = nextStop.stops[0].stop_points.filter(
+        obj => obj.stop_id === nextStopID
+      )[0].stop_name;
+    } else {
+      nextStopName = 'Unknown';
     }
+
+    if (prevStopID !== null) {
+      const prevStop = await getStop(prevStopID);
+      prevStopName = prevStop.stops[0].stop_points.filter(
+        obj => obj.stop_id === prevStopID
+      )[0].stop_name;
+    } else {
+      prevStopName = 'Unknown';
+    }
+
+    this.setState({
+      nextStop: nextStopName,
+      previousStop: prevStopName,
+      last_updated: vehicles[0].last_updated
+    });
   };
 
   getMapURL = () => {
@@ -93,7 +105,11 @@ class BusInfoModal extends Component {
 
             <p
               className="stop-info"
-              style={state.imgLoaded ? {} : { visibility: 'hidden' }}
+              style={
+                state.imgLoaded || state.mapURL === ''
+                  ? {}
+                  : { visibility: 'hidden' }
+              }
             >
               <b>Next Stop: </b>
               {state.nextStop}
