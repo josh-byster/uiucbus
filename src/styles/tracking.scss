@@ -33,4 +33,32 @@
   .stop_name {
     margin-top: 20px;
   }
+
+  .refresh-text {
+    text-align: center;
+    h5 {
+      font-weight: 400;
+    }
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .fadeIn {
+    opacity: 1;
+  }
+  .fadeOut {
+    opacity: 0;
+  }
+
+  .refresh-btn {
+    color: #3498db;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    transition: color 0.5s;
+    &:hover {
+      color: #2980b9;
+      outline: none;
+    }
+  }
 }

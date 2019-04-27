@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
 import BusResults from '../components/BusResults';
 import '../styles/tracking.scss';
 import { getStop } from '../util/api';
 import StopSearch from '../components/StopSearch';
+
+const SECS_UNTIL_REFRESH_WARN = 5;
 
 class TrackingPage extends Component {
   constructor(props) {
@@ -12,10 +16,13 @@ class TrackingPage extends Component {
     this.state = {
       stopInfo: {},
       stopNameLoaded: null,
-      stopResultsLoaded: null
+      stopResultsLoaded: null,
+      secsSinceRefresh: 0,
+      shouldRefreshResults: false
     };
     const { match } = this.props;
     this.getStopName(match.params.id);
+    setInterval(this.incrementCounter, 1000);
   }
 
   componentDidUpdate(prevProps) {
@@ -27,7 +34,11 @@ class TrackingPage extends Component {
   }
 
   finishedLoadingResults = () => {
-    this.setState({ stopResultsLoaded: true });
+    this.setState({
+      stopResultsLoaded: true,
+      shouldRefreshResults: false,
+      secsSinceRefresh: 0
+    });
   };
 
   getStopName = async stopId => {
@@ -41,8 +52,24 @@ class TrackingPage extends Component {
     }
   };
 
+  incrementCounter = () => {
+    this.setState(prevState => ({
+      secsSinceRefresh: prevState.secsSinceRefresh + 1
+    }));
+  };
+
+  refresh = () => {
+    this.setState({ shouldRefreshResults: true });
+  };
+
   render() {
-    const { stopNameLoaded, stopResultsLoaded, stopInfo } = this.state;
+    const {
+      stopNameLoaded,
+      stopResultsLoaded,
+      stopInfo,
+      secsSinceRefresh,
+      shouldRefreshResults
+    } = this.state;
     const resultStyle =
       (stopNameLoaded && stopResultsLoaded) || stopNameLoaded === false // if the stop name invalid, display the "stop invalid"
         ? {}
@@ -51,6 +78,7 @@ class TrackingPage extends Component {
       (stopNameLoaded && stopResultsLoaded) || stopNameLoaded === false
         ? { display: 'none' }
         : {};
+    const displayReload = secsSinceRefresh > SECS_UNTIL_REFRESH_WARN;
     return (
       <div className="tracking-page">
         <LinearProgress
@@ -60,7 +88,27 @@ class TrackingPage extends Component {
         />
         <div className="info" style={resultStyle}>
           <h1 className="stop_name">{stopInfo.stop_name}</h1>
+
           <StopSearch />
+          <div
+            className={`refresh-text ${displayReload ? 'fadeIn' : 'fadeOut'}`}
+          >
+            <h5>
+              Last refresh happened {secsSinceRefresh}s ago. Reload?{' '}
+              <button
+                type="button"
+                className="refresh-btn"
+                onClick={e => {
+                  e.preventDefault();
+                  this.refresh();
+                }}
+                disabled={!displayReload}
+              >
+                {' '}
+                <FontAwesomeIcon icon={faSync} />
+              </button>
+            </h5>
+          </div>
         </div>
         <div style={resultStyle}>
           {stopNameLoaded === false ? (
@@ -70,6 +118,7 @@ class TrackingPage extends Component {
               style={resultStyle}
               resultCallback={this.finishedLoadingResults}
               stopInfo={stopInfo}
+              shouldRefresh={shouldRefreshResults}
             />
           )}
         </div>
@@ -77,6 +126,7 @@ class TrackingPage extends Component {
     );
   }
 }
+
 TrackingPage.propTypes = {
   match: PropTypes.object.isRequired
 };

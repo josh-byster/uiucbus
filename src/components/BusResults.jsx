@@ -30,8 +30,11 @@ class BusResults extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { stopInfo } = this.props;
-    if (prevProps.stopInfo.stop_id !== stopInfo.stop_id) {
+    const { stopInfo, shouldRefresh } = this.props;
+    if (
+      prevProps.stopInfo.stop_id !== stopInfo.stop_id ||
+      (!prevProps.shouldRefresh && shouldRefresh)
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         departures: [],
@@ -117,6 +120,7 @@ class BusResults extends Component {
 BusResults.propTypes = {
   stopInfo: PropTypes.object.isRequired,
   resultCallback: PropTypes.func.isRequired,
-  style: PropTypes.object.isRequired
+  style: PropTypes.object.isRequired,
+  shouldRefresh: PropTypes.bool.isRequired
 };
 export default BusResults;
