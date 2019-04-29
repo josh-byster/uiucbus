@@ -40,10 +40,9 @@ class BusInfoModal extends Component {
 
   getNextPrevStops = async () => {
     const { busInfo } = this.props;
-    let status;
     let vehicles;
     try {
-      ({ status, vehicles } = await getVehicleInfo(busInfo.vehicle_id));
+      ({ vehicles } = await getVehicleInfo(busInfo.vehicle_id));
     } catch (e) {
       this.setState({
         nextStop: 'Unknown',
