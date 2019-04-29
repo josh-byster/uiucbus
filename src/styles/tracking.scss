@@ -38,9 +38,12 @@
     text-align: center;
     h5 {
       font-weight: 400;
+      @media screen and(max-width:500px) {
+        font-size: 3.5vw;
+      }
     }
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.75s;
   }
 
   .fadeIn {
@@ -48,6 +51,7 @@
   }
   .fadeOut {
     opacity: 0;
+    transition: none;
   }
 
   .refresh-btn {
@@ -55,6 +59,7 @@
     outline: none;
     background-color: transparent;
     border: none;
+    padding: 0px;
     transition: color 0.5s;
     &:hover {
       color: #2980b9;

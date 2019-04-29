@@ -100,7 +100,8 @@ class TrackingPage extends Component {
             className={`refresh-text ${displayReload ? 'fadeIn' : 'fadeOut'}`}
           >
             <h5>
-              Last refresh happened {timeSinceRefreshText} ago. Reload?{' '}
+              Last refresh happened {timeSinceRefreshText} ago. Reload?
+              <br />
               <button
                 type="button"
                 className="refresh-btn"
