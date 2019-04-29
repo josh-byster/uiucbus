@@ -12,13 +12,11 @@ script:
   - npm run build
   - npm run make-cname
   - npm run make-404
-  - npm run lint-all
   - npm run prettier-check
   - npm run test
   - $(npm bin)/http-server ./build --silent -p 3000 &
-  - $(npm bin)/cypress run --record --key 178361c2-3439-43e9-9758-863ec3627d31
+  - $(npm bin)/cypress run 
 env: TZ=America/Chicago
-  CODECOV_TOKEN="3d9fb408-6d58-49b5-a475-5e1df67c39e9"
 deploy:
   provider: pages
   verbose: true
