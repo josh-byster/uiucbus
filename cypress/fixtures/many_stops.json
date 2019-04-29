@@ -1,518 +1,821 @@
 {
-  "time": "2019-01-03T17:23:20-06:00",
+  "time": "2019-04-28T21:46:28-05:00",
   "new_changeset": true,
   "status": { "code": 200, "msg": "ok" },
-  "rqst": { "method": "GetDeparturesByStop", "params": { "stop_id": "PLAZA" } },
+  "rqst": {
+    "method": "GetDeparturesByStop",
+    "params": { "pt": 60, "stop_id": "IU" }
+  },
   "departures": [
     {
-      "stop_id": "PLAZA:4",
-      "headsign": "22N Illini Limited",
-      "route": {
-        "route_color": "5a1d5a",
-        "route_id": "ILLINI LIMITED",
-        "route_long_name": "Illini Limited",
-        "route_short_name": "22",
-        "route_text_color": "ffffff"
-      },
-      "trip": {
-        "trip_id": "[@7.0.41202961@][1][1249913080046]/1__I1_NONUIMF",
-        "trip_headsign": "Lincoln & Killarney",
-        "route_id": "ILLINI LIMITED",
-        "block_id": "I1 NONUIMF",
-        "direction": "North",
-        "service_id": "I1 NONUIMF",
-        "shape_id": "22N"
-      },
-      "vehicle_id": "0109",
-      "origin": { "stop_id": "ARYWRT:3" },
-      "destination": { "stop_id": "LNCLNKLRNY:1" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": true,
-      "scheduled": "2019-01-03T17:20:00-06:00",
-      "expected": "2019-01-03T17:24:56-06:00",
-      "expected_mins": 0,
-      "location": { "lat": 40.108173, "lon": -88.228917 }
-    },
-    {
-      "stop_id": "PLAZA:1",
-      "headsign": "4W Blue",
-      "route": {
-        "route_color": "355caa",
-        "route_id": "BLUE",
-        "route_long_name": "Blue",
-        "route_short_name": "4",
-        "route_text_color": "ffffff"
-      },
-      "trip": {
-        "trip_id": "[@14.0.56288268@][4][1302636749043]/15__B4_NOSCHMF",
-        "trip_headsign": "Round Barn Road",
-        "route_id": "BLUE",
-        "block_id": "B4 NOSCHMF",
-        "direction": "West",
-        "service_id": "B4 NOSCHMF",
-        "shape_id": "4W"
-      },
-      "vehicle_id": "1167",
-      "origin": { "stop_id": "IT:1" },
-      "destination": { "stop_id": "RNDBRNRD:2" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": false,
-      "scheduled": "2019-01-03T17:30:00-06:00",
-      "expected": "2019-01-03T17:30:00-06:00",
-      "expected_mins": 7,
-      "location": { "lat": 40.11628, "lon": -88.241333 }
-    },
-    {
-      "stop_id": "PLAZA:4",
-      "headsign": "1N YELLOWhopper",
+      "stop_id": "IU:1",
+      "headsign": "100S Yellow E14",
       "route": {
         "route_color": "fcee1f",
-        "route_id": "YELLOWHOPPER",
-        "route_long_name": "YELLOWhopper",
-        "route_short_name": "1",
+        "route_id": "YELLOW LATE NIGHT SUNDAY",
+        "route_long_name": "Yellow Late Night Sunday",
+        "route_short_name": "100",
         "route_text_color": "000000"
       },
       "trip": {
-        "trip_id": "[@15.0.63189099@][1][1334168041183]/36__Y7_NONUIMF",
-        "trip_headsign": "Illinois Terminal",
-        "route_id": "YELLOWHOPPER",
-        "block_id": "Y7 NONUIMF",
-        "direction": "North",
-        "service_id": "Y7 NONUIMF",
-        "shape_id": "YELLOWHOPPER 23"
-      },
-      "vehicle_id": "1171",
-      "origin": { "stop_id": "E14:2" },
-      "destination": { "stop_id": "IT:5" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": true,
-      "scheduled": "2019-01-03T17:31:00-06:00",
-      "expected": "2019-01-03T17:31:00-06:00",
-      "expected_mins": 8,
-      "location": { "lat": 40.095697, "lon": -88.240667 }
-    },
-    {
-      "stop_id": "PLAZA:3",
-      "headsign": "1S Yellow",
-      "route": {
-        "route_color": "fcee1f",
-        "route_id": "YELLOW",
-        "route_long_name": "Yellow",
-        "route_short_name": "1",
-        "route_text_color": "000000"
-      },
-      "trip": {
-        "trip_id": "[@15.0.63189004@][2][1340828987634]/12__Y8_MF",
-        "trip_headsign": "First & Curtis - Savoy Walmart",
-        "route_id": "YELLOW",
-        "block_id": "Y8 MF",
-        "direction": "South",
-        "service_id": "Y8 MF",
-        "shape_id": "YELLOW 14"
-      },
-      "vehicle_id": "1182",
-      "origin": { "stop_id": "WALMART:2" },
-      "destination": { "stop_id": "SWALMART:1" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": true,
-      "scheduled": "2019-01-03T17:28:00-06:00",
-      "expected": "2019-01-03T17:32:27-06:00",
-      "expected_mins": 9,
-      "location": { "lat": 40.121157, "lon": -88.243667 }
-    },
-    {
-      "stop_id": "PLAZA:3",
-      "headsign": "1S YELLOWhopper E-14",
-      "route": {
-        "route_color": "fcee1f",
-        "route_id": "YELLOWHOPPER",
-        "route_long_name": "YELLOWhopper",
-        "route_short_name": "1",
-        "route_text_color": "000000"
-      },
-      "trip": {
-        "trip_id": "[@15.0.63189099@][2][1334168821073]/69__Y4_MF",
+        "trip_id": "[@124.0.123496035@][1552342003121]/23__Y2UISU[2019-3-31]",
         "trip_headsign": "Lot E-14",
-        "route_id": "YELLOWHOPPER",
-        "block_id": "Y4 MF",
+        "route_id": "YELLOW LATE NIGHT SUNDAY",
+        "block_id": "Y2UISU[2019-3-31]",
         "direction": "South",
-        "service_id": "Y4 MF",
-        "shape_id": "YELLOWHOPPER 26"
+        "service_id": "Y2UISU[2019-3-31]",
+        "shape_id": "[@124.0.123496035@]100SLTNT->"
       },
-      "vehicle_id": "1722",
-      "origin": { "stop_id": "IT:5" },
+      "vehicle_id": "1355",
+      "origin": { "stop_id": "WALMART:2" },
       "destination": { "stop_id": "E14:2" },
       "is_monitored": true,
       "is_scheduled": true,
       "is_istop": true,
-      "scheduled": "2019-01-03T17:38:00-06:00",
-      "expected": "2019-01-03T17:38:08-06:00",
-      "expected_mins": 15,
-      "location": { "lat": 40.110137, "lon": -88.228917 }
+      "scheduled": "2019-04-28T21:48:00-05:00",
+      "expected": "2019-04-28T21:47:03-05:00",
+      "expected_mins": 1,
+      "location": { "lat": 40.113683, "lon": -88.228917 }
     },
     {
-      "stop_id": "PLAZA:2",
-      "headsign": "21 Raven Vet-Med",
+      "stop_id": "IU:2",
+      "headsign": "120W Teal",
       "route": {
-        "route_color": "000000",
-        "route_id": "RAVEN",
-        "route_long_name": "Raven",
-        "route_short_name": "21",
+        "route_color": "006991",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "route_long_name": "Teal Late Night Sunday",
+        "route_short_name": "120",
         "route_text_color": "ffffff"
       },
       "trip": {
-        "trip_id": "[@2.0.81457398@][11][1425933027212]/20__RV1_MF",
-        "trip_headsign": "Illini Union",
-        "route_id": "RAVEN",
-        "block_id": "RV1 MF",
-        "direction": "N/A",
-        "service_id": "RV1 MF",
-        "shape_id": "[@2.0.81457398@]15"
-      },
-      "vehicle_id": "1610",
-      "origin": { "stop_id": "VETMED:1" },
-      "destination": { "stop_id": "VETMED:1" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": true,
-      "scheduled": "2019-01-03T17:40:00-06:00",
-      "expected": "2019-01-03T17:40:00-06:00",
-      "expected_mins": 17,
-      "location": { "lat": 40.100637, "lon": -88.222417 }
-    },
-    {
-      "stop_id": "PLAZA:2",
-      "headsign": "8E Bronze",
-      "route": {
-        "route_color": "9e8966",
-        "route_id": "BRONZE",
-        "route_long_name": "Bronze",
-        "route_short_name": "8",
-        "route_text_color": "000000"
-      },
-      "trip": {
-        "trip_id": "[@14.0.51709163@][3][1277738203343]/0__BZ2_NOSCHMF",
-        "trip_headsign": "Lincoln Square",
-        "route_id": "BRONZE",
-        "block_id": "BZ2 NOSCHMF",
-        "direction": "East",
-        "service_id": "BZ2 NOSCHMF",
-        "shape_id": "8E"
-      },
-      "vehicle_id": "1731",
-      "origin": { "stop_id": "PLAZA:2" },
-      "destination": { "stop_id": "LSE:1" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": false,
-      "scheduled": "2019-01-03T17:40:00-06:00",
-      "expected": "2019-01-03T17:40:00-06:00",
-      "expected_mins": 17,
-      "location": { "lat": 40.090187, "lon": -88.204833 }
-    },
-    {
-      "stop_id": "PLAZA:2",
-      "headsign": "4E Blue",
-      "route": {
-        "route_color": "355caa",
-        "route_id": "BLUE",
-        "route_long_name": "Blue",
-        "route_short_name": "4",
-        "route_text_color": "ffffff"
-      },
-      "trip": {
-        "trip_id": "[@2.0.80545824@][31][1426087345141]/0__B2_MF",
+        "trip_id": "[@124.0.92276155@][1484344792164]/65__T1UISU",
         "trip_headsign": "Illinois Terminal",
-        "route_id": "BLUE",
-        "block_id": "B2 MF",
-        "direction": "East",
-        "service_id": "B2 MF",
-        "shape_id": "BLUE 51"
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "block_id": "T1UISU",
+        "direction": "West",
+        "service_id": "T1UISU",
+        "shape_id": "[@124.0.92276155@]120W TEAL LATE 12"
       },
-      "vehicle_id": "1726",
-      "origin": { "stop_id": "RNDBRNRD:2" },
-      "destination": { "stop_id": "IT:1" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": false,
-      "scheduled": "2019-01-03T17:35:00-06:00",
-      "expected": "2019-01-03T17:41:20-06:00",
-      "expected_mins": 18,
-      "location": { "lat": 40.09823, "lon": -88.276583 }
-    },
-    {
-      "stop_id": "PLAZA:2",
-      "headsign": "5E Green",
-      "route": {
-        "route_color": "008063",
-        "route_id": "GREEN",
-        "route_long_name": "Green",
-        "route_short_name": "5",
-        "route_text_color": "ffffff"
-      },
-      "trip": {
-        "trip_id": "[@14.0.56288551@][3][1303842779869]/2__GN3_NOSCH",
-        "trip_headsign": "Main & Brady",
-        "route_id": "GREEN",
-        "block_id": "GN3 NOSCH",
-        "direction": "East",
-        "service_id": "GN3 NOSCH",
-        "shape_id": "[@15.0.63192321@]21"
-      },
-      "vehicle_id": "1166",
-      "origin": { "stop_id": "PA6TH:1" },
-      "destination": { "stop_id": "MNBRDY:2" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": false,
-      "scheduled": "2019-01-03T17:43:35-06:00",
-      "expected": "2019-01-03T17:43:35-06:00",
-      "expected_mins": 20,
-      "location": { "lat": 40.1007, "lon": -88.22375 }
-    },
-    {
-      "stop_id": "PLAZA:1",
-      "headsign": "9A Brown",
-      "route": {
-        "route_color": "825622",
-        "route_id": "BROWN",
-        "route_long_name": "Brown",
-        "route_short_name": "9",
-        "route_text_color": "ffffff"
-      },
-      "trip": {
-        "trip_id": "[@2.0.80548152@][11][1425506680849]/13__BA2_MF",
-        "trip_headsign": "Parkland College",
-        "route_id": "BROWN",
-        "block_id": "BA2 MF",
-        "direction": "A",
-        "service_id": "BA2 MF",
-        "shape_id": "[@15.0.61662606@]364"
-      },
-      "vehicle_id": "1727",
-      "origin": { "stop_id": "PKLN:1" },
-      "destination": { "stop_id": "PKLN:1" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": false,
-      "scheduled": "2019-01-03T17:44:00-06:00",
-      "expected": "2019-01-03T17:45:30-06:00",
-      "expected_mins": 22,
-      "location": { "lat": 40.128693, "lon": -88.28675 }
-    },
-    {
-      "stop_id": "PLAZA:4",
-      "headsign": "1N Yellow",
-      "route": {
-        "route_color": "fcee1f",
-        "route_id": "YELLOW",
-        "route_long_name": "Yellow",
-        "route_short_name": "1",
-        "route_text_color": "000000"
-      },
-      "trip": {
-        "trip_id": "[@15.0.63189004@][1][1340827148626]/6__Y6_NOSCHMF",
-        "trip_headsign": "Champaign Walmart",
-        "route_id": "YELLOW",
-        "block_id": "Y6 NOSCHMF",
-        "direction": "North",
-        "service_id": "Y6 NOSCHMF",
-        "shape_id": "[@15.0.63189004@]23"
-      },
-      "vehicle_id": "1725",
-      "origin": { "stop_id": "SWALMART:1" },
-      "destination": { "stop_id": "WALMART:2" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": true,
-      "scheduled": "2019-01-03T17:41:00-06:00",
-      "expected": "2019-01-03T17:45:44-06:00",
-      "expected_mins": 22,
-      "location": { "lat": 40.069477, "lon": -88.25025 }
-    },
-    {
-      "stop_id": "PLAZA:3",
-      "headsign": "1S YELLOWhopper Gerty",
-      "route": {
-        "route_color": "fcee1f",
-        "route_id": "YELLOWHOPPER",
-        "route_long_name": "YELLOWhopper",
-        "route_short_name": "1",
-        "route_text_color": "000000"
-      },
-      "trip": {
-        "trip_id": "[@15.0.63189099@][2][1334168564897]/54__Y7_NONUIMF",
-        "trip_headsign": "Gerty & Griffith",
-        "route_id": "YELLOWHOPPER",
-        "block_id": "Y7 NONUIMF",
-        "direction": "South",
-        "service_id": "Y7 NONUIMF",
-        "shape_id": "YELLOWHOPPER 25"
-      },
-      "vehicle_id": "1171",
-      "origin": { "stop_id": "IT:5" },
-      "destination": { "stop_id": "ISWS:2" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": true,
-      "scheduled": "2019-01-03T17:48:00-06:00",
-      "expected": "2019-01-03T17:48:00-06:00",
-      "expected_mins": 25,
-      "location": { "lat": 40.095697, "lon": -88.240667 }
-    },
-    {
-      "stop_id": "PLAZA:3",
-      "headsign": "13S Silver",
-      "route": {
-        "route_color": "cccccc",
-        "route_id": "SILVER",
-        "route_long_name": "Silver",
-        "route_short_name": "13",
-        "route_text_color": "000000"
-      },
-      "trip": {
-        "trip_id": "[@12.0.42199629@][4][1246896960625]/127__SV4_NONUIMF_NOSCH",
-        "trip_headsign": "PAR",
-        "route_id": "SILVER",
-        "block_id": "SV4 NONUIMF NOSCH",
-        "direction": "South",
-        "service_id": "SV4 NONUIMF NOSCH",
-        "shape_id": "SILVER 120"
-      },
-      "vehicle_id": "1730",
-      "origin": { "stop_id": "LSE:8" },
-      "destination": { "stop_id": "PAR:2" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": true,
-      "scheduled": "2019-01-03T17:49:00-06:00",
-      "expected": "2019-01-03T17:49:00-06:00",
-      "expected_mins": 26,
-      "location": { "lat": 40.107983, "lon": -88.228833 }
-    },
-    {
-      "stop_id": "PLAZA:3",
-      "headsign": "22S Illini Limited",
-      "route": {
-        "route_color": "5a1d5a",
-        "route_id": "ILLINI LIMITED",
-        "route_long_name": "Illini Limited",
-        "route_short_name": "22",
-        "route_text_color": "ffffff"
-      },
-      "trip": {
-        "trip_id": "[@7.0.41202961@][2][1238522777281]/48__I1_NONUIMF",
-        "trip_headsign": "Transit Plaza",
-        "route_id": "ILLINI LIMITED",
-        "block_id": "I1 NONUIMF",
-        "direction": "South",
-        "service_id": "I1 NONUIMF",
-        "shape_id": "ILLINI 845"
-      },
-      "vehicle_id": "0109",
-      "origin": { "stop_id": "LNCLNKLRNY:1" },
-      "destination": { "stop_id": "ARYWRT:3" },
-      "is_monitored": true,
-      "is_scheduled": true,
-      "is_istop": true,
-      "scheduled": "2019-01-03T17:48:00-06:00",
-      "expected": "2019-01-03T17:49:34-06:00",
-      "expected_mins": 26,
-      "location": { "lat": 40.108173, "lon": -88.228917 }
-    },
-    {
-      "stop_id": "PLAZA:4",
-      "headsign": "1N YELLOWhopper",
-      "route": {
-        "route_color": "fcee1f",
-        "route_id": "YELLOWHOPPER",
-        "route_long_name": "YELLOWhopper",
-        "route_short_name": "1",
-        "route_text_color": "000000"
-      },
-      "trip": {
-        "trip_id": "[@15.0.63189099@][1][1334167918228]/20__Y2_MF",
-        "trip_headsign": "Illinois Terminal",
-        "route_id": "YELLOWHOPPER",
-        "block_id": "Y2 MF",
-        "direction": "North",
-        "service_id": "Y2 MF",
-        "shape_id": "[@15.0.63189099@]29"
-      },
-      "vehicle_id": "1186",
-      "origin": { "stop_id": "ISWS:2" },
+      "vehicle_id": "1728",
+      "origin": { "stop_id": "ODSS:1" },
       "destination": { "stop_id": "IT:5" },
       "is_monitored": true,
       "is_scheduled": true,
       "is_istop": true,
-      "scheduled": "2019-01-03T17:51:00-06:00",
-      "expected": "2019-01-03T17:51:00-06:00",
-      "expected_mins": 28,
-      "location": { "lat": 40.104183, "lon": -88.232083 }
+      "scheduled": "2019-04-28T21:48:00-05:00",
+      "expected": "2019-04-28T21:48:21-05:00",
+      "expected_mins": 2,
+      "location": { "lat": 40.10469, "lon": -88.223833 }
     },
     {
-      "stop_id": "PLAZA:4",
-      "headsign": "22N Illini Limited",
+      "stop_id": "IU:2",
+      "headsign": "220S Illini",
       "route": {
         "route_color": "5a1d5a",
-        "route_id": "ILLINI LIMITED",
-        "route_long_name": "Illini Limited",
-        "route_short_name": "22",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
         "route_text_color": "ffffff"
       },
       "trip": {
-        "trip_id": "[@7.0.41202961@][1][1249913080046]/2__I1_NONUIMF",
-        "trip_headsign": "Lincoln & Anthony",
-        "route_id": "ILLINI LIMITED",
-        "block_id": "I1 NONUIMF",
-        "direction": "North",
-        "service_id": "I1 NONUIMF",
-        "shape_id": "[@15.0.63192185@]43"
+        "trip_id": "[@124.0.123550624@][1552403661110]/90__I1UISU[2019-3-31]",
+        "trip_headsign": "PAR",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I1UISU[2019-3-31]",
+        "direction": "South",
+        "service_id": "I1UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220S ILLINI 20"
       },
-      "vehicle_id": "0109",
-      "origin": { "stop_id": "ARYWRT:3" },
-      "destination": { "stop_id": "LNCLNKLRNY:2" },
+      "vehicle_id": "1180",
+      "origin": { "stop_id": "LNCLNKLRNY:1" },
+      "destination": { "stop_id": "PAR:2" },
       "is_monitored": true,
       "is_scheduled": true,
       "is_istop": true,
-      "scheduled": "2019-01-03T17:50:00-06:00",
-      "expected": "2019-01-03T17:51:34-06:00",
-      "expected_mins": 28,
-      "location": { "lat": 40.108173, "lon": -88.228917 }
+      "scheduled": "2019-04-28T21:49:00-05:00",
+      "expected": "2019-04-28T21:53:15-05:00",
+      "expected_mins": 7,
+      "location": { "lat": 40.130403, "lon": -88.219583 }
     },
     {
-      "stop_id": "PLAZA:4",
-      "headsign": "13N Silver",
+      "stop_id": "IU:1",
+      "headsign": "130N Silver",
       "route": {
         "route_color": "cccccc",
-        "route_id": "SILVER",
-        "route_long_name": "Silver",
-        "route_short_name": "13",
+        "route_id": "SILVER EVENING SUNDAY",
+        "route_long_name": "Silver Evening Sunday",
+        "route_short_name": "130",
         "route_text_color": "000000"
       },
       "trip": {
-        "trip_id": "[@12.0.42199629@][3][1246896590515]/61__SV2_NONUIMF",
+        "trip_id": "[@124.0.123908707@][1553106305476]/41__SV1UISU[2019-3-31]",
         "trip_headsign": "Lincoln Square",
-        "route_id": "SILVER",
-        "block_id": "SV2 NONUIMF",
+        "route_id": "SILVER EVENING SUNDAY",
+        "block_id": "SV1UISU[2019-3-31]",
         "direction": "North",
-        "service_id": "SV2 NONUIMF",
-        "shape_id": "SILVER 2"
+        "service_id": "SV1UISU[2019-3-31]",
+        "shape_id": "[@124.0.123908707@]130N SILVER EVENING 1"
       },
-      "vehicle_id": "1168",
+      "vehicle_id": "1726",
+      "origin": { "stop_id": "VETMED:1" },
+      "destination": { "stop_id": "LSE:8" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T21:53:00-05:00",
+      "expected": "2019-04-28T21:53:43-05:00",
+      "expected_mins": 7,
+      "location": { "lat": 40.095063, "lon": -88.219 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "50E Green Lsq",
+      "route": {
+        "route_color": "008063",
+        "route_id": "GREEN LATE NIGHT SUNDAY",
+        "route_long_name": "Green Late Night Sunday",
+        "route_short_name": "50",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92345918@][1484579847669]/56__GR3_UISU",
+        "trip_headsign": "Lincoln Square",
+        "route_id": "GREEN LATE NIGHT SUNDAY",
+        "block_id": "GR3 UISU",
+        "direction": "East",
+        "service_id": "GR3 UISU",
+        "shape_id": "[@124.0.92345918@]50E-LATE"
+      },
+      "vehicle_id": "1163",
+      "origin": { "stop_id": "IT:1" },
+      "destination": { "stop_id": "LSE:8" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": false,
+      "scheduled": "2019-04-28T21:54:00-05:00",
+      "expected": "2019-04-28T21:54:00-05:00",
+      "expected_mins": 8,
+      "location": { "lat": 40.115647, "lon": -88.24075 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "220N Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/47__I2UISU[2019-3-31]",
+        "trip_headsign": "Lincoln & Killarney",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I2UISU[2019-3-31]",
+        "direction": "North",
+        "service_id": "I2UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220N ILLINI 10"
+      },
+      "vehicle_id": "1352",
+      "origin": { "stop_id": "PAR:2" },
+      "destination": { "stop_id": "LNCLNKLRNY:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T21:56:00-05:00",
+      "expected": "2019-04-28T21:55:59-05:00",
+      "expected_mins": 10,
+      "location": { "lat": 40.104183, "lon": -88.230667 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "220S Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/87__I4UISU[2019-3-31]",
+        "trip_headsign": "PAR",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I4UISU[2019-3-31]",
+        "direction": "South",
+        "service_id": "I4UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220S ILLINI 20"
+      },
+      "vehicle_id": "1612",
+      "origin": { "stop_id": "LNCLNKLRNY:1" },
+      "destination": { "stop_id": "PAR:2" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T21:59:00-05:00",
+      "expected": "2019-04-28T21:59:00-05:00",
+      "expected_mins": 13,
+      "location": { "lat": 40.132303, "lon": -88.217833 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "120E Teal Orchard Downs",
+      "route": {
+        "route_color": "006991",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "route_long_name": "Teal Late Night Sunday",
+        "route_short_name": "120",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92276155@][1484344792164]/29__T1UISU",
+        "trip_headsign": "Orchard Downs",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "block_id": "T1UISU",
+        "direction": "East",
+        "service_id": "T1UISU",
+        "shape_id": "[@124.0.92276155@]120E TEAL LATE 13"
+      },
+      "vehicle_id": "1728",
+      "origin": { "stop_id": "IT:5" },
+      "destination": { "stop_id": "ODSS:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:02:00-05:00",
+      "expected": "2019-04-28T22:03:33-05:00",
+      "expected_mins": 17,
+      "location": { "lat": 40.10469, "lon": -88.223833 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "220N Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/5__I3UISU[2019-3-31]",
+        "trip_headsign": "Lincoln & Killarney",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I3UISU[2019-3-31]",
+        "direction": "North",
+        "service_id": "I3UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220N ILLINI 10"
+      },
+      "vehicle_id": "1837",
+      "origin": { "stop_id": "PAR:2" },
+      "destination": { "stop_id": "LNCLNKLRNY:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:06:00-05:00",
+      "expected": "2019-04-28T22:06:00-05:00",
+      "expected_mins": 20,
+      "location": { "lat": 40.099433, "lon": -88.220917 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "50W Green IT",
+      "route": {
+        "route_color": "008063",
+        "route_id": "GREEN LATE NIGHT SUNDAY",
+        "route_long_name": "Green Late Night Sunday",
+        "route_short_name": "50",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92345918@][1484579847669]/20__GR3_UISU",
+        "trip_headsign": "Illinois Terminal",
+        "route_id": "GREEN LATE NIGHT SUNDAY",
+        "block_id": "GR3 UISU",
+        "direction": "West",
+        "service_id": "GR3 UISU",
+        "shape_id": "[@124.0.92345918@]50W-LATE"
+      },
+      "vehicle_id": "1163",
+      "origin": { "stop_id": "LSE:8" },
+      "destination": { "stop_id": "IT:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": false,
+      "scheduled": "2019-04-28T22:06:00-05:00",
+      "expected": "2019-04-28T22:06:00-05:00",
+      "expected_mins": 20,
+      "location": { "lat": 40.115647, "lon": -88.24075 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "120W Teal",
+      "route": {
+        "route_color": "006991",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "route_long_name": "Teal Late Night Sunday",
+        "route_short_name": "120",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92276155@][1484344792164]/55__T2UISU",
+        "trip_headsign": "Illinois Terminal",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "block_id": "T2UISU",
+        "direction": "West",
+        "service_id": "T2UISU",
+        "shape_id": "[@124.0.92276155@]120W TEAL LATE 12"
+      },
+      "vehicle_id": "1836",
+      "origin": { "stop_id": "ODSS:1" },
+      "destination": { "stop_id": "IT:5" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:08:00-05:00",
+      "expected": "2019-04-28T22:08:58-05:00",
+      "expected_mins": 22,
+      "location": { "lat": 40.107793, "lon": -88.224 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "220S Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/72__I6UISU[2019-3-31]",
+        "trip_headsign": "PAR",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I6UISU[2019-3-31]",
+        "direction": "South",
+        "service_id": "I6UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220S ILLINI 20"
+      },
+      "vehicle_id": "1346",
+      "origin": { "stop_id": "LNCLNKLRNY:1" },
+      "destination": { "stop_id": "PAR:2" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:09:00-05:00",
+      "expected": "2019-04-28T22:09:00-05:00",
+      "expected_mins": 23,
+      "location": { "lat": 40.11039, "lon": -88.22675 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "130N Silver",
+      "route": {
+        "route_color": "cccccc",
+        "route_id": "SILVER EVENING SUNDAY",
+        "route_long_name": "Silver Evening Sunday",
+        "route_short_name": "130",
+        "route_text_color": "000000"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123908707@][1553106305476]/59__SV2UISU[2019-3-31]",
+        "trip_headsign": "Lincoln Square",
+        "route_id": "SILVER EVENING SUNDAY",
+        "block_id": "SV2UISU[2019-3-31]",
+        "direction": "North",
+        "service_id": "SV2UISU[2019-3-31]",
+        "shape_id": "[@124.0.123908707@]130N SILVER EVENING 2"
+      },
+      "vehicle_id": "1732",
       "origin": { "stop_id": "PAR:2" },
       "destination": { "stop_id": "LSE:8" },
       "is_monitored": true,
       "is_scheduled": true,
       "is_istop": true,
-      "scheduled": "2019-01-03T17:52:00-06:00",
-      "expected": "2019-01-03T17:52:00-06:00",
-      "expected_mins": 29,
-      "location": { "lat": 40.10412, "lon": -88.222083 }
+      "scheduled": "2019-04-28T22:13:00-05:00",
+      "expected": "2019-04-28T22:13:00-05:00",
+      "expected_mins": 27,
+      "location": { "lat": 40.111657, "lon": -88.208 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "220N Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/13__I5UISU[2019-3-31]",
+        "trip_headsign": "Lincoln & Killarney",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I5UISU[2019-3-31]",
+        "direction": "North",
+        "service_id": "I5UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220N ILLINI 10"
+      },
+      "vehicle_id": "1178",
+      "origin": { "stop_id": "PAR:2" },
+      "destination": { "stop_id": "LNCLNKLRNY:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:16:00-05:00",
+      "expected": "2019-04-28T22:16:00-05:00",
+      "expected_mins": 30,
+      "location": { "lat": 40.10412, "lon": -88.22575 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "220S Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/91__I2UISU[2019-3-31]",
+        "trip_headsign": "PAR",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I2UISU[2019-3-31]",
+        "direction": "South",
+        "service_id": "I2UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220S ILLINI 20"
+      },
+      "vehicle_id": "1352",
+      "origin": { "stop_id": "LNCLNKLRNY:1" },
+      "destination": { "stop_id": "PAR:2" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:19:00-05:00",
+      "expected": "2019-04-28T22:19:00-05:00",
+      "expected_mins": 33,
+      "location": { "lat": 40.104183, "lon": -88.230667 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "100S Yellow E14",
+      "route": {
+        "route_color": "fcee1f",
+        "route_id": "YELLOW LATE NIGHT SUNDAY",
+        "route_long_name": "Yellow Late Night Sunday",
+        "route_short_name": "100",
+        "route_text_color": "000000"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123496035@][1552342003121]/26__Y5UISU[2019-3-31]",
+        "trip_headsign": "Lot E-14",
+        "route_id": "YELLOW LATE NIGHT SUNDAY",
+        "block_id": "Y5UISU[2019-3-31]",
+        "direction": "South",
+        "service_id": "Y5UISU[2019-3-31]",
+        "shape_id": "[@124.0.123496035@]100SLTNT->"
+      },
+      "vehicle_id": "1350",
+      "origin": { "stop_id": "WALMART:2" },
+      "destination": { "stop_id": "E14:2" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:23:00-05:00",
+      "expected": "2019-04-28T22:23:00-05:00",
+      "expected_mins": 37,
+      "location": { "lat": 40.1273, "lon": -88.23875 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "120E Teal Orchard Downs",
+      "route": {
+        "route_color": "006991",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "route_long_name": "Teal Late Night Sunday",
+        "route_short_name": "120",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92276155@][1484344792164]/12__T2UISU",
+        "trip_headsign": "Orchard Downs",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "block_id": "T2UISU",
+        "direction": "East",
+        "service_id": "T2UISU",
+        "shape_id": "[@124.0.92276155@]120E TEAL LATE 13"
+      },
+      "vehicle_id": "1836",
+      "origin": { "stop_id": "IT:5" },
+      "destination": { "stop_id": "ODSS:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:22:00-05:00",
+      "expected": "2019-04-28T22:23:31-05:00",
+      "expected_mins": 37,
+      "location": { "lat": 40.107793, "lon": -88.224 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "220N Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/38__I7UISU[2019-3-31]",
+        "trip_headsign": "Lincoln & Killarney",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I7UISU[2019-3-31]",
+        "direction": "North",
+        "service_id": "I7UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220N ILLINI 10"
+      },
+      "vehicle_id": "1720",
+      "origin": { "stop_id": "PAR:2" },
+      "destination": { "stop_id": "LNCLNKLRNY:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:26:00-05:00",
+      "expected": "2019-04-28T22:26:00-05:00",
+      "expected_mins": 40,
+      "location": { "lat": 40.110263, "lon": -88.233417 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "120W Teal",
+      "route": {
+        "route_color": "006991",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "route_long_name": "Teal Late Night Sunday",
+        "route_short_name": "120",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92276155@][1484344792164]/46__T1UISU",
+        "trip_headsign": "Illinois Terminal",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "block_id": "T1UISU",
+        "direction": "West",
+        "service_id": "T1UISU",
+        "shape_id": "[@124.0.92276155@]120W TEAL LATE 12"
+      },
+      "vehicle_id": "1728",
+      "origin": { "stop_id": "ODSS:1" },
+      "destination": { "stop_id": "IT:5" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:28:00-05:00",
+      "expected": "2019-04-28T22:28:00-05:00",
+      "expected_mins": 42,
+      "location": { "lat": 40.10469, "lon": -88.223833 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "50E Green Lsq",
+      "route": {
+        "route_color": "008063",
+        "route_id": "GREEN LATE NIGHT SUNDAY",
+        "route_long_name": "Green Late Night Sunday",
+        "route_short_name": "50",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92345918@][1484579847669]/48__GR3_UISU",
+        "trip_headsign": "Lincoln Square",
+        "route_id": "GREEN LATE NIGHT SUNDAY",
+        "block_id": "GR3 UISU",
+        "direction": "East",
+        "service_id": "GR3 UISU",
+        "shape_id": "[@124.0.92345918@]50E-LATE"
+      },
+      "vehicle_id": "1163",
+      "origin": { "stop_id": "IT:1" },
+      "destination": { "stop_id": "LSE:8" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": false,
+      "scheduled": "2019-04-28T22:29:00-05:00",
+      "expected": "2019-04-28T22:29:00-05:00",
+      "expected_mins": 43,
+      "location": { "lat": 40.115647, "lon": -88.24075 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "220S Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/88__I3UISU[2019-3-31]",
+        "trip_headsign": "PAR",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I3UISU[2019-3-31]",
+        "direction": "South",
+        "service_id": "I3UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220S ILLINI 20"
+      },
+      "vehicle_id": "1837",
+      "origin": { "stop_id": "LNCLNKLRNY:1" },
+      "destination": { "stop_id": "PAR:2" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:29:00-05:00",
+      "expected": "2019-04-28T22:29:00-05:00",
+      "expected_mins": 43,
+      "location": { "lat": 40.099433, "lon": -88.220917 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "130N Silver",
+      "route": {
+        "route_color": "cccccc",
+        "route_id": "SILVER EVENING SUNDAY",
+        "route_long_name": "Silver Evening Sunday",
+        "route_short_name": "130",
+        "route_text_color": "000000"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123908707@][1553106305476]/39__SV1UISU[2019-3-31]",
+        "trip_headsign": "Lincoln Square",
+        "route_id": "SILVER EVENING SUNDAY",
+        "block_id": "SV1UISU[2019-3-31]",
+        "direction": "North",
+        "service_id": "SV1UISU[2019-3-31]",
+        "shape_id": "[@124.0.123908707@]130N SILVER EVENING 1"
+      },
+      "vehicle_id": "1726",
+      "origin": { "stop_id": "VETMED:1" },
+      "destination": { "stop_id": "LSE:8" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:33:00-05:00",
+      "expected": "2019-04-28T22:33:00-05:00",
+      "expected_mins": 47,
+      "location": { "lat": 40.095063, "lon": -88.219 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "220N Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/14__I1UISU[2019-3-31]",
+        "trip_headsign": "Lincoln & Killarney",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I1UISU[2019-3-31]",
+        "direction": "North",
+        "service_id": "I1UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220N ILLINI 10"
+      },
+      "vehicle_id": "1180",
+      "origin": { "stop_id": "PAR:2" },
+      "destination": { "stop_id": "LNCLNKLRNY:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:36:00-05:00",
+      "expected": "2019-04-28T22:36:00-05:00",
+      "expected_mins": 50,
+      "location": { "lat": 40.130403, "lon": -88.219583 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "220S Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/97__I5UISU[2019-3-31]",
+        "trip_headsign": "PAR",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I5UISU[2019-3-31]",
+        "direction": "South",
+        "service_id": "I5UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220S ILLINI 20"
+      },
+      "vehicle_id": "1178",
+      "origin": { "stop_id": "LNCLNKLRNY:1" },
+      "destination": { "stop_id": "PAR:2" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:39:00-05:00",
+      "expected": "2019-04-28T22:39:00-05:00",
+      "expected_mins": 53,
+      "location": { "lat": 40.10412, "lon": -88.22575 }
+    },
+    {
+      "stop_id": "IU:2",
+      "headsign": "50W Green IT",
+      "route": {
+        "route_color": "008063",
+        "route_id": "GREEN LATE NIGHT SUNDAY",
+        "route_long_name": "Green Late Night Sunday",
+        "route_short_name": "50",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92345918@][1484579847669]/6__GR3_UISU",
+        "trip_headsign": "Illinois Terminal",
+        "route_id": "GREEN LATE NIGHT SUNDAY",
+        "block_id": "GR3 UISU",
+        "direction": "West",
+        "service_id": "GR3 UISU",
+        "shape_id": "[@124.0.92345918@]50W-LATE"
+      },
+      "vehicle_id": "1163",
+      "origin": { "stop_id": "LSE:8" },
+      "destination": { "stop_id": "IT:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": false,
+      "scheduled": "2019-04-28T22:41:00-05:00",
+      "expected": "2019-04-28T22:41:00-05:00",
+      "expected_mins": 55,
+      "location": { "lat": 40.115647, "lon": -88.24075 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "120E Teal Orchard Downs",
+      "route": {
+        "route_color": "006991",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "route_long_name": "Teal Late Night Sunday",
+        "route_short_name": "120",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.92276155@][1484344792164]/37__T1UISU",
+        "trip_headsign": "Orchard Downs",
+        "route_id": "TEAL LATE NIGHT SUNDAY",
+        "block_id": "T1UISU",
+        "direction": "East",
+        "service_id": "T1UISU",
+        "shape_id": "[@124.0.92276155@]120E TEAL LATE 13"
+      },
+      "vehicle_id": "1728",
+      "origin": { "stop_id": "IT:5" },
+      "destination": { "stop_id": "ODSS:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:42:00-05:00",
+      "expected": "2019-04-28T22:42:00-05:00",
+      "expected_mins": 56,
+      "location": { "lat": 40.10469, "lon": -88.223833 }
+    },
+    {
+      "stop_id": "IU:1",
+      "headsign": "220N Illini",
+      "route": {
+        "route_color": "5a1d5a",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "route_long_name": "Illini Evening Sunday",
+        "route_short_name": "220",
+        "route_text_color": "ffffff"
+      },
+      "trip": {
+        "trip_id": "[@124.0.123550624@][1552403661110]/43__I4UISU[2019-3-31]",
+        "trip_headsign": "Lincoln & Killarney",
+        "route_id": "ILLINI EVENING SUNDAY",
+        "block_id": "I4UISU[2019-3-31]",
+        "direction": "North",
+        "service_id": "I4UISU[2019-3-31]",
+        "shape_id": "[@124.0.123550624@]220N ILLINI 10"
+      },
+      "vehicle_id": "1612",
+      "origin": { "stop_id": "PAR:2" },
+      "destination": { "stop_id": "LNCLNKLRNY:1" },
+      "is_monitored": true,
+      "is_scheduled": true,
+      "is_istop": true,
+      "scheduled": "2019-04-28T22:46:00-05:00",
+      "expected": "2019-04-28T22:46:00-05:00",
+      "expected_mins": 60,
+      "location": { "lat": 40.132303, "lon": -88.217833 }
     }
   ]
 }
