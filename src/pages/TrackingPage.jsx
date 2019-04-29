@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { formatDistance } from 'date-fns';
+
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import BusResults from '../components/BusResults';
 import '../styles/tracking.scss';
 import { getStop } from '../util/api';
 import StopSearch from '../components/StopSearch';
 
-const SECS_UNTIL_REFRESH_WARN = 5;
+const SECS_UNTIL_REFRESH_WARN = 10;
 
 class TrackingPage extends Component {
   constructor(props) {
@@ -79,6 +81,10 @@ class TrackingPage extends Component {
         ? { display: 'none' }
         : {};
     const displayReload = secsSinceRefresh > SECS_UNTIL_REFRESH_WARN;
+    const timeSinceRefreshText = formatDistance(0, secsSinceRefresh * 1000, {
+      addSuffix: false,
+      includeSeconds: true
+    });
     return (
       <div className="tracking-page">
         <LinearProgress
@@ -94,7 +100,7 @@ class TrackingPage extends Component {
             className={`refresh-text ${displayReload ? 'fadeIn' : 'fadeOut'}`}
           >
             <h5>
-              Last refresh happened {secsSinceRefresh}s ago. Reload?{' '}
+              Last refresh happened {timeSinceRefreshText} ago. Reload?{' '}
               <button
                 type="button"
                 className="refresh-btn"
