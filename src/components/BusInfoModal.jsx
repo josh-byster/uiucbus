@@ -25,6 +25,19 @@ class BusInfoModal extends Component {
     }
   }
 
+  getNameOfStop = async stopID => {
+    if (stopID !== null) {
+      const nextStop = await getStop(stopID);
+      if (!nextStop.stops[0]) {
+        return 'Unknown';
+      }
+      return nextStop.stops[0].stop_points.filter(
+        obj => obj.stop_id === stopID
+      )[0].stop_name;
+    }
+    return 'Unknown';
+  };
+
   getNextPrevStops = async () => {
     const { busInfo } = this.props;
     let status;
@@ -40,35 +53,18 @@ class BusInfoModal extends Component {
       });
       return;
     }
-    let nextStopName;
-    let prevStopName;
-    console.log('Hello');
-    console.log(status);
     const nextStopID = vehicles[0].next_stop_id;
     const prevStopID = vehicles[0].previous_stop_id;
+    const nextStopName = await this.getNameOfStop(nextStopID);
+    const prevStopName = await this.getNameOfStop(prevStopID);
 
-    if (nextStopID !== null) {
-      const nextStop = await getStop(nextStopID);
-      nextStopName = nextStop.stops[0].stop_points.filter(
-        obj => obj.stop_id === nextStopID
-      )[0].stop_name;
-    } else {
-      nextStopName = 'Unknown';
-    }
-
-    if (prevStopID !== null) {
-      const prevStop = await getStop(prevStopID);
-      prevStopName = prevStop.stops[0].stop_points.filter(
-        obj => obj.stop_id === prevStopID
-      )[0].stop_name;
-    } else {
-      prevStopName = 'Unknown';
-    }
-
+    const lastUpdatedDate = vehicles[0].last_updated;
     this.setState({
       nextStop: nextStopName,
       previousStop: prevStopName,
-      last_updated: vehicles[0].last_updated
+      last_updated: !Number.isNaN(new Date() - new Date(lastUpdatedDate))
+        ? Math.round((new Date() - new Date(lastUpdatedDate)) / 1000)
+        : 'Unknown'
     });
   };
 
@@ -118,11 +114,9 @@ class BusInfoModal extends Component {
               {state.previousStop}
               <br />
               <br />
-              <i>
-                Position last updated{' '}
-                {Math.round((new Date() - new Date(state.last_updated)) / 1000)}{' '}
-                seconds ago
-              </i>
+              {state.last_updated !== 'Unknown' && (
+                <i>Position last updated {state.last_updated} seconds ago</i>
+              )}
             </p>
           </ModalBody>
           <ModalFooter>
