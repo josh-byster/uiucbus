@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
-
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import '../styles/StopSearch.scss';
-import { appendRecentStop } from '../util/CookieHandler';
-import NearestStop from './NearestStop';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { appendRecentStop } from '../util/CookieHandler';
+import NearestStop from './NearestStop';
 
 const stops = require('../util/allstops.json');
 
@@ -15,19 +15,20 @@ const stops = require('../util/allstops.json');
 const getSuggestions = value => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
+  const words = inputValue.split(' ');
 
   return inputLength === 0
     ? []
     : stops
         .filter(stop => {
-          var words = inputValue.split(' ');
-          for (var idx in words) {
-            if (!stop.stop_name.toLowerCase().includes(words[idx])) {
-              return false;
-            }
-          }
+          let containsWord = false;
+          // loop through every word in the input and see if it's included in the stop name
+          words.forEach(word => {
+            if (stop.stop_name.toLowerCase().includes(word))
+              containsWord = true;
+          });
 
-          return true;
+          return containsWord;
         })
         .slice(0, 5);
 };
@@ -58,43 +59,43 @@ class StopSearch extends Component {
     };
   }
 
-  toggleNearestStopModal = () => {
-    this.setState({
-      nearestStopModalOpen: !this.state.nearestStopModalOpen
-    });
-  };
-
-  innerRef;
-  getInnerRef = ref => {
-    this.innerRef = ref;
-  };
-
-  getLocation = () => {
-    this.innerRef && this.innerRef.getLocation();
-  };
-
-  componentDidUpdate(prevProps) {
-    if (this.state.shouldRedirect) {
+  componentDidUpdate() {
+    const { shouldRedirect } = this.state;
+    if (shouldRedirect) {
       this.setState({ shouldRedirect: false, value: '' });
     }
   }
 
-  onChange = (event, { newValue, method }) => {
+  getLocation = () => {
+    if (this.innerRef) {
+      this.innerRef.getLocation();
+    }
+  };
+
+  getInnerRef = ref => {
+    this.innerRef = ref;
+  };
+
+  toggleNearestStopModal = () => {
+    this.setState(prevState => ({
+      nearestStopModalOpen: !prevState.nearestStopModalOpen
+    }));
+  };
+
+  onChange = (event, { newValue }) => {
     this.setState({
       value: newValue
     });
   };
 
-  onSuggestionSelected = (
-    e,
-    { suggestion, suggestionValue, suggestionIndex, sectionIndex, method }
-  ) => {
+  onSuggestionSelected = (e, { suggestion }) => {
     this.setState({
       shouldRedirect: true,
       selectionID: suggestion.stop_id,
       selectionName: suggestion.stop_name
     });
   };
+
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
@@ -110,9 +111,25 @@ class StopSearch extends Component {
     });
   };
 
-  render() {
-    const { value, suggestions } = this.state;
+  onSuggestionHighlighted = ({ suggestion }) => {
+    this.setState({
+      highlightedSuggestion: suggestion
+    });
+  };
 
+  innerRef;
+
+  render() {
+    const {
+      value,
+      suggestions,
+      shouldRedirect,
+      selectionName,
+      selectionID,
+      nearestStopModalOpen,
+      highlightedSuggestion
+    } = this.state;
+    const { style } = this.props;
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
       placeholder: 'Type the name of a stop',
@@ -120,32 +137,33 @@ class StopSearch extends Component {
       onChange: this.onChange
     };
 
-    if (this.state.shouldRedirect) {
+    if (shouldRedirect) {
       appendRecentStop({
-        name: this.state.selectionName,
-        id: this.state.selectionID
+        name: selectionName,
+        id: selectionID
       });
-      return <Redirect push to={`/track/${this.state.selectionID}`} />;
+      return <Redirect push to={`/track/${selectionID}`} />;
     }
 
     // Finally, render it!
     return (
       <div className="search-wrapper">
         <Autosuggest
-          style={this.props.style}
+          style={style}
           onSuggestionSelected={this.onSuggestionSelected}
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionHighlighted={this.onSuggestionHighlighted}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
-          highlightFirstSuggestion={true}
+          highlightFirstSuggestion={!highlightedSuggestion}
           className="form-control"
           inputProps={inputProps}
         />
         <Button
           className="location-btn"
-          onClick={e => {
+          onClick={() => {
             this.getLocation();
             this.toggleNearestStopModal();
           }}
@@ -153,7 +171,7 @@ class StopSearch extends Component {
           <FontAwesomeIcon icon={faMapMarkerAlt} />
         </Button>
         <NearestStop
-          isOpen={this.state.nearestStopModalOpen}
+          isOpen={nearestStopModalOpen}
           toggle={this.toggleNearestStopModal}
           ref={this.getInnerRef}
         />
@@ -161,5 +179,9 @@ class StopSearch extends Component {
     );
   }
 }
+
+StopSearch.propTypes = {
+  style: PropTypes.object
+};
 
 export default StopSearch;

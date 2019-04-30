@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "lint-all": "eslint 'src/**/*.js'",
+    "lint-all": "eslint 'src/**/*.{jsx,js}'",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "prettier-all": "prettier --write src/**/*.js",

@@ -12,6 +12,7 @@ script:
   - npm run build
   - npm run make-cname
   - npm run make-404
+  - npm run lint-all
   - npm run prettier-check
   - npm run test
   - $(npm bin)/http-server ./build --silent -p 3000 &
