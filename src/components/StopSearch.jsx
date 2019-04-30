@@ -21,11 +21,11 @@ const getSuggestions = value => {
     ? []
     : stops
         .filter(stop => {
-          let containsWord = false;
+          let containsWord = true;
           // loop through every word in the input and see if it's included in the stop name
           words.forEach(word => {
-            if (stop.stop_name.toLowerCase().includes(word))
-              containsWord = true;
+            if (!stop.stop_name.toLowerCase().includes(word))
+              containsWord = false;
           });
 
           return containsWord;
