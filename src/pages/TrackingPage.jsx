@@ -20,11 +20,12 @@ class TrackingPage extends Component {
       stopNameLoaded: null,
       stopResultsLoaded: null,
       secsSinceRefresh: 0,
-      shouldRefreshResults: false
+      shouldRefreshResults: false,
+      intervalID: -1
     };
     const { match } = this.props;
     this.getStopName(match.params.id);
-    setInterval(this.incrementCounter, 1000);
+    this.state.intervalID = setInterval(this.incrementCounter, 1000);
   }
 
   componentDidUpdate(prevProps) {
@@ -32,6 +33,13 @@ class TrackingPage extends Component {
     if (prevProps.match.params.id !== match.params.id) {
       this.setState({ stopNameLoaded: null, stopResultsLoaded: null });
       this.getStopName(match.params.id);
+    }
+  }
+
+  componentWillUnmount() {
+    const { intervalID } = this.state;
+    if (intervalID !== -1) {
+      clearInterval(intervalID);
     }
   }
 
@@ -137,4 +145,5 @@ class TrackingPage extends Component {
 TrackingPage.propTypes = {
   match: PropTypes.object.isRequired
 };
+
 export default TrackingPage;
