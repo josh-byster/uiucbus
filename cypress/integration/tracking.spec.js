@@ -1,4 +1,4 @@
-import { CUMTD_API_KEY } from '../../src/util/api';
+import { CUMTD_API_URI } from '../../src/util/api';
 
 context('Tracking With Stops Available', () => {
   beforeEach(() => {
@@ -10,19 +10,19 @@ context('Tracking With Stops Available', () => {
 
     cy.route({
       method: 'GET', // Route all GET requests
-      url: `https://developer.mtd.org/api/v2.2/json//getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=*`, // Mock a response for a stop ID
+      url: `${CUMTD_API_URI}/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
       response: '@IUStops'
     }).as('getDepartures');
 
     cy.route({
       method: 'GET', // Route all GET requests
-      url: `https://developer.mtd.org/api/v2.2/json//getstop?key=${CUMTD_API_KEY}&stop_id=IU`, // Mock a response for a stop ID
+      url: `${CUMTD_API_URI}/getstop?stop_id=IU`, // Mock a response for a stop ID
       response: '@IUStopInfo'
     });
 
     cy.route({
       method: 'GET', // Route all GET requests
-      url: `https://developer.mtd.org/api/v2.2/json//getvehicle?key=${CUMTD_API_KEY}&vehicle_id=*`, // Mock a response for a stop ID
+      url: `${CUMTD_API_URI}/getvehicle?vehicle_id=*`, // Mock a response for a stop ID
       response: '@IUVehicle'
     });
 

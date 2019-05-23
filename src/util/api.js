@@ -1,43 +1,37 @@
 import axios from 'axios';
 
-const API_URL = 'https://developer.mtd.org/api/v2.2/json/';
+const CUMTD_API_URI = 'https://bustracker-api.herokuapp.com/api';
 const MAPBOX_API_KEY =
   'pk.eyJ1Ijoiam9zaC1ieXN0ZXIiLCJhIjoiY2psN2xyZGFoMDY5ZjNxbWtpeDE0dDlwNSJ9.AAJipEPA6e-kLi1Jv3Wpyg';
-const CUMTD_API_KEY = 'fd4fb84bbbb34acfae890f17144ee131';
-const MAX_EXPECTED_MINS_AWAY = 60;
 function getBuses(stopId) {
   return axios
-    .get(
-      `${API_URL}/getdeparturesbystop?key=${CUMTD_API_KEY}&stop_id=${stopId}&pt=${MAX_EXPECTED_MINS_AWAY}`
-    )
+    .get(`${CUMTD_API_URI}/getdeparturesbystop?stop_id=${stopId}`)
     .then(res => res.data);
 }
 
 // Get the stop name and additional info
 function getStop(stopId) {
   return axios
-    .get(`${API_URL}/getstop?key=${CUMTD_API_KEY}&stop_id=${stopId}`)
+    .get(`${CUMTD_API_URI}/getstop?stop_id=${stopId}`)
     .then(res => res.data);
 }
 
 function getVehicleInfo(vehicleId) {
   return axios
-    .get(`${API_URL}/getvehicle?key=${CUMTD_API_KEY}&vehicle_id=${vehicleId}`)
+    .get(`${CUMTD_API_URI}/getvehicle?vehicle_id=${vehicleId}`)
     .then(res => res.data);
 }
 
 function getNearestStops(latitude, longitude) {
   return axios
-    .get(
-      `${API_URL}/getstopsbylatlon?key=${CUMTD_API_KEY}&lat=${latitude}&lon=${longitude}`
-    )
+    .get(`${CUMTD_API_URI}/getstopsbylatlon?lat=${latitude}&lon=${longitude}`)
     .then(res => res.data);
 }
 export {
   getBuses,
   getStop,
   MAPBOX_API_KEY,
-  CUMTD_API_KEY,
+  CUMTD_API_URI,
   getVehicleInfo,
   getNearestStops
 };
