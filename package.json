@@ -27,7 +27,7 @@
     "react-geolocated": "^2.4.1",
     "react-pose": "^4.0.8",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.0",
+    "react-scripts": "^3.0.0",
     "reactstrap": "^7.1.0"
   },
   "scripts": {
