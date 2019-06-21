@@ -5,18 +5,22 @@ import { MAPBOX_API_KEY, getVehicleInfo, getStop } from '../util/api';
 import '../styles/InfoModal.scss';
 
 class BusInfoModal extends Component {
+  defaultState = {
+    nextStop: '',
+    previousStop: '',
+    imageExpanded: false,
+    imgLoaded: false,
+    lastUpdated: 0
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      mapURL: '',
-      nextStop: '',
-      previousStop: ''
-    };
+    this.state = this.defaultState;
   }
 
   componentDidUpdate(prevProps) {
-    const { busInfo } = this.props;
-    if (prevProps.busInfo !== busInfo) {
+    const { isOpen } = this.props;
+    if (prevProps.isOpen === false && isOpen === true) {
       const mapURL = this.getMapURL();
 
       // eslint-disable-next-line react/no-did-update-set-state
@@ -24,6 +28,10 @@ class BusInfoModal extends Component {
       this.getNextPrevStops();
     }
   }
+
+  resetState = () => {
+    this.setState();
+  };
 
   getNameOfStop = async stopID => {
     if (stopID !== null) {
@@ -47,7 +55,7 @@ class BusInfoModal extends Component {
       this.setState({
         nextStop: 'Unknown',
         previousStop: 'Unknown',
-        last_updated: 'N/A',
+        lastUpdated: 'N/A',
         mapURL: ''
       });
       return;
@@ -61,7 +69,7 @@ class BusInfoModal extends Component {
     this.setState({
       nextStop: nextStopName,
       previousStop: prevStopName,
-      last_updated: !Number.isNaN(new Date() - new Date(lastUpdatedDate))
+      lastUpdated: !Number.isNaN(new Date() - new Date(lastUpdatedDate))
         ? Math.round((new Date() - new Date(lastUpdatedDate)) / 1000)
         : 'Unknown'
     });
@@ -79,25 +87,45 @@ class BusInfoModal extends Component {
     return null;
   };
 
+  toggleImageExpand = () =>
+    this.setState(prevState => {
+      return {
+        imageExpanded: !prevState.imageExpanded
+      };
+    });
+
   render() {
     const { props, state } = this;
     // silencing the linter warnings
     const { isOpen, toggle } = this.props;
     return (
       <div>
-        <Modal isOpen={isOpen} toggle={() => toggle()} className="info-modal">
+        <Modal
+          isOpen={isOpen}
+          toggle={() => {
+            this.setState(this.defaultState);
+            toggle();
+          }}
+          className="info-modal"
+        >
           <ModalHeader toggle={this.toggle}>
             {props.busInfo.headsign}
           </ModalHeader>
           <ModalBody>
             <img
-              className="img-fluid map-image"
+              className={
+                state.imageExpanded
+                  ? 'img-fluid map-image full'
+                  : 'img-fluid map-image'
+              }
               alt="bus information"
               src={state.mapURL}
               style={state.imgLoaded ? {} : { visibility: 'hidden' }} // Toggle visibility based on the image loaded
               onLoad={() => this.setState({ imgLoaded: true })}
             />
-
+            <p className="expand-text" onClick={this.toggleImageExpand}>
+              {state.imageExpanded ? 'Make Smaller' : 'Expand'}{' '}
+            </p>
             <p
               className="stop-info"
               style={
@@ -113,13 +141,19 @@ class BusInfoModal extends Component {
               {state.previousStop}
               <br />
               <br />
-              {state.last_updated !== 'Unknown' && (
-                <i>Position last updated {state.last_updated} seconds ago</i>
+              {state.lastUpdated !== 'Unknown' && (
+                <i>Position last updated {state.lastUpdated} seconds ago</i>
               )}
             </p>
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={() => props.toggle()}>
+            <Button
+              color="secondary"
+              onClick={() => {
+                this.setState({});
+                toggle();
+              }}
+            >
               Exit
             </Button>
           </ModalFooter>

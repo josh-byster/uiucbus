@@ -1,10 +1,25 @@
 .info-modal {
+  text-align: center;
   .map-image {
     border-radius: 5px;
+    width: 50%;
+    &.full {
+      width: 100%;
+    }
   }
   .stop-info {
     margin-top: 10px;
     margin-bottom: 10px;
-    text-align: center;
+  }
+  .expand-text {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
