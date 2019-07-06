@@ -1,0 +1,29 @@
+{
+  "name": "redis-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon server.js",
+    "test": "NODE_ENV=test mocha tests"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": ">=0.18.1",
+    "bluebird": "^3.5.4",
+    "express": "^4.17.0",
+    "helmet": "^3.18.0",
+    "morgan": "^1.9.1",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^1.19.0",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^5.16.0",
+    "mocha": "^6.1.4",
+    "supertest": "^4.0.2"
+  }
+}
