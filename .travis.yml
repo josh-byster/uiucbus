@@ -25,5 +25,5 @@ deploy:
     on:
       branch: master
   # backend deploy
-  - provider: heroku
+  - provider: script
     script: sh backend/deploy_heroku.sh
