@@ -1,28 +1,28 @@
-language: node_js
-node_js:
-  - 10
-cache:
-  # Caches $HOME/.npm when npm ci is default script command
-  # Caches node_modules in all other cases
-  npm: true
-  directories:
-    # cache folder with Cypress binary
-    - ~/.cache
+services: 
+  - docker
+
+before_install:
+  - npm install -g cypress
+
 script:
-  - npm run build
-  - npm run make-cname
-  - npm run make-404
-  - npm run lint-all
-  - npm run prettier-check
-  - npm run test
-  - $(npm bin)/http-server ./build --silent -p 3000 &
-  - $(npm bin)/cypress run 
+  - docker-compose -f docker-compose.prod.yml up -d 
+  - cypress run --project ./frontend
+  # Stop all processes to be able to bind to ports for specific unit tests
+  - docker-compose down 
+  # Run the backend tests
+  - docker-compose -f docker-compose.prod.yml run backend npm test
+  # Copy over the files to the container
+  - docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
+  - 
 env: TZ=America/Chicago
 deploy:
-  provider: pages
+  - provider: pages
   verbose: true
   skip_cleanup: true
-  local_dir: build/
-  github-token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
+  local_dir: new_build/
+  github-token: $GITHUB_TOKEN 
   on:
     branch: master
+  # backend deploy
+  - provider: heroku
+  script: sh backend/deploy_heroku.sh

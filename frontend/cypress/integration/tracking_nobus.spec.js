@@ -1,6 +1,4 @@
 // <reference types="Cypress" />
-import { CUMTD_API_URI } from '../../src/util/api';
-
 context('Tracking No Stops', () => {
   beforeEach(() => {
     cy.fixture('no_stops.json').as('stops');
@@ -8,14 +6,14 @@ context('Tracking No Stops', () => {
     cy.server(); // enable response stubbing
     cy.route({
       method: 'GET',
-      url: `${CUMTD_API_URI}/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
+      url: `*/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
       response: '@stops'
     }).as('getDepartures');
 
     // Using this to reduce load on MTD's API
     cy.route({
       method: 'GET',
-      url: `${CUMTD_API_URI}/getstop?stop_id=PAR`, // Mock a response for getting stops
+      url: `*/getstop?stop_id=PAR`, // Mock a response for getting stops
       response: '@PARStopInfo'
     });
     cy.visit('http://localhost:3000/#/track/PAR');

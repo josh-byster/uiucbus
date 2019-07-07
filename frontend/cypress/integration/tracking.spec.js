@@ -1,4 +1,3 @@
-import { CUMTD_API_URI } from '../../src/util/api';
 
 context('Tracking With Stops Available', () => {
   beforeEach(() => {
@@ -10,19 +9,19 @@ context('Tracking With Stops Available', () => {
 
     cy.route({
       method: 'GET', // Route all GET requests
-      url: `${CUMTD_API_URI}/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
+      url: `*/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
       response: '@IUStops'
     }).as('getDepartures');
 
     cy.route({
       method: 'GET', // Route all GET requests
-      url: `${CUMTD_API_URI}/getstop?stop_id=IU`, // Mock a response for a stop ID
+      url: `*/getstop?stop_id=IU`, // Mock a response for a stop ID
       response: '@IUStopInfo'
     });
 
     cy.route({
       method: 'GET', // Route all GET requests
-      url: `${CUMTD_API_URI}/getvehicle?vehicle_id=*`, // Mock a response for a stop ID
+      url: `*/getvehicle?vehicle_id=*`, // Mock a response for a stop ID
       response: '@IUVehicle'
     });
 

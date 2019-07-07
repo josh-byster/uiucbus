@@ -23,7 +23,6 @@ old_files/api-keys.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-frontend/cypress/videos
-frontend/cypress/screenshots
-frontend/cypress/cypress/
-frontend/cypress/cypress.json
+cypress/videos
+cypress/cypress/
+cypress/cypress.json
