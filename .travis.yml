@@ -1,3 +1,5 @@
+language: node_js
+
 services: 
   - docker
 
@@ -6,7 +8,9 @@ before_install:
 
 script:
   - docker-compose -f docker-compose.prod.yml up -d 
-  - cypress run .
+  - cypress run --project ./frontend
+  - docker-compose down 
+  - docker-compose -f docker-compose.prod.yml run backend npm test
 
 env: TZ=America/Chicago
 #deploy:
