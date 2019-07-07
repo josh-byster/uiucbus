@@ -1,28 +1,19 @@
-language: node_js
-node_js:
-  - 10
-cache:
-  # Caches $HOME/.npm when npm ci is default script command
-  # Caches node_modules in all other cases
-  npm: true
-  directories:
-    # cache folder with Cypress binary
-    - ~/.cache
+services: 
+  - docker
+
+before_install:
+  - npm install -g cypress
+
 script:
-  - npm run build
-  - npm run make-cname
-  - npm run make-404
-  - npm run lint-all
-  - npm run prettier-check
-  - npm run test
-  - $(npm bin)/http-server ./build --silent -p 3000 &
-  - $(npm bin)/cypress run 
+  - docker-compose -f docker-compose.prod.yml up -d 
+  - cypress run .
+
 env: TZ=America/Chicago
-deploy:
-  provider: pages
-  verbose: true
-  skip_cleanup: true
-  local_dir: build/
-  github-token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
-  on:
-    branch: master
+#deploy:
+#  provider: pages
+#  verbose: true
+#  skip_cleanup: true
+#  local_dir: frontend/build/
+#  github-token: $GITHUB_TOKEN # Set in the settings page of your repository, as a secure variable
+#  on:
+#    branch: master
