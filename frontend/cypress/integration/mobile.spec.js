@@ -1,6 +1,4 @@
 // <reference types="Cypress" />
-import { CUMTD_API_URI } from '../../src/util/api';
-
 context('Mobile', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
@@ -11,7 +9,7 @@ context('Mobile', () => {
     cy.server(); // enable response stubbing
     cy.route({
       method: 'GET', // Route all GET requests
-      url: `${CUMTD_API_URI}/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
+      url: `*/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
       response: '@stops'
     }).as('getDepartures');
   });
