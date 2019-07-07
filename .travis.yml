@@ -16,10 +16,13 @@ script:
   - 
 env: TZ=America/Chicago
 deploy:
-  provider: pages
+  - provider: pages
   verbose: true
   skip_cleanup: true
   local_dir: new_build/
   github-token: $GITHUB_TOKEN 
-#  on:
-#    branch: master
+  on:
+    branch: master
+  # backend deploy
+  - provider: heroku
+  script: sh backend/deploy_heroku.sh
