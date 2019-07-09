@@ -13,7 +13,6 @@ script:
   - docker-compose -f docker-compose.prod.yml run backend npm test
   # Copy over the files to the container
   - docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
-  - 
 env: TZ=America/Chicago
 
 deploy:

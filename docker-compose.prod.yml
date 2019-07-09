@@ -39,9 +39,10 @@ services:
       - redis
       - backend
     environment:
-      # Change to production to reproduce prod issues
       - REACT_APP_API_PORT=5000
     command:
-      sh -c 'http-server ./build -p 3000'
+      # Despite being built off the prod image that has th compiled build, 
+      # we are using the dev version because this will let us use localhost:PORT as the API endpoint
+      sh -c 'npm start'
 
 
