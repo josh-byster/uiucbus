@@ -16,7 +16,7 @@ script:
 env: TZ=America/Chicago
 
 after_success:
-  - docker-compose run backend npm run test && npm run coverage
+  - docker-compose run backend npm run coverage
 
 deploy:
   - provider: pages
