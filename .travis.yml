@@ -15,6 +15,9 @@ script:
   - docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
 env: TZ=America/Chicago
 
+after_success:
+  - docker-compose run backend npm run coverage
+
 deploy:
   - provider: pages
     verbose: true
