@@ -71,6 +71,13 @@ describe("getDeparturesByStop", function() {
       .expect(res => chaiAssertProperty(res, "from_cache", false));
   });
 
+  it("should return an invalid response when getting departures for an invalid stop", async () => {
+    return request(app)
+      .get("/api/getdeparturesbystop?stop_id=invalidstop")
+      .expect(408)
+      .expect(res => chaiAssertProperty(res, "status", 408));
+  });
+
   it("should contain the same timestamp with a cached response (2s test)", async () => {
     let { body } = await request(app)
       .get("/api/getdeparturesbystop?stop_id=PLAZA")
@@ -148,6 +155,20 @@ describe("getStop", function() {
   }).timeout(5000);
 });
 
+describe("other API call", function () {
+  it("should return a valid response with args passed in", async () => {
+    let { body } = await request(app)
+    .get("/api/getcalendardatesbydate?date=2019-01-01")
+    .expect(200)
+    .expect(res => assertValidResponse(res))
+    .expect(res => chaiAssertProperty(res, "rqst.params.date", "2019-01-01"));
+  })
+  it("should return an invalid response on a bad request", async () => {
+    let { body } = await request(app)
+    .get("/api/nonexistentmethod?date=2019-01-01")
+    .expect(500)
+  }) 
+})
 after(() => {
   // flush cache for next run
   client.FLUSHALL();

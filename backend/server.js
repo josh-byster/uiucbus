@@ -52,7 +52,9 @@ app.get("/api/getdeparturesbystop", async (req, res) => {
       resp = await updateGetDeparturesCache(stop_id);
       resp.from_cache = false;
     } catch (e) {
-      console.error(e);
+      console.error("REQUEST ERROR")
+      if(e.response)
+        console.error(e.response.data);
       return res.status(408).send({status: 408, departures: []});
     }
   }
@@ -80,7 +82,9 @@ app.get("/api/getstop", async (req, res) => {
       resp = await updateGetStopCache(stop_id);
       resp.from_cache = false;
     } catch (e) {
-      console.error(e);
+      console.error("REQUEST ERROR")
+      if(e.response)
+        console.error(e.response.data);
       return res.status(408).send({status: 408, stops: []});
     }
   }
@@ -101,7 +105,8 @@ app.get("/api/*", async (req, res) => {
     const json = (await axios.get(apiReqUrl, opts)).data;
     res.send(json);
   } catch (e) {
-    console.error(e);
+    if(e.response)
+      console.error(e.response.data);
     res.status(500).send("error");
   }
 });
