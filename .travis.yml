@@ -1,6 +1,14 @@
 services: 
   - docker
 
+cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
+  npm: true
+  directories:
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
+
 before_install:
   - npm install -g cypress
 
@@ -14,6 +22,12 @@ script:
   # Copy over the files to the container
   - docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
 env: TZ=America/Chicago
+
+after_success:
+  # Set the CI environment variables needed for codecov
+  - ci_env=`bash <(curl -s https://codecov.io/env)`
+  # Run codecov with specified environment variables
+  - docker-compose run $ci_env backend npm run coverage
 
 deploy:
   - provider: pages
