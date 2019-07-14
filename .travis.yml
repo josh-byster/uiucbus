@@ -16,7 +16,10 @@ script:
 env: TZ=America/Chicago
 
 after_success:
-  - docker-compose run backend npm run coverage
+  # Set the CI environment variables needed for codecov
+  - ci_env=`bash <(curl -s https://codecov.io/env)`
+  # Run codecov with specified environment variables
+  - docker-compose run $ci_env backend npm run coverage
 
 deploy:
   - provider: pages
