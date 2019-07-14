@@ -1,4 +1,5 @@
 {
   "projectId": "139hik",
-  "blacklistHosts": "www.google-analytics.com"
+  "blacklistHosts": "www.google-analytics.com",
+  "video": false
 }
