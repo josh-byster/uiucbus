@@ -16,4 +16,4 @@ The site is hosted through GitHub Pages and is aliased at [uiucbus.com](http://u
 
 ## Usage
 
-To run this project, first make sure you have Docker and Docker Compose installed on your machine. Then you must set the `$CUMTD_API_KEY` environment variable. After this, you may run `docker-compose up` to start both the frontend and bbackend! 
+To run this project, first make sure you have Docker and Docker Compose installed on your machine. Then you must set the `$CUMTD_API_KEY` environment variable. After this, you may run `docker-compose up` to start both the frontend and backend! At this point, you can navigate to `localhost:3000` to view the tracker. The API is located at `localhost:5000`.
