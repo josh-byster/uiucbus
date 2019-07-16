@@ -108,7 +108,7 @@ class BusInfoModal extends Component {
           }}
           className="info-modal"
         >
-          <ModalHeader toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle} style={this.props.headerStyle}>
             {props.busInfo.headsign}
           </ModalHeader>
           <ModalBody>
@@ -167,7 +167,8 @@ BusInfoModal.propTypes = {
   toggle: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   busInfo: PropTypes.object.isRequired,
-  stopInfo: PropTypes.object.isRequired
+  stopInfo: PropTypes.object.isRequired,
+  headerStyle: PropTypes.object
 };
 
 export default BusInfoModal;

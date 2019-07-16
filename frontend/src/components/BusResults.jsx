@@ -68,6 +68,17 @@ class BusResults extends Component {
     });
   };
 
+  getModalStyle = info => {
+    console.log(info)
+    if(info.route){
+    return {
+      backgroundColor: `#${info.route.route_color}`,
+      color: `#${info.route.route_text_color}`
+    };
+    }
+return {}
+  };
+
   render() {
     const { validRequest, departures, modalInfo, modalOpen } = this.state;
     const { style, stopInfo } = this.props;
@@ -89,6 +100,7 @@ class BusResults extends Component {
           isOpen={modalOpen}
           toggle={this.toggleModal}
           stopInfo={stopInfo}
+          headerStyle={this.getModalStyle(modalInfo)}
         />
         <Table>
           <thead>
