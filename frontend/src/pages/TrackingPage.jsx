@@ -69,7 +69,7 @@ class TrackingPage extends Component {
   };
 
   refresh = () => {
-    this.setState({ shouldRefreshResults: true });
+    this.setState({ shouldRefreshResults: true,stopResultsLoaded: false });
   };
 
   render() {
