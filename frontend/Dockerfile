@@ -11,7 +11,7 @@ RUN npm install
 # RUN npm ci --only=production
 # Bundle app source
 COPY . .
-EXPOSE 5000
+EXPOSE 3000
 ENV NODE_ENV production
 CMD [ "npm", "start" ]
 
