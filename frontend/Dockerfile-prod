@@ -16,7 +16,7 @@ RUN npm install -g http-server
 
 # Bundle app source
 COPY . .
-EXPOSE 5000
+EXPOSE 3000
 ENV NODE_ENV production
 RUN npm run build
-CMD [ "http-server" "./build", "-p", "5000"]
+CMD [ "http-server" "./build", "-p", "3000"]
