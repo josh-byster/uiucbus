@@ -9,34 +9,31 @@ cache:
     # we also need to cache folder with Cypress binary
     - ~/.cache
 
-before_install:
-  - npm install -g cypress
-
-script:
-  - docker-compose -f docker-compose.prod.yml up -d 
-  - cypress run --project ./frontend
-  # Stop all processes to be able to bind to ports for specific unit tests
-  - docker-compose down 
-  # Run the backend tests
-  - docker-compose -f docker-compose.prod.yml run backend npm test
-  # Copy over the files to the container
-  - docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
-env: TZ=America/Chicago
-
-after_success:
-  # Set the CI environment variables needed for codecov
-  - ci_env=`bash <(curl -s https://codecov.io/env)`
-  # Run codecov with specified environment variables
-  - docker-compose run $ci_env backend npm run coverage
-
-deploy:
-  - provider: pages
-    verbose: true
-    skip_cleanup: true
-    local_dir: new_build/
-    github-token: $GITHUB_TOKEN
-    on:
-      branch: master
-  # backend deploy
-  - provider: script
-    script: sh backend/deploy_heroku.sh
+jobs:
+  include:
+    - stage: tests
+      script:
+      - npm install -g cypress
+      - docker-compose -f docker-compose.prod.yml up -d  
+      - cypress run --project ./frontend
+    - stage: tests
+      env: TZ=America/Chicago
+      script:
+      - docker-compose -f docker-compose.prod.yml run backend npm test
+      # Set the CI environment variables needed for codecov
+      - ci_env=`bash <(curl -s https://codecov.io/env)`
+      # Run codecov with specified environment variables
+      - docker-compose run $ci_env backend npm run coverage
+    - stage: deploy
+      script: docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
+      deploy:
+        - provider: pages
+          verbose: true
+          skip_cleanup: true
+          local_dir: new_build/
+          github-token: $GITHUB_TOKEN
+          on:
+            branch: master
+        # backend deploy
+        - provider: script
+          script: sh backend/deploy_heroku.sh
