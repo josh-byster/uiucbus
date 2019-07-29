@@ -1,31 +1,31 @@
 /// <reference types="Cypress" />
 
-context("Nearest Stop", () => {
+context('Nearest Stop', () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit('http://localhost:3000');
   });
 
-  it("should be able to click on nearest stop icon", () => {
-    cy.get(".location-btn")
+  it('should be able to click on nearest stop icon', () => {
+    cy.get('.location-btn')
       .click()
-      .get(".modal-title")
-      .should("have.text", "Nearest Stops");
+      .get('.modal-title')
+      .should('have.text', 'Nearest Stops');
   });
 
-  it("should be able to click on exit", () => {
-    cy.get(".location-btn")
+  it('should be able to click on exit', () => {
+    cy.get('.location-btn')
       .click()
-      .get(".modal-footer > .btn")
-      .should("be.visible")
+      .get('.modal-footer > .btn')
+      .should('be.visible')
       .click()
-      .get("modal-title")
-      .should("not.exist");
+      .get('modal-title')
+      .should('not.exist');
   });
 
-  it("should not have an empty body", () => {
-    cy.get(".location-btn")
+  it('should not have an empty body', () => {
+    cy.get('.location-btn')
       .click()
-      .get(".modal-body")
-      .should("not.have.text", "");
+      .get('.modal-body')
+      .should('not.have.text', '');
   });
 });

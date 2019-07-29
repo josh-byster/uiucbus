@@ -1,4 +1,3 @@
-
 context('Tracking With Stops Available', () => {
   beforeEach(() => {
     cy.fixture('many_stops.json').as('IUStops');
