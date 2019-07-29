@@ -9,6 +9,8 @@ cache:
     # we also need to cache folder with Cypress binary
     - ~/.cache
 
+env: TZ=America/Chicago
+
 jobs:
   include:
     - stage: tests
@@ -17,7 +19,6 @@ jobs:
       - docker-compose -f docker-compose.prod.yml up -d  
       - cypress run --project ./frontend
     - stage: tests
-      env: TZ=America/Chicago
       script:
       - docker-compose -f docker-compose.prod.yml run backend npm test
       # Set the CI environment variables needed for codecov
