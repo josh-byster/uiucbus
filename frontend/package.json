@@ -18,7 +18,7 @@
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
     "prop-types": "^15.7.2",
-    "pulltorefreshjs": "^0.1.17",
+    "pulltorefreshjs": "^0.1.18",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
     "react-cookie": "^4.0.1",
