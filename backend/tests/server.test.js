@@ -95,7 +95,7 @@ describe('getDeparturesByStop', function() {
       .expect(res => assertValidResponse(res));
 
     expect(original_time).to.equal(newbody.time);
-  }).timeout(5000);
+  }).timeout(10000);
 });
 
 describe('getStop', function() {
@@ -150,7 +150,7 @@ describe('getStop', function() {
       .expect(res => assertValidResponse(res));
 
     expect(original_time).to.equal(newbody.time);
-  }).timeout(5000);
+  }).timeout(10000);
 });
 
 describe('other API call', function() {
