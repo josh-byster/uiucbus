@@ -5,6 +5,9 @@ const redis = require('redis');
 const bluebird = require('bluebird');
 const morgan = require('morgan');
 const helmet = require('helmet');
+const Sentry = require('@sentry/node');
+
+Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 const API_URI = 'https://developer.mtd.org/api/v2.2/json';
 const CUMTD_API_KEY = process.env.CUMTD_API_KEY;
@@ -19,6 +22,7 @@ const opts = {
 
 // create express app on port 3000
 const app = express();
+app.use(Sentry.Handlers.requestHandler());
 app.use(morgan('dev'));
 app.use(helmet());
 const port = process.env.PORT;
@@ -52,6 +56,7 @@ app.get('/api/getdeparturesbystop', async (req, res) => {
       resp = await updateGetDeparturesCache(stop_id);
       resp.from_cache = false;
     } catch (e) {
+      Sentry.captureException(e);
       console.error('REQUEST ERROR');
       if (e.response) console.error(e.response.data);
       return res.status(408).send({ status: 408, departures: [] });
@@ -81,6 +86,7 @@ app.get('/api/getstop', async (req, res) => {
       resp = await updateGetStopCache(stop_id);
       resp.from_cache = false;
     } catch (e) {
+      Sentry.captureException(e);
       console.error('REQUEST ERROR');
       if (e.response) console.error(e.response.data);
       return res.status(408).send({ status: 408, stops: [] });
@@ -103,10 +109,13 @@ app.get('/api/*', async (req, res) => {
     const json = (await axios.get(apiReqUrl, opts)).data;
     res.send(json);
   } catch (e) {
+    Sentry.captureException(e);
     if (e.response) console.error(e.response.data);
     res.status(500).send('error');
   }
 });
+
+app.use(Sentry.Handlers.errorHandler());
 
 const updateGetDeparturesCache = async stop_id => {
   // get latest info

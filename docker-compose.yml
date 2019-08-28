@@ -33,6 +33,7 @@ services:
       - REDIS_URL=redis://redis-store:6379
       # MTD API key used in the Express server, pulled as an environment variable
       - CUMTD_API_KEY=$CUMTD_API_KEY
+      - SENTRY_DSN=$SENTRY_DSN
     command:
       sh -c 'npm run start:dev'
 
