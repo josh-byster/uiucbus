@@ -69,7 +69,6 @@ class BusResults extends Component {
   };
 
   getModalStyle = info => {
-    console.log(info);
     if (info.route) {
       return {
         backgroundColor: `#${info.route.route_color}`,
