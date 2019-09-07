@@ -17,8 +17,10 @@ Sentry.init({
 
 LogRocket.init('oh67gs/uiucbus');
 
-Sentry.configureScope(scope => {
-  scope.setExtra('sessionURL', LogRocket.sessionURL);
+LogRocket.getSessionURL(sessionURL => {
+  Sentry.configureScope(scope => {
+    scope.setExtra('sessionURL', sessionURL);
+  });
 });
 
 function App() {
