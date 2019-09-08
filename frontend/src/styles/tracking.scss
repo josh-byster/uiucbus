@@ -1,10 +1,10 @@
 .tracking-page {
+  @import url('https://fonts.googleapis.com/css?family=Rubik:300,400');
   h1,
   h4 {
     text-align: center;
   }
   h4 {
-    @import url('https://fonts.googleapis.com/css?family=Rubik:300');
     font-family: 'Rubik', sans-serif;
   }
 
@@ -12,18 +12,21 @@
     margin-left: 20px;
     margin-right: 20px;
   }
-  .table td {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    font-size: 20px;
-    @media screen and(max-width:500px) {
-      font-size: 5vw;
-      .btn {
-        font-size: 12px;
+  .table {
+    font-family: 'Rubik', sans-serif;
+    td {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      font-size: 20px;
+      @media screen and(max-width:500px) {
+        font-size: 5vw;
+        .btn {
+          font-size: 12px;
+        }
       }
+      border-top: none;
+      font-family: 'Lato', sans-serif;
     }
-    border-top: none;
-    font-family: 'Lato', sans-serif;
   }
 
   .no-wrap {
