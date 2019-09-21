@@ -3,7 +3,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatDistance } from 'date-fns';
-
+import { Alert } from 'reactstrap';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import BusResults from '../components/BusResults';
 import '../styles/tracking.scss';
@@ -21,7 +21,8 @@ class TrackingPage extends Component {
       stopResultsLoaded: null,
       secsSinceRefresh: 0,
       shouldRefreshResults: false,
-      intervalID: -1
+      intervalID: -1,
+      error: ""
     };
     const { match } = this.props;
     this.getStopName(match.params.id);
@@ -45,14 +46,26 @@ class TrackingPage extends Component {
 
   finishedLoadingResults = () => {
     this.setState({
+      error: "",
       stopResultsLoaded: true,
       shouldRefreshResults: false,
       secsSinceRefresh: 0
     });
   };
 
+  errorManager = msg => {
+    this.setState(
+      { error: msg }
+    );
+  };
+
+  handleCurrentStopError = numRetries => {
+    this.errorManager(`Looks like at this moment, the MTD servers are under heavy load and are unresponsive. We'll keep retrying in the meantime. (Number of tries: ${numRetries})`);
+  }
+
+
   getStopName = async stopId => {
-    const { status, stops } = await getStop(stopId);
+    const { status, stops } = await getStop(stopId, this.handleCurrentStopError);
     if (status.code === 200 && stops.length > 0) {
       const stopObj = stops[0];
       this.setState({ stopInfo: stopObj, stopNameLoaded: true });
@@ -78,7 +91,8 @@ class TrackingPage extends Component {
       stopResultsLoaded,
       stopInfo,
       secsSinceRefresh,
-      shouldRefreshResults
+      shouldRefreshResults,
+      error
     } = this.state;
     const resultStyle =
       (stopNameLoaded && stopResultsLoaded) || stopNameLoaded === false // if the stop name invalid, display the "stop invalid"
@@ -93,6 +107,7 @@ class TrackingPage extends Component {
       addSuffix: false,
       includeSeconds: true
     });
+
     return (
       <div className="tracking-page">
         <LinearProgress
@@ -100,42 +115,51 @@ class TrackingPage extends Component {
           variant="indeterminate"
           style={progressStyle}
         />
-        <div className="info" style={resultStyle}>
-          <h1 className="stop_name">{stopInfo.stop_name}</h1>
 
-          <StopSearch />
-          <div
-            className={`refresh-text ${displayReload ? 'fadeIn' : 'fadeOut'}`}
-          >
-            <h5>
-              Last refresh happened {timeSinceRefreshText} ago. Reload?
-              <br />
-              <button
-                type="button"
-                className="refresh-btn"
-                onClick={e => {
-                  e.preventDefault();
-                  this.refresh();
-                }}
-                disabled={!displayReload}
-              >
-                {' '}
-                <FontAwesomeIcon icon={faSync} />
-              </button>
-            </h5>
+        <div className="info">
+          <div className="errors container">
+              {error &&
+                <Alert color="danger">{error}</Alert>
+              }
           </div>
-        </div>
-        <div style={resultStyle}>
-          {stopNameLoaded === false ? (
-            <h4 className="no-bus">Stop does not exist</h4>
-          ) : (
-            <BusResults
-              style={resultStyle}
-              resultCallback={this.finishedLoadingResults}
-              stopInfo={stopInfo}
-              shouldRefresh={shouldRefreshResults}
-            />
-          )}
+          <div className="data" style={resultStyle}>
+            <h1 className="stop_name">{stopInfo.stop_name}</h1>
+
+            <StopSearch />
+            <div
+              className={`refresh-text ${displayReload ? 'fadeIn' : 'fadeOut'}`}
+            >
+              <h5>
+                Last refresh happened {timeSinceRefreshText} ago. Reload?
+                <br />
+                <button
+                  type="button"
+                  className="refresh-btn"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.refresh();
+                  }}
+                  disabled={!displayReload}
+                >
+                  {' '}
+                  <FontAwesomeIcon icon={faSync} />
+                </button>
+              </h5>
+            </div>
+          </div>
+          <div style={resultStyle}>
+            {stopNameLoaded === false ? (
+              <h4 className="no-bus">Stop does not exist</h4>
+            ) : (
+              <BusResults
+                style={resultStyle}
+                resultCallback={this.finishedLoadingResults}
+                stopInfo={stopInfo}
+                shouldRefresh={shouldRefreshResults}
+                errorHandler={this.errorManager}
+              />
+            )}
+          </div>
         </div>
       </div>
     );
