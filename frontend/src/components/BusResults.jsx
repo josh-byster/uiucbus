@@ -46,9 +46,13 @@ class BusResults extends Component {
     }
   }
 
+  handleRequestError = (numRetries) => {
+    this.props.errorHandler(`Looks like at this moment, the MTD servers are under heavy load and are unresponsive. We'll keep retrying in the meantime. (Number of tries: ${numRetries})`);
+  }
+
   getData = async () => {
     const { stopInfo, resultCallback } = this.props;
-    const { status, departures } = await getBuses(stopInfo.stop_id);
+    const { status, departures } = await getBuses(stopInfo.stop_id, this.handleRequestError);
     if (status.code === 200) {
       this.setState({ validRequest: true });
       this.setState({ departures });
@@ -79,7 +83,7 @@ class BusResults extends Component {
   };
 
   render() {
-    const { validRequest, departures, modalInfo, modalOpen } = this.state;
+    const { validRequest, departures, modalInfo, modalOpen, errorMsg } = this.state;
     const { style, stopInfo } = this.props;
     if (validRequest === null) {
       // On first time don't swap out elements unnecessarily. Just render div.
@@ -91,6 +95,10 @@ class BusResults extends Component {
 
     if (validRequest === true && departures.length === 0) {
       return <h4 className="no-bus">No buses coming in the next hour.</h4>;
+    }
+
+    if(errorMsg){
+      return <h4 className='error'>Hi</h4>
     }
     return (
       <div style={style}>
@@ -132,6 +140,7 @@ BusResults.propTypes = {
   stopInfo: PropTypes.object.isRequired,
   resultCallback: PropTypes.func.isRequired,
   style: PropTypes.object.isRequired,
-  shouldRefresh: PropTypes.bool.isRequired
+  shouldRefresh: PropTypes.bool.isRequired,
+  errorHandler: PropTypes.func.isRequired
 };
 export default BusResults;

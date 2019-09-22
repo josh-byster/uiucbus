@@ -9,13 +9,16 @@ const CUMTD_API_URI =
 const MAPBOX_API_KEY =
   'pk.eyJ1Ijoiam9zaC1ieXN0ZXIiLCJhIjoiY2psN2xyZGFoMDY5ZjNxbWtpeDE0dDlwNSJ9.AAJipEPA6e-kLi1Jv3Wpyg';
 
-function getBuses(stopId) {
-  return retryWrapper(`${CUMTD_API_URI}/getdeparturesbystop?stop_id=${stopId}`);
+function getBuses(stopId, cb) {
+  return retryWrapper(
+    `${CUMTD_API_URI}/getdeparturesbystop?stop_id=${stopId}`,
+    cb
+  );
 }
 
 // Get the stop name and additional info
-function getStop(stopId) {
-  return retryWrapper(`${CUMTD_API_URI}/getstop?stop_id=${stopId}`);
+function getStop(stopId, cb) {
+  return retryWrapper(`${CUMTD_API_URI}/getstop?stop_id=${stopId}`, cb);
 }
 
 function getVehicleInfo(vehicleId) {
@@ -28,9 +31,14 @@ function getNearestStops(latitude, longitude) {
   );
 }
 
-function retryWrapper(url) {
+function retryWrapper(url, cb) {
   return promiseRetry(function(retry, number) {
-    if (number > 1) console.error('Retrying XHR with attempt number', number);
+    if (number > 1) {
+      console.error('Retrying XHR with attempt number', number);
+      if (cb) {
+        cb(number);
+      }
+    }
     return axios
       .get(url)
       .then(res => res.data)
