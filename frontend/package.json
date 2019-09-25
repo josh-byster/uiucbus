@@ -28,7 +28,7 @@
     "react-ga": "^2.6.0",
     "react-geolocated": "^3.0.1",
     "react-pose": "^4.0.8",
-    "react-router-dom": "^5.0.1",
+    "react-router-dom": "^5.1.0",
     "react-scripts": "^3.1.2",
     "reactstrap": "^8.0.1"
   },
