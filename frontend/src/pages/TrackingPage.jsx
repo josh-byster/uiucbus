@@ -96,6 +96,13 @@ class TrackingPage extends Component {
 
   changeLoaderStatus = () => {
     if (this.shouldDisplayProgress()) {
+      if (
+        this.state.stopNameLoaded === true &&
+        !this.state.stopResultsLoaded &&
+        nProgress.status < 0.5
+      ) {
+        nProgress.set(0.5);
+      }
       nProgress.start();
     } else {
       nProgress.done();
