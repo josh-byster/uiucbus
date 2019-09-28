@@ -18,14 +18,13 @@ class BusResults extends Component {
   }
 
   componentDidMount = () => {
-    const { stopInfo } = this.props;
     PullToRefresh.init({
-      mainElement: '.tracking-page',
-      triggerElement: '.info',
+      mainElement: 'body',
+      triggerElement: '.data',
       shouldPullToRefresh: () => {
-        return stopInfo.stop_id !== undefined;
+        return this.props.stopInfo.stop_id !== undefined;
       },
-      onRefresh: this.getData.bind(this)
+      onRefresh: this.getData
     });
   };
 
@@ -51,6 +50,7 @@ class BusResults extends Component {
   }
 
   getData = async () => {
+    console.log("Hello!")
     const { stopInfo, resultCallback } = this.props;
     const { status, departures } = await getBuses(stopInfo.stop_id, this.handleRequestError);
     if (status.code === 200) {
