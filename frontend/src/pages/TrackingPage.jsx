@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import nProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatDistance } from 'date-fns';
@@ -22,7 +24,7 @@ class TrackingPage extends Component {
       secsSinceRefresh: 0,
       shouldRefreshResults: false,
       intervalID: -1,
-      error: ""
+      error: ''
     };
     const { match } = this.props;
     this.getStopName(match.params.id);
@@ -46,7 +48,7 @@ class TrackingPage extends Component {
 
   finishedLoadingResults = () => {
     this.setState({
-      error: "",
+      error: '',
       stopResultsLoaded: true,
       shouldRefreshResults: false,
       secsSinceRefresh: 0
@@ -54,18 +56,20 @@ class TrackingPage extends Component {
   };
 
   errorManager = msg => {
-    this.setState(
-      { error: msg }
-    );
+    this.setState({ error: msg });
   };
 
   handleCurrentStopError = numRetries => {
-    this.errorManager(`Looks like at this moment, the MTD servers are under heavy load and are unresponsive. We'll keep retrying in the meantime. (Number of tries: ${numRetries})`);
-  }
-
+    this.errorManager(
+      `Looks like at this moment, the MTD servers are under heavy load and are unresponsive. We'll keep retrying in the meantime. (Number of tries: ${numRetries})`
+    );
+  };
 
   getStopName = async stopId => {
-    const { status, stops } = await getStop(stopId, this.handleCurrentStopError);
+    const { status, stops } = await getStop(
+      stopId,
+      this.handleCurrentStopError
+    );
     if (status.code === 200 && stops.length > 0) {
       const stopObj = stops[0];
       this.setState({ stopInfo: stopObj, stopNameLoaded: true });
@@ -85,6 +89,25 @@ class TrackingPage extends Component {
     this.setState({ shouldRefreshResults: true, stopResultsLoaded: false });
   };
 
+  shouldDisplayProgress = () => {
+    const { stopNameLoaded, stopResultsLoaded } = this.state;
+    return !stopResultsLoaded && stopNameLoaded !== false; // if the stop name invalid, display the "stop invalid"
+  };
+
+  changeLoaderStatus = () => {
+    if (this.shouldDisplayProgress()) {
+      if (
+        this.state.stopNameLoaded === true &&
+        !this.state.stopResultsLoaded &&
+        nProgress.status < 0.5
+      ) {
+        nProgress.set(0.5);
+      }
+      nProgress.start();
+    } else {
+      nProgress.done();
+    }
+  };
   render() {
     const {
       stopNameLoaded,
@@ -94,14 +117,8 @@ class TrackingPage extends Component {
       shouldRefreshResults,
       error
     } = this.state;
-    const resultStyle =
-      (stopNameLoaded && stopResultsLoaded) || stopNameLoaded === false // if the stop name invalid, display the "stop invalid"
-        ? {}
-        : { display: 'none' };
-    const progressStyle = // mutual exclusive, when one is display none, the other is off
-      (stopNameLoaded && stopResultsLoaded) || stopNameLoaded === false
-        ? { display: 'none' }
-        : {};
+    const resultStyle = this.shouldDisplayProgress() ? { display: 'none' } : {};
+    this.changeLoaderStatus();
     const displayReload = secsSinceRefresh > SECS_UNTIL_REFRESH_WARN;
     const timeSinceRefreshText = formatDistance(0, secsSinceRefresh * 1000, {
       addSuffix: false,
@@ -110,17 +127,9 @@ class TrackingPage extends Component {
 
     return (
       <div className="tracking-page">
-        <LinearProgress
-          color="secondary"
-          variant="indeterminate"
-          style={progressStyle}
-        />
-
         <div className="info">
           <div className="errors container">
-              {error &&
-                <Alert color="danger">{error}</Alert>
-              }
+            {error && <Alert color="danger">{error}</Alert>}
           </div>
           <div className="data" style={resultStyle}>
             <h1 className="stop_name">{stopInfo.stop_name}</h1>
