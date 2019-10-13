@@ -11,6 +11,9 @@ cache:
 
 before_install:
   - npm install -g cypress
+    # Add cypress-related packages
+  - sudo apt-get update
+  - sudo apt -y install libgconf2-4
 
 script:
   - docker-compose -f docker-compose.prod.yml up -d 
