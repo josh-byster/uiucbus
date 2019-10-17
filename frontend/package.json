@@ -68,7 +68,7 @@
     ]
   },
   "devDependencies": {
-    "coveralls": "^3.0.6",
+    "coveralls": "^3.0.7",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.4.2",
