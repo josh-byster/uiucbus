@@ -31,7 +31,7 @@
     "react-pose": "^4.0.9",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
-    "reactstrap": "^8.0.1"
+    "reactstrap": "^8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
