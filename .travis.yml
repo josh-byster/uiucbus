@@ -10,7 +10,7 @@ cache:
     - ~/.cache
 
 before_install:
-  - npm install -g cypress@3.4.0
+  - npm install -g cypress@3.6.1
     # Add cypress-related packages
   - sudo apt-get update
   - sudo apt -y install libgconf2-4
