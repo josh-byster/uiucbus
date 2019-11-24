@@ -17,6 +17,7 @@ before_install:
 
 script:
   - docker-compose -f docker-compose.prod.yml up -d 
+  - sleep 15
   - cypress run --project ./frontend
   # Stop all processes to be able to bind to ports for specific unit tests
   - docker-compose down 
