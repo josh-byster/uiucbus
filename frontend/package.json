@@ -12,7 +12,7 @@
     "bootstrap": "^4.4.1",
     "date-fns": "^2.8.1",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.6.0",
+    "eslint-config-prettier": "^6.7.0",
     "lint-staged": "^9.4.3",
     "logrocket": "^1.0.4",
     "node-sass": "^4.13.0",
