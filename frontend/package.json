@@ -74,6 +74,6 @@
     "enzyme-to-json": "^3.4.3",
     "eslint-plugin-cypress": "^2.8.1",
     "http-server": "^0.12.1",
-    "husky": "^4.1.0"
+    "husky": "^4.2.0"
   }
 }
