@@ -14,7 +14,7 @@
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.10.1",
     "lint-staged": "^10.0.9",
-    "logrocket": "^1.0.6",
+    "logrocket": "^1.0.7",
     "node-sass": "^4.13.1",
     "nprogress": "^0.2.0",
     "prettier": "^2.0.2",
