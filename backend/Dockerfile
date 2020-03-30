@@ -1,4 +1,4 @@
-FROM node:13.10.1-alpine
+FROM node:13.12.0-alpine
 
 WORKDIR '/var/www/app'
 # Install app dependencies
