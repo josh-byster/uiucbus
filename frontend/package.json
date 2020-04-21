@@ -17,7 +17,7 @@
     "logrocket": "^1.0.7",
     "node-sass": "^4.13.1",
     "nprogress": "^0.2.0",
-    "prettier": "^2.0.4",
+    "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "promise-retry": "^1.1.1",
     "prop-types": "^15.7.2",
