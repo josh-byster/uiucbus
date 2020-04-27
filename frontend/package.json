@@ -73,7 +73,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.4",
     "eslint-plugin-cypress": "^2.10.3",
-    "http-server": "^0.12.2",
+    "http-server": "^0.12.3",
     "husky": "^4.2.5"
   }
 }
