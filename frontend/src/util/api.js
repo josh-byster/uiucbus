@@ -3,7 +3,7 @@ import promiseRetry from 'promise-retry';
 
 const CUMTD_API_URI =
   process.env.NODE_ENV === 'production'
-    ? 'https://bustracker-api.herokuapp.com/api'
+    ? 'https://api.uiucbus.com/api'
     : `http://localhost:${process.env.REACT_APP_API_PORT}/api`;
 
 const MAPBOX_API_KEY =
