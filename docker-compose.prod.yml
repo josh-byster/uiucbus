@@ -44,5 +44,5 @@ services:
       # we are using the dev version because this will let us use localhost:PORT as the API endpoint
       # which gets baked into the prod image and is thus unaffected by env vars from this file
       sh -c 'npm start'
-
+    stdin_open: true
 

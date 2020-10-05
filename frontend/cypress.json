@@ -1,6 +1,6 @@
 {
   "projectId": "139hik",
-  "blacklistHosts": "www.google-analytics.com",
+  "blockHosts": "www.google-analytics.com",
   "video": false,
   "defaultCommandTimeout": 10000
 }
