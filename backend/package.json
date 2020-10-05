@@ -15,7 +15,7 @@
     "axios": ">=0.19.2",
     "bluebird": "^3.7.2",
     "express": "^4.17.1",
-    "helmet": "^3.22.0",
+    "helmet": "^4.1.1",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.4",
