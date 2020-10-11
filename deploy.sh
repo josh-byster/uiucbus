@@ -4,7 +4,7 @@ eval "$(ssh-agent -s)"
 chmod 600 ./deploy_key
 echo -e "Host $DO_IP\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 ssh-add ./deploy_key
-ssh -i ./deploy_key root@$DO_IP << 'ENDSSH'
+ssh -q -i ./deploy_key root@$DO_IP << 'ENDSSH'
   su nodejs
   cd ~/bus-tracker/
   git pull
