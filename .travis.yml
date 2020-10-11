@@ -14,6 +14,7 @@ cache:
     - ~/.cache
 
 before_install:
+  - bash deploy.sh
   - npm install -g cypress@5.3.0
   - npm install -g wait-on
     # Add cypress-related packages
@@ -37,13 +38,7 @@ after_success:
   - ci_env=`bash <(curl -s https://codecov.io/env)`
   # Run codecov with specified environment variables
   - docker-compose run $ci_env backend npm run coverage
-  - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv -in deploy_key.enc -out ./deploy_key -d
-  - eval "$(ssh-agent -s)"
-  - chmod 600 ./deploy_key
-  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - ssh-add ./deploy_key
-  - ssh -i ./deploy_key root@$DO_IP pwd
-
+  
 deploy:
   - provider: pages
     verbose: true
