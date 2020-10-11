@@ -37,12 +37,17 @@ after_success:
   - ci_env=`bash <(curl -s https://codecov.io/env)`
   # Run codecov with specified environment variables
   - docker-compose run $ci_env backend npm run coverage
-
+  
 deploy:
   - provider: pages
     verbose: true
-    skip_cleanup: true
+    cleanup: true
     local_dir: new_build/
-    github-token: $GITHUB_TOKEN
+    token: $GITHUB_TOKEN
+    on:
+      branch: master
+
+  - provider: script
+    script: bash deploy.sh
     on:
       branch: master
