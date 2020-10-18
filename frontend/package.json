@@ -13,7 +13,7 @@
     "date-fns": "^2.16.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.13.0",
-    "lint-staged": "^10.4.1",
+    "lint-staged": "^10.4.2",
     "logrocket": "^1.0.14",
     "node-sass": "^4.14.1",
     "nprogress": "^0.2.0",
