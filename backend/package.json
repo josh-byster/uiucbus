@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sentry/node": "^5.26.0",
+    "@sentry/node": "^5.27.0",
     "axios": ">=0.20.0",
     "bluebird": "^3.7.2",
     "express": "^4.17.1",
