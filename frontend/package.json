@@ -23,7 +23,7 @@
     "prop-types": "^15.7.2",
     "pulltorefreshjs": "^0.1.21",
     "react": "^16.14.0",
-    "react-autosuggest": "^10.0.3",
+    "react-autosuggest": "^10.0.4",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.14.0",
     "react-ga": "^3.3.0",
