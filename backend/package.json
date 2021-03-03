@@ -22,7 +22,7 @@
     "redis": "^3.0.2"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
+    "chai": "^4.3.2",
     "chai-http": "^4.3.0",
     "codecov": "^3.8.1",
     "eslint": "^7.18.0",
