@@ -8,22 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Setup CI Script
-        run: | 
-             sudo npm install -g cypress@5.3.0
-             sudo npm install -g wait-on
-             sudo apt-get update
-             sudo apt -y install libgconf2-4
-      - name: Start Docker Container 
-        run: docker-compose -f docker-compose.prod.yml up -d 
+      - name: Cypress Run
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: frontend
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 180
+          start: docker-compose -f ../docker-compose.prod.yml up -d  
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
-      - name: Wait
-        run: wait-on http://localhost:3000/
-      - name: Run Cypress Tests
-        run: cypress run --project ./frontend
       - name: Stop Processes
-        run: docker-compose down 
+        run: docker-compose down -v
       - name: Run Backend Tests 
         run: docker-compose -f docker-compose.prod.yml run backend npm test
       - name: Copy files to container 
