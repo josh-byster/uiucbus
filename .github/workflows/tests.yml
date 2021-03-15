@@ -1,0 +1,35 @@
+name: Testing
+
+on: [push]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup CI Script
+        run: | 
+             sudo npm install -g cypress@5.3.0
+             sudo npm install -g wait-on
+             sudo apt-get update
+             sudo apt -y install libgconf2-4
+      - name: Start Docker Container 
+        run: docker-compose -f docker-compose.prod.yml up -d 
+        env:
+          CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
+      - name: Wait
+        run: wait-on http://localhost:3000/
+      - name: Run Cypress Tests
+        run: cypress run --project ./frontend
+      - name: Stop Processes
+        run: docker-compose down 
+      - name: Run Backend Tests 
+        run: docker-compose -f docker-compose.prod.yml run backend npm test
+      - name: Copy files to container 
+        run: docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
+      - name: Upload coverage
+        run: |
+             ci_env=`bash <(curl -s https://codecov.io/env)
+             docker-compose run $ci_env backend npm run coverage
+    
