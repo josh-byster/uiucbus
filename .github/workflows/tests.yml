@@ -19,8 +19,10 @@ jobs:
         with:
           timezone: 'America/Chicago'
 
-      - name: Run Backend Tests 🧪
-        run: docker-compose -f docker-compose.prod.yml run backend npm test
+      - name: Backend Testing 🧪
+        run: |
+          ci_env=`bash <(curl -s https://codecov.io/env)`
+          docker-compose run $ci_env backend npm run coverage
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
 
@@ -40,7 +42,4 @@ jobs:
       - name: Copy Files
         run: docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
 
-      - name: Upload Coverage
-        run: |
-          ci_env=`bash <(curl -s https://codecov.io/env)`
-          docker-compose run $ci_env backend npm run coverage
+
