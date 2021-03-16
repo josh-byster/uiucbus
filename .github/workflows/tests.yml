@@ -55,6 +55,7 @@ jobs:
         run: |
           ssh-keyscan -t rsa api.uiucbus.com >> ~/.ssh/known_hosts
           git remote add dokku dokku@api.uiucbus.com:api.uiucbus.com 
-          git subtree push --prefix backend dokku master
         env:
           SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
