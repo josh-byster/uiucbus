@@ -10,6 +10,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Build Docker Image
         run: docker-compose -f docker-compose.prod.yml build
+        env:
+          CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
       - name: Cypress Run
         uses: cypress-io/github-action@v2
         with:
