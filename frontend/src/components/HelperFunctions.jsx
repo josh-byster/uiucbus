@@ -38,7 +38,7 @@ function removeColors(str) {
       'NAVY',
       'PINK',
       'RAVEN',
-      'ILLINI'
+      'ILLINI',
     ];
     let newStr = str;
     for (let i = 0; i < colors.length; i++) {

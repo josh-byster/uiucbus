@@ -8,7 +8,7 @@ function getRecentStops() {
 
 function appendRecentStop(object) {
   const arr = getRecentStops();
-  const index = arr.map(x => x.id).indexOf(object.id);
+  const index = arr.map((x) => x.id).indexOf(object.id);
   if (index !== -1) {
     arr.splice(index, 1); // remove duplicates in array
   }

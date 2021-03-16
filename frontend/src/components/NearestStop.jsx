@@ -13,7 +13,7 @@ class NearestStop extends Component {
     super(props);
     this.state = {
       validRequest: false,
-      stops: []
+      stops: [],
     };
   }
 
@@ -26,7 +26,7 @@ class NearestStop extends Component {
 
   getStops = async () => {
     const {
-      coords: { latitude, longitude }
+      coords: { latitude, longitude },
     } = this.props;
     const { status, stops } = await getNearestStops(latitude, longitude);
 
@@ -58,7 +58,7 @@ class NearestStop extends Component {
                           toggle();
                           appendRecentStop({
                             name: value.stop_name,
-                            id: value.stop_id
+                            id: value.stop_id,
                           });
                         }}
                       >
@@ -94,13 +94,13 @@ NearestStop.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   toggle: PropTypes.func.isRequired,
   positionError: PropTypes.object,
-  coords: PropTypes.object
+  coords: PropTypes.object,
 };
 
 export default geolocated({
   positionOptions: {
-    enableHighAccuracy: false
+    enableHighAccuracy: false,
   },
   userDecisionTimeout: 5000,
-  suppressLocationOnMount: true
+  suppressLocationOnMount: true,
 })(NearestStop);

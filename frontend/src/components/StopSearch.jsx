@@ -12,7 +12,7 @@ import NearestStop from './NearestStop';
 const stops = require('../util/allstops.json');
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
-const getSuggestions = value => {
+const getSuggestions = (value) => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
   const words = inputValue.split(' ');
@@ -20,10 +20,10 @@ const getSuggestions = value => {
   return inputLength === 0
     ? []
     : stops
-        .filter(stop => {
+        .filter((stop) => {
           let containsWord = true;
           // loop through every word in the input and see if it's included in the stop name
-          words.forEach(word => {
+          words.forEach((word) => {
             if (!stop.stop_name.toLowerCase().includes(word))
               containsWord = false;
           });
@@ -36,10 +36,10 @@ const getSuggestions = value => {
 // When suggestion is clicked, Autosuggest needs to populate the input
 // based on the clicked suggestion. Teach Autosuggest how to calculate the
 // input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.stop_name;
+const getSuggestionValue = (suggestion) => suggestion.stop_name;
 
 // Use your imagination to render suggestions.
-const renderSuggestion = suggestion => <div>{suggestion.stop_name}</div>;
+const renderSuggestion = (suggestion) => <div>{suggestion.stop_name}</div>;
 
 class StopSearch extends Component {
   constructor() {
@@ -55,7 +55,7 @@ class StopSearch extends Component {
       suggestions: [],
       selectionID: '',
       selectionName: '',
-      nearestStopModalOpen: false
+      nearestStopModalOpen: false,
     };
   }
 
@@ -72,19 +72,19 @@ class StopSearch extends Component {
     }
   };
 
-  getInnerRef = ref => {
+  getInnerRef = (ref) => {
     this.innerRef = ref;
   };
 
   toggleNearestStopModal = () => {
-    this.setState(prevState => ({
-      nearestStopModalOpen: !prevState.nearestStopModalOpen
+    this.setState((prevState) => ({
+      nearestStopModalOpen: !prevState.nearestStopModalOpen,
     }));
   };
 
   onChange = (event, { newValue }) => {
     this.setState({
-      value: newValue
+      value: newValue,
     });
   };
 
@@ -92,7 +92,7 @@ class StopSearch extends Component {
     this.setState({
       shouldRedirect: true,
       selectionID: suggestion.stop_id,
-      selectionName: suggestion.stop_name
+      selectionName: suggestion.stop_name,
     });
   };
 
@@ -100,20 +100,20 @@ class StopSearch extends Component {
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: getSuggestions(value)
+      suggestions: getSuggestions(value),
     });
   };
 
   // Autosuggest will call this function every time you need to clear suggestions.
   onSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: []
+      suggestions: [],
     });
   };
 
   onSuggestionHighlighted = ({ suggestion }) => {
     this.setState({
-      highlightedSuggestion: suggestion
+      highlightedSuggestion: suggestion,
     });
   };
 
@@ -127,20 +127,20 @@ class StopSearch extends Component {
       selectionName,
       selectionID,
       nearestStopModalOpen,
-      highlightedSuggestion
+      highlightedSuggestion,
     } = this.state;
     const { style } = this.props;
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
       placeholder: 'Type the name of a stop',
       value,
-      onChange: this.onChange
+      onChange: this.onChange,
     };
 
     if (shouldRedirect) {
       appendRecentStop({
         name: selectionName,
-        id: selectionID
+        id: selectionID,
       });
       return <Redirect push to={`/track/${selectionID}`} />;
     }
@@ -181,7 +181,7 @@ class StopSearch extends Component {
 }
 
 StopSearch.propTypes = {
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 export default StopSearch;

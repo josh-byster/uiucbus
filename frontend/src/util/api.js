@@ -32,7 +32,7 @@ function getNearestStops(latitude, longitude) {
 }
 
 function retryWrapper(url, cb) {
-  return promiseRetry(function(retry, number) {
+  return promiseRetry(function (retry, number) {
     if (number > 1) {
       console.error('Retrying XHR with attempt number', number);
       if (cb) {
@@ -41,7 +41,7 @@ function retryWrapper(url, cb) {
     }
     return axios
       .get(url)
-      .then(res => res.data)
+      .then((res) => res.data)
       .catch(retry);
   });
 }
@@ -52,5 +52,5 @@ export {
   MAPBOX_API_KEY,
   CUMTD_API_URI,
   getVehicleInfo,
-  getNearestStops
+  getNearestStops,
 };

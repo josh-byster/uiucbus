@@ -11,19 +11,19 @@ class BusResultRow extends Component {
       // eslint-disable-next-line react/destructuring-assignment
       delay: (100 * (1 - 0.5 ** this.props.elementOrder)) / (1 - 0.5),
       transition: {
-        opacity: { ease: 'easeIn', duration: 300 }
-      }
+        opacity: { ease: 'easeIn', duration: 300 },
+      },
     },
     exit: {
       opacity: 0,
-      transition: { duration: 0 }
-    }
+      transition: { duration: 0 },
+    },
   });
 
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: false
+      isVisible: false,
     };
   }
 
@@ -31,7 +31,7 @@ class BusResultRow extends Component {
     this.setState({ isVisible: true });
   }
 
-  computeHMS = expectedDate => {
+  computeHMS = (expectedDate) => {
     const date = new Date(expectedDate.toString());
     let hour = date.getHours() % 12;
     if (hour === 0) {
@@ -52,7 +52,7 @@ class BusResultRow extends Component {
     const { info } = this.props;
     return {
       backgroundColor: `#${info.route.route_color}`,
-      color: `#${info.route.route_text_color}`
+      color: `#${info.route.route_text_color}`,
     };
   };
 
@@ -91,7 +91,7 @@ class BusResultRow extends Component {
 BusResultRow.propTypes = {
   info: PropTypes.object.isRequired,
   toggleModal: PropTypes.func.isRequired,
-  elementOrder: PropTypes.number.isRequired
+  elementOrder: PropTypes.number.isRequired,
 };
 
 export default BusResultRow;

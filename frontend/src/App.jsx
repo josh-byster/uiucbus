@@ -12,21 +12,21 @@ if (process.env.NODE_ENV === 'production') {
   ReactGA.pageview(window.location.pathname + window.location.search);
 
   Sentry.init({
-    dsn: 'https://a3cd776e555b4f62b9215dee5e11a886@sentry.io/306037'
+    dsn: 'https://a3cd776e555b4f62b9215dee5e11a886@sentry.io/306037',
   });
 
   LogRocket.init('oh67gs/uiucbus');
 
-  LogRocket.getSessionURL(sessionURL => {
-    Sentry.configureScope(scope => {
+  LogRocket.getSessionURL((sessionURL) => {
+    Sentry.configureScope((scope) => {
       scope.setExtra('sessionURL', sessionURL);
     });
   });
-  window.addEventListener('offline', function(e) {
+  window.addEventListener('offline', function (e) {
     console.log('Not connected to LAN');
   });
 
-  window.addEventListener('online', function(e) {
+  window.addEventListener('online', function (e) {
     console.log('Connected back on LAN');
   });
 }

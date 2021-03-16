@@ -11,36 +11,36 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from 'reactstrap';
 import {
   appendRecentStop,
   getRecentStops,
-  clearAllRecents
+  clearAllRecents,
 } from '../util/CookieHandler';
 
 class BusNavbar extends Component {
   defaultStops = [
     {
       name: 'Transit Plaza',
-      id: 'PLAZA'
+      id: 'PLAZA',
     },
     {
       name: 'Illini Union',
-      id: 'IU'
+      id: 'IU',
     },
     {
       name: 'PAR',
-      id: 'PAR'
+      id: 'PAR',
     },
     {
       name: 'Krannert Center',
-      id: 'KRANNERT'
+      id: 'KRANNERT',
     },
     {
       name: 'First & Stadium',
-      id: '1STSTDM'
-    }
+      id: '1STSTDM',
+    },
   ];
 
   constructor(props) {
@@ -48,14 +48,14 @@ class BusNavbar extends Component {
 
     this.state = {
       isOpen: false,
-      recentStops: []
+      recentStops: [],
     };
   }
 
   toggle = () => {
     const { isOpen } = this.state;
     this.setState({
-      isOpen: !isOpen
+      isOpen: !isOpen,
     });
   };
 
@@ -63,7 +63,7 @@ class BusNavbar extends Component {
     const { isOpen } = this.state;
     if (isOpen) {
       this.setState({
-        isOpen: false
+        isOpen: false,
       });
     }
   };
@@ -89,7 +89,7 @@ class BusNavbar extends Component {
                     <NavLink
                       tag={Link}
                       to={`/track/${value.id}`}
-                      onClick={e => {
+                      onClick={(e) => {
                         appendRecentStop({ name: value.name, id: value.id });
                         this.closeNavbar();
                         e.target.blur();
@@ -112,7 +112,7 @@ class BusNavbar extends Component {
                         <NavLink
                           tag={Link}
                           to={`/track/${value.id}`}
-                          onClick={e => {
+                          onClick={(e) => {
                             e.target.blur();
                             this.closeNavbar();
                           }}

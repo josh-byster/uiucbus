@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import nProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import PropTypes from 'prop-types';
@@ -24,7 +23,7 @@ class TrackingPage extends Component {
       secsSinceRefresh: 0,
       shouldRefreshResults: false,
       intervalID: -1,
-      error: ''
+      error: '',
     };
     const { match } = this.props;
     this.getStopName(match.params.id);
@@ -51,21 +50,21 @@ class TrackingPage extends Component {
       error: '',
       stopResultsLoaded: true,
       shouldRefreshResults: false,
-      secsSinceRefresh: 0
+      secsSinceRefresh: 0,
     });
   };
 
-  errorManager = msg => {
+  errorManager = (msg) => {
     this.setState({ error: msg });
   };
 
-  handleCurrentStopError = numRetries => {
+  handleCurrentStopError = (numRetries) => {
     this.errorManager(
       `Looks like at this moment, the MTD servers are under heavy load and are unresponsive. We'll keep retrying in the meantime. (Number of tries: ${numRetries})`
     );
   };
 
-  getStopName = async stopId => {
+  getStopName = async (stopId) => {
     const { status, stops } = await getStop(
       stopId,
       this.handleCurrentStopError
@@ -80,8 +79,8 @@ class TrackingPage extends Component {
   };
 
   incrementCounter = () => {
-    this.setState(prevState => ({
-      secsSinceRefresh: prevState.secsSinceRefresh + 1
+    this.setState((prevState) => ({
+      secsSinceRefresh: prevState.secsSinceRefresh + 1,
     }));
   };
 
@@ -111,18 +110,17 @@ class TrackingPage extends Component {
   render() {
     const {
       stopNameLoaded,
-      stopResultsLoaded,
       stopInfo,
       secsSinceRefresh,
       shouldRefreshResults,
-      error
+      error,
     } = this.state;
     const resultStyle = this.shouldDisplayProgress() ? { display: 'none' } : {};
     this.changeLoaderStatus();
     const displayReload = secsSinceRefresh > SECS_UNTIL_REFRESH_WARN;
     const timeSinceRefreshText = formatDistance(0, secsSinceRefresh * 1000, {
       addSuffix: false,
-      includeSeconds: true
+      includeSeconds: true,
     });
 
     return (
@@ -144,7 +142,7 @@ class TrackingPage extends Component {
                 <button
                   type="button"
                   className="refresh-btn"
-                  onClick={e => {
+                  onClick={(e) => {
                     e.preventDefault();
                     this.refresh();
                   }}
@@ -176,7 +174,7 @@ class TrackingPage extends Component {
 }
 
 TrackingPage.propTypes = {
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
 };
 
 export default TrackingPage;

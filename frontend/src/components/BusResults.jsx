@@ -13,7 +13,7 @@ class BusResults extends Component {
       departures: [],
       validRequest: null,
       modalInfo: {},
-      modalOpen: false
+      modalOpen: false,
     };
   }
 
@@ -24,7 +24,7 @@ class BusResults extends Component {
       shouldPullToRefresh: () => {
         return this.props.stopInfo.stop_id !== undefined;
       },
-      onRefresh: this.getData
+      onRefresh: this.getData,
     });
   };
 
@@ -39,13 +39,13 @@ class BusResults extends Component {
         departures: [],
         validRequest: null,
         modalInfo: {},
-        modalOpen: false
+        modalOpen: false,
       });
       this.getData();
     }
   }
 
-  handleRequestError = numRetries => {
+  handleRequestError = (numRetries) => {
     this.props.errorHandler(
       `Looks like at this moment, the MTD servers are under heavy load and are unresponsive. We'll keep retrying in the meantime. (Number of tries: ${numRetries})`
     );
@@ -66,8 +66,8 @@ class BusResults extends Component {
     resultCallback();
   };
 
-  toggleModal = info => {
-    this.setState(state => {
+  toggleModal = (info) => {
+    this.setState((state) => {
       if (info !== undefined) {
         return { modalOpen: !state.modalOpen, modalInfo: info };
       }
@@ -76,11 +76,11 @@ class BusResults extends Component {
     });
   };
 
-  getModalStyle = info => {
+  getModalStyle = (info) => {
     if (info.route) {
       return {
         backgroundColor: `#${info.route.route_color}`,
-        color: `#${info.route.route_text_color}`
+        color: `#${info.route.route_text_color}`,
       };
     }
     return {};
@@ -92,7 +92,7 @@ class BusResults extends Component {
       departures,
       modalInfo,
       modalOpen,
-      errorMsg
+      errorMsg,
     } = this.state;
     const { style, stopInfo } = this.props;
     if (validRequest === null) {
@@ -151,6 +151,6 @@ BusResults.propTypes = {
   resultCallback: PropTypes.func.isRequired,
   style: PropTypes.object.isRequired,
   shouldRefresh: PropTypes.bool.isRequired,
-  errorHandler: PropTypes.func.isRequired
+  errorHandler: PropTypes.func.isRequired,
 };
 export default BusResults;

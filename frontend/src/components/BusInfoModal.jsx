@@ -10,7 +10,7 @@ class BusInfoModal extends Component {
     previousStop: '',
     imageExpanded: false,
     imgLoaded: false,
-    lastUpdated: 0
+    lastUpdated: 0,
   };
 
   constructor(props) {
@@ -33,14 +33,14 @@ class BusInfoModal extends Component {
     this.setState();
   };
 
-  getNameOfStop = async stopID => {
+  getNameOfStop = async (stopID) => {
     if (stopID !== null) {
       const nextStop = await getStop(stopID);
       if (!nextStop.stops[0]) {
         return 'Unknown';
       }
       return nextStop.stops[0].stop_points.filter(
-        obj => obj.stop_id === stopID
+        (obj) => obj.stop_id === stopID
       )[0].stop_name;
     }
     return 'Unknown';
@@ -56,7 +56,7 @@ class BusInfoModal extends Component {
         nextStop: 'Unknown',
         previousStop: 'Unknown',
         lastUpdated: 'N/A',
-        mapURL: ''
+        mapURL: '',
       });
       return;
     }
@@ -71,7 +71,7 @@ class BusInfoModal extends Component {
       previousStop: prevStopName,
       lastUpdated: !Number.isNaN(new Date() - new Date(lastUpdatedDate))
         ? Math.round((new Date() - new Date(lastUpdatedDate)) / 1000)
-        : 'Unknown'
+        : 'Unknown',
     });
   };
 
@@ -88,9 +88,9 @@ class BusInfoModal extends Component {
   };
 
   toggleImageExpand = () =>
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        imageExpanded: !prevState.imageExpanded
+        imageExpanded: !prevState.imageExpanded,
       };
     });
 
@@ -168,7 +168,7 @@ BusInfoModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   busInfo: PropTypes.object.isRequired,
   stopInfo: PropTypes.object.isRequired,
-  headerStyle: PropTypes.object
+  headerStyle: PropTypes.object,
 };
 
 export default BusInfoModal;
