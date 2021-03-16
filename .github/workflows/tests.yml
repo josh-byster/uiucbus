@@ -8,27 +8,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Build Docker Image
+      - name: Build Docker Image 📦
         run: docker-compose -f docker-compose.prod.yml build
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
-      - name: Cypress Run
+      - name: Set Timezone ⏱️
+        uses: zcong1993/setup-timezone@master
+        with:
+          timezone: 'America/Chicago'
+      - name: Cypress Run 🌲
         uses: cypress-io/github-action@v2
         with:
           working-directory: frontend
-          wait-on: "http://localhost:3000"
+          wait-on: 'http://localhost:3000'
           wait-on-timeout: 180
-          start: docker-compose -f ../docker-compose.prod.yml up -d  
+          start: docker-compose -f ../docker-compose.prod.yml up -d
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
-      - name: Stop Processes
+      - name: Stop Processes ✋
         run: docker-compose down -v
-      - name: Run Backend Tests 
+      - name: Run Backend Tests 🧪
         run: docker-compose -f docker-compose.prod.yml run backend npm test
-      - name: Copy files to container 
+      - name: Copy Files
         run: docker-compose -f docker-compose.prod.yml run -v ${PWD}/new_build:/var/www/app/mnt frontend /bin/sh copy_files.sh
-      - name: Upload coverage
+      - name: Upload Coverage
         run: |
-             ci_env=`bash <(curl -s https://codecov.io/env)
-             docker-compose run $ci_env backend npm run coverage
-    
+          ci_env=`bash <(curl -s https://codecov.io/env)
+          docker-compose run $ci_env backend npm run coverage
