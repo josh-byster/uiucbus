@@ -10,9 +10,9 @@
 
 <p align="center">
 
-  <a href="https://travis-ci.com/josh-byster/bus-tracker">
-    <img src="https://travis-ci.com/josh-byster/bus-tracker.svg?branch=master"
-         alt="Travis CI">
+  <a href="https://github.com/josh-byster/uiucbus/actions/workflows/tests.yml">
+    <img src="https://github.com/josh-byster/uiucbus/actions/workflows/tests.yml/badge.svg"
+         alt="GitHub Actions">
   </a>
   <a href="https://cypress.io">
     <img src="https://img.shields.io/badge/cypress.io-tests-green.svg?style=flat-square"
@@ -22,8 +22,8 @@
     <img src="https://img.shields.io/badge/License-MIT-blue.svg"
          alt="License">
   </a>
-  <a href="https://codecov.io/gh/josh-byster/bus-tracker">
-    <img src="https://codecov.io/gh/josh-byster/bus-tracker/branch/master/graph/badge.svg"
+  <a href="https://codecov.io/gh/uiucbus/bus-tracker">
+    <img src="https://codecov.io/gh/josh-byster/uiucbus/branch/master/graph/badge.svg"
          alt="Codecov">
   </a>
 </p>
