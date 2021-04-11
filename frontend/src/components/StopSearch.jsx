@@ -136,7 +136,6 @@ class StopSearch extends Component {
       value,
       onChange: this.onChange,
     };
-
     if (shouldRedirect) {
       appendRecentStop({
         name: selectionName,
@@ -157,7 +156,9 @@ class StopSearch extends Component {
           onSuggestionHighlighted={this.onSuggestionHighlighted}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
-          highlightFirstSuggestion={!highlightedSuggestion}
+          highlightFirstSuggestion={
+            suggestions.indexOf(highlightedSuggestion) < 1
+          }
           className="form-control"
           inputProps={inputProps}
         />

@@ -16,10 +16,7 @@ context('Basic', () => {
 
       // .type() with special character sequences
       .type('{downarrow}')
-      .should('have.value', 'First and Lake Park North')
-      .clear()
-      .type('PAR{uparrow}')
-      .should('have.value', 'PAR');
+      .should('have.value', 'First and Lake Park North');
   });
 
   it('cycling through results should work', () => {

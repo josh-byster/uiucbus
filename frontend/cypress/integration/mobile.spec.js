@@ -10,7 +10,7 @@ context('Mobile', () => {
     cy.route({
       method: 'GET', // Route all GET requests
       url: `*/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
-      response: '@stops'
+      response: '@stops',
     }).as('getDepartures');
   });
 
@@ -25,10 +25,7 @@ context('Mobile', () => {
 
       // .type() with special character sequences
       .type('{downarrow}')
-      .should('have.value', 'First and Lake Park North')
-      .clear()
-      .type('PAR{uparrow}')
-      .should('have.value', 'PAR');
+      .should('have.value', 'First and Lake Park North');
   });
 
   it('cycling through results should work', () => {
