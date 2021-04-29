@@ -1,0 +1,85 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/backend"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 4
+  ignore:
+  - dependency-name: chai
+    versions:
+    - 4.3.0
+    - 4.3.1
+    - 4.3.2
+    - 4.3.3
+  - dependency-name: "@sentry/node"
+    versions:
+    - 6.0.2
+    - 6.0.3
+    - 6.0.4
+    - 6.1.0
+    - 6.2.0
+    - 6.2.1
+  - dependency-name: eslint
+    versions:
+    - 7.19.0
+    - 7.20.0
+    - 7.21.0
+- package-ecosystem: npm
+  directory: "/frontend"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 4
+  ignore:
+  - dependency-name: react-autosuggest
+    versions:
+    - 10.1.0
+  - dependency-name: react-dom
+    versions:
+    - 17.0.1
+  - dependency-name: react-dev-utils
+    versions:
+    - 11.0.4
+  - dependency-name: elliptic
+    versions:
+    - 6.5.4
+  - dependency-name: "@sentry/browser"
+    versions:
+    - 6.0.2
+    - 6.0.3
+    - 6.0.4
+    - 6.1.0
+    - 6.2.0
+    - 6.2.1
+- package-ecosystem: docker
+  directory: "/backend"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 4
+  ignore:
+  - dependency-name: node
+    versions:
+    - 15.10.0.pre.alpine
+    - 15.7.0.pre.alpine
+    - 15.8.0.pre.alpine
+    - 15.9.0.pre.alpine
+- package-ecosystem: docker
+  directory: "/frontend"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 4
+  ignore:
+  - dependency-name: node
+    versions:
+    - 15.10.0.pre.alpine
+    - 15.11.0.pre.alpine
+    - 15.12.0.pre.alpine
+    - 15.13.0.pre.alpine
+    - 15.14.0.pre.alpine
+    - 15.7.0.pre.alpine
+    - 15.8.0.pre.alpine
+    - 15.9.0.pre.alpine
