@@ -10,7 +10,7 @@
     "@sentry/browser": "^6.4.1",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
-    "date-fns": "^2.21.3",
+    "date-fns": "^2.22.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
     "lint-staged": "^11.0.0",
