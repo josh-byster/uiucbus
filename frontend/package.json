@@ -15,7 +15,7 @@
     "eslint-config-prettier": "^8.3.0",
     "lint-staged": "^11.0.0",
     "logrocket": "^1.2.3",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "nprogress": "^0.2.0",
     "prettier": "^2.3.0",
     "pretty-quick": "^3.1.0",
