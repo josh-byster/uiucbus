@@ -1,4 +1,4 @@
-FROM node:16.3.0-alpine
+FROM node:17.6.0-alpine
 
 WORKDIR '/var/www/app'
 # Install app dependencies
