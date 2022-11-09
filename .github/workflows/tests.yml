@@ -28,7 +28,7 @@ jobs:
 
       - run: cd frontend && rm package.json && rm package-lock.json && npm i --force cypress && cd ..
       - name: Cypress Run 🌲
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           working-directory: frontend
           wait-on: 'http://localhost:3000'
