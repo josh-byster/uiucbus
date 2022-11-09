@@ -26,7 +26,7 @@ jobs:
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
 
-      - run: cd frontend && npm i --force cypress
+      - run: cd frontend && rm package.json && rm package-lock.json && npm i --force cypress && cd ..
       - name: Cypress Run 🌲
         uses: cypress-io/github-action@v2
         with:
