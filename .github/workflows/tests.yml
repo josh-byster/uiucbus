@@ -26,6 +26,7 @@ jobs:
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
 
+      - run: npm i -g cypress
       - name: Cypress Run 🌲
         uses: cypress-io/github-action@v2
         with:
@@ -33,6 +34,7 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 180
           start: docker-compose -f ../docker-compose.prod.yml up -d
+          install: false
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
 
