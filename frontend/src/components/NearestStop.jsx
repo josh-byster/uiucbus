@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
-import { geolocated } from 'react-geolocated';
+import { useGeolocated } from 'react-geolocated';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -18,8 +18,8 @@ class NearestStop extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { coords } = this.props;
-    if (coords && coords !== prevProps.coords) {
+    const { isOpen } = this.props;
+    if (isOpen) {
       this.getStops();
     }
   }
@@ -28,8 +28,9 @@ class NearestStop extends Component {
     const {
       coords: { latitude, longitude },
     } = this.props;
+    console.log(latitude)
     const { status, stops } = await getNearestStops(latitude, longitude);
-
+    
     if (status.code === 200) {
       this.setState({ validRequest: true, stops });
     } else {
@@ -39,14 +40,14 @@ class NearestStop extends Component {
   };
 
   render() {
-    const { isOpen, toggle, positionError, coords } = this.props;
+    const { isOpen, toggle, coords } = this.props;
     const { stops, showMore } = this.state;
     return (
       <div>
         <Modal isOpen={isOpen} toggle={toggle} className="nearest-stop-modal">
           <ModalHeader>Nearest Stops</ModalHeader>
           <ModalBody>
-            {positionError != null
+            {!coords
               ? 'Location services are not enabled.'
               : stops.slice(0, showMore ? 10 : 5).map((value, key) => {
                   // only get 5 items max
@@ -97,10 +98,16 @@ NearestStop.propTypes = {
   coords: PropTypes.object,
 };
 
-export default geolocated({
+const config = {
   positionOptions: {
     enableHighAccuracy: false,
   },
   userDecisionTimeout: 5000,
-  suppressLocationOnMount: true,
-})(NearestStop);
+};
+
+const WrappedNearestStop = (props) => {
+  const { coords } = useGeolocated(config);
+  return (<NearestStop {...props} coords={coords}/>)
+  
+}
+export default WrappedNearestStop;

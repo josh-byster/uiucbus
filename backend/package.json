@@ -5,30 +5,30 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon server.js",
-    "test": "NODE_ENV=test nyc mocha tests --timeout 7500",
+    "test": "NODE_ENV=test nyc mocha tests --timeout 7500 --exit",
     "coverage": "npm run test && nyc report --reporter=text-lcov | codecov -y --pipe"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sentry/node": "^6.5.1",
-    "axios": ">=0.21.1",
+    "@sentry/node": "^7.18.0",
+    "axios": ">=1.1.3",
     "bluebird": "^3.7.2",
-    "express": "^4.17.1",
-    "helmet": "^4.6.0",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
     "morgan": "^1.10.0",
     "node-fetch": "^3.2.10",
-    "nodemon": "^2.0.7",
-    "redis": "^3.1.2"
+    "nodemon": "^2.0.20",
+    "redis": "^4.4.0"
   },
   "devDependencies": {
-    "chai": "^4.3.4",
+    "chai": "^4.3.7",
     "chai-http": "^4.3.0",
     "codecov": "^3.8.2",
-    "eslint": "^7.28.0",
+    "eslint": "^8.27.0",
     "mocha": "^10.1.0",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.1.0",
-    "supertest": "^6.1.3"
+    "supertest": "^6.3.1"
   }
 }

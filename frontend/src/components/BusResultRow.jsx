@@ -1,25 +1,9 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
-import posed, { PoseGroup } from 'react-pose';
 import removeColors from './HelperFunctions';
 
 class BusResultRow extends Component {
-  TransitionWrapper = posed.tr({
-    enter: {
-      opacity: 1,
-      // eslint-disable-next-line react/destructuring-assignment
-      delay: (100 * (1 - 0.5 ** this.props.elementOrder)) / (1 - 0.5),
-      transition: {
-        opacity: { ease: 'easeIn', duration: 300 },
-      },
-    },
-    exit: {
-      opacity: 0,
-      transition: { duration: 0 },
-    },
-  });
-
   constructor(props) {
     super(props);
     this.state = {
@@ -59,10 +43,8 @@ class BusResultRow extends Component {
   render() {
     const { isVisible } = this.state;
     const { info, toggleModal } = this.props;
-    return (
-      <PoseGroup flipMove={false}>
-        {isVisible && (
-          <this.TransitionWrapper
+    return (isVisible && (
+          <tr
             key={info.headsign + info.expected_mins}
             style={this.getTRStyle()}
             className="resultRow"
@@ -81,9 +63,8 @@ class BusResultRow extends Component {
                 Location
               </Button>
             </td>
-          </this.TransitionWrapper>
-        )}
-      </PoseGroup>
+          </tr>
+        )
     );
   }
 }

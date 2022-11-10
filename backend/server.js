@@ -28,7 +28,9 @@ app.use(helmet());
 const port = process.env.PORT;
 const host = process.env.REDIS_URL ? process.env.REDIS_URL : '';
 
-var client = redis.createClient(host);
+var client = redis.createClient({url: host});
+
+client.connect().then(console.log);
 bluebird.promisifyAll(redis);
 
 app.all('/*', function(req, res, next) {
@@ -42,7 +44,7 @@ app.get('/api/getdeparturesbystop', async (req, res) => {
   if (!stop_id) {
     return res.status(400).send('invalid');
   }
-  let stringifiedCurrentEntry = await client.getAsync(stop_id);
+  let stringifiedCurrentEntry = await client.get(stop_id);
   let resp;
 
   if (stringifiedCurrentEntry) {
@@ -72,7 +74,7 @@ app.get('/api/getstop', async (req, res) => {
   if (!stop_id) {
     return res.status(400).send('invalid');
   }
-  let stringifiedCurrentEntry = await client.getAsync(key);
+  let stringifiedCurrentEntry = await client.get(key);
   let resp;
 
   if (stringifiedCurrentEntry) {
@@ -124,7 +126,7 @@ const updateGetDeparturesCache = async stop_id => {
     opts
   )).data;
 
-  await client.setAsync(stop_id, JSON.stringify(json), 'EX', 30);
+  await client.set(stop_id, JSON.stringify(json), 'EX', 30);
   return json;
 };
 
@@ -136,7 +138,7 @@ const updateGetStopCache = async stop_id => {
   )).data;
 
   // refresh every 24 hours
-  await client.setAsync(
+  await client.set(
     `${stop_id}.stop`,
     JSON.stringify(json),
     'EX',
