@@ -29,7 +29,7 @@ class NearestStop extends Component {
       coords: { latitude, longitude },
     } = this.props;
     const { status, stops } = await getNearestStops(latitude, longitude);
-
+    
     if (status.code === 200) {
       this.setState({ validRequest: true, stops });
     } else {
@@ -105,9 +105,9 @@ const config = {
   suppressLocationOnMount: true,
 };
 
-const WrappedNearestStop = () => {
+const WrappedNearestStop = (props) => {
   const { coords } = useGeolocated(config);
-  return (<NearestStop coords={coords}/>)
+  return (<NearestStop {...props} coords={coords}/>)
   
 }
 export default WrappedNearestStop;
