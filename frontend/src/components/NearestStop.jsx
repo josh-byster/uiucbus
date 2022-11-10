@@ -18,8 +18,8 @@ class NearestStop extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { coords } = this.props;
-    if (coords && coords !== prevProps.coords) {
+    const { isOpen } = this.props;
+    if (isOpen) {
       this.getStops();
     }
   }
@@ -28,6 +28,7 @@ class NearestStop extends Component {
     const {
       coords: { latitude, longitude },
     } = this.props;
+    console.log(latitude)
     const { status, stops } = await getNearestStops(latitude, longitude);
     
     if (status.code === 200) {
@@ -39,14 +40,14 @@ class NearestStop extends Component {
   };
 
   render() {
-    const { isOpen, toggle, positionError, coords } = this.props;
+    const { isOpen, toggle, coords } = this.props;
     const { stops, showMore } = this.state;
     return (
       <div>
         <Modal isOpen={isOpen} toggle={toggle} className="nearest-stop-modal">
           <ModalHeader>Nearest Stops</ModalHeader>
           <ModalBody>
-            {positionError != null
+            {!coords
               ? 'Location services are not enabled.'
               : stops.slice(0, showMore ? 10 : 5).map((value, key) => {
                   // only get 5 items max
@@ -102,7 +103,6 @@ const config = {
     enableHighAccuracy: false,
   },
   userDecisionTimeout: 5000,
-  suppressLocationOnMount: true,
 };
 
 const WrappedNearestStop = (props) => {

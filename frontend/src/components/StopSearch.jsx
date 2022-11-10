@@ -171,11 +171,11 @@ class StopSearch extends Component {
         >
           <FontAwesomeIcon icon={faMapMarkerAlt} />
         </Button>
-        <NearestStop
+        {nearestStopModalOpen && <NearestStop
           isOpen={nearestStopModalOpen}
           toggle={this.toggleNearestStopModal}
           ref={this.getInnerRef}
-        />
+        />}
       </div>
     );
   }
