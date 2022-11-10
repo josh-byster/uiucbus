@@ -170,5 +170,5 @@ describe('other API call', function() {
 after(() => {
   // flush cache for next run
   client.FLUSHALL();
-  client.end(true);
+  client.quit();
 });
