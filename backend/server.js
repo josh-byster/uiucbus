@@ -126,7 +126,7 @@ const updateGetDeparturesCache = async stop_id => {
     opts
   )).data;
 
-  await client.set(stop_id, JSON.stringify(json), 'EX', 30);
+  await client.set(stop_id, JSON.stringify(json), {EX: 30});
   return json;
 };
 
