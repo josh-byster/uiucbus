@@ -105,7 +105,7 @@ class BusNavbar extends Component {
                 <DropdownToggle nav caret onClick={this.updateRecents}>
                   Recents
                 </DropdownToggle>
-                <DropdownMenu right>
+                <DropdownMenu end>
                   {recentStops.map((value, key) => {
                     return (
                       <DropdownItem key={key}>

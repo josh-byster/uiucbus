@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Sentry from '@sentry/browser';
 import './App.css';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import HomePage from './pages/HomePage';
 import TrackingPage from './pages/TrackingPage';
@@ -32,15 +32,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 function App() {
   return (
-    <Router>
       <div>
         <BusNavbar />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/track/:id" component={TrackingPage} />
-        </Switch>
+        <Routes>
+          <Route exact path="/" element={<HomePage/>} />
+          <Route path="/track/:id" element={<TrackingPage/>} />
+        </Routes>
       </div>
-    </Router>
   );
 }
 

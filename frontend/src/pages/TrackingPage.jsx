@@ -10,6 +10,7 @@ import BusResults from '../components/BusResults';
 import '../styles/tracking.scss';
 import { getStop } from '../util/api';
 import StopSearch from '../components/StopSearch';
+import { useParams } from 'react-router-dom';
 
 const SECS_UNTIL_REFRESH_WARN = 10;
 
@@ -25,16 +26,16 @@ class TrackingPage extends Component {
       intervalID: -1,
       error: '',
     };
-    const { match } = this.props;
-    this.getStopName(match.params.id);
+    const { params } = this.props;
+    this.getStopName(params.id);
     this.state.intervalID = setInterval(this.incrementCounter, 1000);
   }
 
   componentDidUpdate(prevProps) {
-    const { match } = this.props;
-    if (prevProps.match.params.id !== match.params.id) {
+    const { params } = this.props;
+    if (prevProps.params.id !== params.id) {
       this.setState({ stopNameLoaded: null, stopResultsLoaded: null });
-      this.getStopName(match.params.id);
+      this.getStopName(params.id);
     }
   }
 
@@ -174,7 +175,20 @@ class TrackingPage extends Component {
 }
 
 TrackingPage.propTypes = {
-  match: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
-export default TrackingPage;
+const withRouter = WrappedComponent => props => {
+  const params = useParams();
+  // etc... other react-router-dom v6 hooks
+
+  return (
+    <WrappedComponent
+      {...props}
+      params={params}
+      // etc...
+    />
+  );
+};
+
+export default withRouter(TrackingPage);

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
-import { geolocated } from 'react-geolocated';
+import { useGeolocated } from 'react-geolocated';
 import PropTypes from 'prop-types';
 import { Modal, ModalHeader, ModalBody, Button, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -97,10 +97,17 @@ NearestStop.propTypes = {
   coords: PropTypes.object,
 };
 
-export default geolocated({
+const config = {
   positionOptions: {
     enableHighAccuracy: false,
   },
   userDecisionTimeout: 5000,
   suppressLocationOnMount: true,
-})(NearestStop);
+};
+
+const WrappedNearestStop = () => {
+  const { coords } = useGeolocated(config);
+  return (<NearestStop coords={coords}/>)
+  
+}
+export default WrappedNearestStop;

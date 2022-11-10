@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import '../styles/StopSearch.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -141,7 +141,7 @@ class StopSearch extends Component {
         name: selectionName,
         id: selectionID,
       });
-      return <Redirect push to={`/track/${selectionID}`} />;
+      return <Navigate to={`/track/${selectionID}`} />;
     }
 
     // Finally, render it!
