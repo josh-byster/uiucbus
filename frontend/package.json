@@ -33,7 +33,7 @@
     "reactstrap": "^9.1.5"
   },
   "scripts": {
-    "start": "CHOKIDAR_USEPOLLING=true react-scripts start",
+    "start": "WATCHPACK_POLLING=true react-scripts start",
     "lint-all": "eslint 'src/**/*.{jsx,js}'",
     "build": "react-scripts build",
     "test": "react-scripts test",
