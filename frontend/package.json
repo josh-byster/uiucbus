@@ -12,7 +12,7 @@
     "date-fns": "^2.29.3",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
-    "framer-motion": "^7.6.15",
+    "framer-motion": "^7.10.0",
     "lint-staged": "^13.0.4",
     "logrocket": "^3.0.1",
     "node-sass": "^8.0.0",
