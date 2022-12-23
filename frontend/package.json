@@ -7,7 +7,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@sentry/browser": "^7.26.0",
-    "axios": "^1.2.0",
+    "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.29.3",
     "eslint-config-airbnb": "^19.0.4",
