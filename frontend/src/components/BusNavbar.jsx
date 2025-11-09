@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Collapse,
@@ -18,128 +18,97 @@ import {
   getRecentStops,
   clearAllRecents,
 } from '../util/CookieHandler';
+import '../styles/navbar.scss';
 
-class BusNavbar extends Component {
-  defaultStops = [
-    {
-      name: 'Transit Plaza',
-      id: 'PLAZA',
+const DEFAULT_STOPS = [
+  { name: 'Transit Plaza', id: 'PLAZA' },
+  { name: 'Illini Union', id: 'IU' },
+  { name: 'PAR', id: 'PAR' },
+  { name: 'Krannert Center', id: 'KRANNERT' },
+  { name: 'First & Stadium', id: '1STSTDM' },
+];
+
+const BusNavbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [recentStops, setRecentStops] = useState([]);
+
+  const toggle = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []);
+
+  const closeNavbar = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const updateRecents = useCallback(() => {
+    setRecentStops(getRecentStops());
+  }, []);
+
+  const handleStopClick = useCallback(
+    (stop) => (e) => {
+      appendRecentStop({ name: stop.name, id: stop.id });
+      closeNavbar();
+      e.target.blur();
     },
-    {
-      name: 'Illini Union',
-      id: 'IU',
+    [closeNavbar]
+  );
+
+  const handleRecentClick = useCallback(
+    (e) => {
+      e.target.blur();
+      closeNavbar();
     },
-    {
-      name: 'PAR',
-      id: 'PAR',
-    },
-    {
-      name: 'Krannert Center',
-      id: 'KRANNERT',
-    },
-    {
-      name: 'First & Stadium',
-      id: '1STSTDM',
-    },
-  ];
+    [closeNavbar]
+  );
 
-  constructor(props) {
-    super(props);
+  return (
+    <Navbar color="dark" dark expand="md" className="navbar-modern">
+      <NavbarBrand tag={Link} to="/">
+        UIUC Bus Tracker
+      </NavbarBrand>
+      <NavbarToggler onClick={toggle} aria-label="Toggle navigation" />
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="ms-auto" navbar>
+          {DEFAULT_STOPS.map((stop) => (
+            <NavItem key={stop.id}>
+              <NavLink tag={Link} to={`/track/${stop.id}`} onClick={handleStopClick(stop)}>
+                {stop.name}
+              </NavLink>
+            </NavItem>
+          ))}
 
-    this.state = {
-      isOpen: false,
-      recentStops: [],
-    };
-  }
-
-  toggle = () => {
-    const { isOpen } = this.state;
-    this.setState({
-      isOpen: !isOpen,
-    });
-  };
-
-  closeNavbar = () => {
-    const { isOpen } = this.state;
-    if (isOpen) {
-      this.setState({
-        isOpen: false,
-      });
-    }
-  };
-
-  updateRecents = () => {
-    this.setState({ recentStops: getRecentStops() });
-  };
-
-  render() {
-    const { isOpen, recentStops } = this.state;
-    return (
-      <div>
-        <Navbar color="dark" dark expand="md">
-          <NavbarBrand tag={Link} to="/">
-            UIUC Bus Tracker
-          </NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              {this.defaultStops.map((value, key) => {
-                return (
-                  <NavItem key={key}>
-                    <NavLink
-                      tag={Link}
-                      to={`/track/${value.id}`}
-                      onClick={(e) => {
-                        appendRecentStop({ name: value.name, id: value.id });
-                        this.closeNavbar();
-                        e.target.blur();
-                      }}
-                    >
-                      {value.name}
-                    </NavLink>
-                  </NavItem>
-                );
-              })}
-
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret onClick={this.updateRecents}>
-                  Recents
-                </DropdownToggle>
-                <DropdownMenu end>
-                  {recentStops.map((value, key) => {
-                    return (
-                      <DropdownItem key={key}>
-                        <NavLink
-                          tag={Link}
-                          to={`/track/${value.id}`}
-                          onClick={(e) => {
-                            e.target.blur();
-                            this.closeNavbar();
-                          }}
-                          style={{ color: '#000000' }}
-                        >
-                          {value.name}
-                        </NavLink>
-                      </DropdownItem>
-                    );
-                  })}
+          <UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret onClick={updateRecents}>
+              Recents
+            </DropdownToggle>
+            <DropdownMenu end>
+              {recentStops.length > 0 ? (
+                <>
+                  {recentStops.map((stop, index) => (
+                    <DropdownItem key={`${stop.id}-${index}`}>
+                      <Link
+                        to={`/track/${stop.id}`}
+                        onClick={handleRecentClick}
+                        className="dropdown-link"
+                      >
+                        {stop.name}
+                      </Link>
+                    </DropdownItem>
+                  ))}
                   <DropdownItem divider />
-                  <DropdownItem>
-                    <NavLink
-                      onClick={() => clearAllRecents()}
-                      style={{ color: '#000000' }}
-                    >
-                      Clear All
-                    </NavLink>
+                  <DropdownItem onClick={clearAllRecents} className="clear-recents">
+                    Clear All
                   </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
-    );
-  }
-}
+                </>
+              ) : (
+                <DropdownItem disabled>No recent stops</DropdownItem>
+              )}
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </Nav>
+      </Collapse>
+    </Navbar>
+  );
+};
 
 export default BusNavbar;

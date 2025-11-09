@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import Autosuggest from 'react-autosuggest';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
@@ -11,7 +11,6 @@ import NearestStop from './NearestStop';
 
 const stops = require('../util/allstops.json');
 
-// Teach Autosuggest how to calculate suggestions for any given input value.
 const getSuggestions = (value) => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
@@ -21,165 +20,111 @@ const getSuggestions = (value) => {
     ? []
     : stops
         .filter((stop) => {
-          let containsWord = true;
-          // loop through every word in the input and see if it's included in the stop name
-          words.forEach((word) => {
-            if (!stop.stop_name.toLowerCase().includes(word))
-              containsWord = false;
-          });
-
-          return containsWord;
+          return words.every((word) => stop.stop_name.toLowerCase().includes(word));
         })
         .slice(0, 5);
 };
 
-// When suggestion is clicked, Autosuggest needs to populate the input
-// based on the clicked suggestion. Teach Autosuggest how to calculate the
-// input value for every given suggestion.
 const getSuggestionValue = (suggestion) => suggestion.stop_name;
 
-// Use your imagination to render suggestions.
 const renderSuggestion = (suggestion) => <div>{suggestion.stop_name}</div>;
 
-class StopSearch extends Component {
-  constructor() {
-    super();
+const StopSearch = ({ style }) => {
+  const [value, setValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectionID, setSelectionID] = useState('');
+  const [selectionName, setSelectionName] = useState('');
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [nearestStopModalOpen, setNearestStopModalOpen] = useState(false);
+  const [highlightedSuggestion, setHighlightedSuggestion] = useState(null);
 
-    // Autosuggest is a controlled component.
-    // This means that you need to provide an input value
-    // and an onChange handler that updates this value (see below).
-    // Suggestions also need to be provided to the Autosuggest,
-    // and they are initially empty because the Autosuggest is closed.
-    this.state = {
-      value: '',
-      suggestions: [],
-      selectionID: '',
-      selectionName: '',
-      nearestStopModalOpen: false,
-    };
+  const nearestStopRef = useRef(null);
+
+  const onChange = useCallback((event, { newValue }) => {
+    setValue(newValue);
+  }, []);
+
+  const onSuggestionSelected = useCallback((e, { suggestion }) => {
+    setShouldRedirect(true);
+    setSelectionID(suggestion.stop_id);
+    setSelectionName(suggestion.stop_name);
+    setValue('');
+  }, []);
+
+  const onSuggestionsFetchRequested = useCallback(({ value }) => {
+    setSuggestions(getSuggestions(value));
+  }, []);
+
+  const onSuggestionsClearRequested = useCallback(() => {
+    setSuggestions([]);
+  }, []);
+
+  const onSuggestionHighlighted = useCallback(({ suggestion }) => {
+    setHighlightedSuggestion(suggestion);
+  }, []);
+
+  const toggleNearestStopModal = useCallback(() => {
+    setNearestStopModalOpen((prev) => !prev);
+  }, []);
+
+  const getLocation = useCallback(() => {
+    if (nearestStopRef.current) {
+      nearestStopRef.current.getLocation();
+    }
+  }, []);
+
+  const inputProps = {
+    placeholder: 'Type the name of a stop',
+    value,
+    onChange,
+    'aria-label': 'Search for bus stop',
+  };
+
+  if (shouldRedirect) {
+    appendRecentStop({
+      name: selectionName,
+      id: selectionID,
+    });
+    setShouldRedirect(false);
+    return <Navigate to={`/track/${selectionID}`} />;
   }
 
-  componentDidUpdate() {
-    const { shouldRedirect } = this.state;
-    if (shouldRedirect) {
-      this.setState({ shouldRedirect: false, value: '' });
-    }
-  }
-
-  getLocation = () => {
-    if (this.innerRef) {
-      this.innerRef.getLocation();
-    }
-  };
-
-  getInnerRef = (ref) => {
-    this.innerRef = ref;
-  };
-
-  toggleNearestStopModal = () => {
-    this.setState((prevState) => ({
-      nearestStopModalOpen: !prevState.nearestStopModalOpen,
-    }));
-  };
-
-  onChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue,
-    });
-  };
-
-  onSuggestionSelected = (e, { suggestion }) => {
-    this.setState({
-      shouldRedirect: true,
-      selectionID: suggestion.stop_id,
-      selectionName: suggestion.stop_name,
-    });
-  };
-
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value),
-    });
-  };
-
-  // Autosuggest will call this function every time you need to clear suggestions.
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: [],
-    });
-  };
-
-  onSuggestionHighlighted = ({ suggestion }) => {
-    this.setState({
-      highlightedSuggestion: suggestion,
-    });
-  };
-
-  innerRef;
-
-  render() {
-    const {
-      value,
-      suggestions,
-      shouldRedirect,
-      selectionName,
-      selectionID,
-      nearestStopModalOpen,
-      highlightedSuggestion,
-    } = this.state;
-    const { style } = this.props;
-    // Autosuggest will pass through all these props to the input.
-    const inputProps = {
-      placeholder: 'Type the name of a stop',
-      value,
-      onChange: this.onChange,
-    };
-    if (shouldRedirect) {
-      appendRecentStop({
-        name: selectionName,
-        id: selectionID,
-      });
-      return <Navigate to={`/track/${selectionID}`} />;
-    }
-
-    // Finally, render it!
-    return (
-      <div className="search-wrapper">
-        <Autosuggest
-          style={style}
-          onSuggestionSelected={this.onSuggestionSelected}
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          onSuggestionHighlighted={this.onSuggestionHighlighted}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          highlightFirstSuggestion={
-            suggestions.indexOf(highlightedSuggestion) < 1
-          }
-          className="form-control"
-          inputProps={inputProps}
-        />
-        <Button
-          className="location-btn"
-          onClick={() => {
-            this.getLocation();
-            this.toggleNearestStopModal();
-          }}
-        >
-          <FontAwesomeIcon icon={faMapMarkerAlt} />
-        </Button>
-        {nearestStopModalOpen && <NearestStop
+  return (
+    <div className="search-wrapper">
+      <Autosuggest
+        style={style}
+        onSuggestionSelected={onSuggestionSelected}
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        onSuggestionHighlighted={onSuggestionHighlighted}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        highlightFirstSuggestion={
+          !highlightedSuggestion || suggestions.indexOf(highlightedSuggestion) < 1
+        }
+        inputProps={inputProps}
+      />
+      <Button
+        className="location-btn"
+        onClick={() => {
+          getLocation();
+          toggleNearestStopModal();
+        }}
+        aria-label="Find nearest bus stops"
+      >
+        <FontAwesomeIcon icon={faMapMarkerAlt} />
+      </Button>
+      {nearestStopModalOpen && (
+        <NearestStop
           isOpen={nearestStopModalOpen}
-          toggle={this.toggleNearestStopModal}
-          ref={this.getInnerRef}
-        />}
-      </div>
-    );
-  }
-}
+          toggle={toggleNearestStopModal}
+          ref={nearestStopRef}
+        />
+      )}
+    </div>
+  );
+};
 
 StopSearch.propTypes = {
   style: PropTypes.object,
