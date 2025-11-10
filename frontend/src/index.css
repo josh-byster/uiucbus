@@ -81,10 +81,36 @@
     color: hsl(var(--primary));
     transition: color 0.15s ease;
     text-decoration: none;
+    cursor: pointer;
   }
 
   a:hover {
     color: hsl(var(--primary) / 0.8);
+  }
+
+  /* Cursor pointer for all interactive elements */
+  button,
+  [role="button"],
+  [type="button"],
+  [type="submit"],
+  [type="reset"],
+  a,
+  label,
+  select,
+  summary,
+  [tabindex]:not([tabindex="-1"]) {
+    cursor: pointer;
+  }
+
+  /* Make sure disabled elements don't get the pointer cursor */
+  :disabled,
+  [aria-disabled="true"] {
+    cursor: default;
+  }
+
+  /* Cursor pointer for elements with click handlers */
+  .cursor-pointer {
+    cursor: pointer;
   }
 }
 
