@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Table } from 'reactstrap';
 import PropTypes from 'prop-types';
-import PullToRefresh from 'pulltorefreshjs';
 import { motion, AnimatePresence } from 'framer-motion';
+import { AlertCircle } from 'lucide-react';
 import { getBuses } from '../util/api';
 import BusResultRow from './BusResultRow';
+import BusResultSkeleton from './BusResultSkeleton';
 import BusInfoModal from './BusInfoModal';
 
 const BusResults = ({ stopInfo, resultCallback, style, shouldRefresh, errorHandler }) => {
@@ -12,6 +12,7 @@ const BusResults = ({ stopInfo, resultCallback, style, shouldRefresh, errorHandl
   const [validRequest, setValidRequest] = useState(null);
   const [modalInfo, setModalInfo] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleRequestError = useCallback(
     (numRetries) => {
@@ -23,6 +24,7 @@ const BusResults = ({ stopInfo, resultCallback, style, shouldRefresh, errorHandl
   );
 
   const getData = useCallback(async () => {
+    setIsLoading(true);
     const { status, departures: fetchedDepartures } = await getBuses(
       stopInfo.stop_id,
       handleRequestError
@@ -33,23 +35,9 @@ const BusResults = ({ stopInfo, resultCallback, style, shouldRefresh, errorHandl
     } else {
       setValidRequest(false);
     }
+    setIsLoading(false);
     resultCallback();
   }, [stopInfo.stop_id, handleRequestError, resultCallback]);
-
-  useEffect(() => {
-    PullToRefresh.init({
-      mainElement: 'body',
-      triggerElement: '.data',
-      shouldPullToRefresh: () => {
-        return stopInfo.stop_id !== undefined;
-      },
-      onRefresh: getData,
-    });
-
-    return () => {
-      PullToRefresh.destroyAll();
-    };
-  }, [stopInfo.stop_id, getData]);
 
   useEffect(() => {
     if (stopInfo.stop_id || shouldRefresh) {
@@ -80,37 +68,51 @@ const BusResults = ({ stopInfo, resultCallback, style, shouldRefresh, errorHandl
     return {};
   }, []);
 
-  if (validRequest === null) {
-    return <div />;
-  }
-
-  if (validRequest === false) {
+  // Loading state with skeletons
+  if (isLoading || validRequest === null) {
     return (
-      <motion.h4
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        This page cannot be loaded.
-      </motion.h4>
+      <div className="max-w-4xl mx-auto px-4 space-y-3">
+        {[...Array(3)].map((_, i) => (
+          <BusResultSkeleton key={i} />
+        ))}
+      </div>
     );
   }
 
-  if (validRequest === true && departures.length === 0) {
+  // Error state
+  if (validRequest === false) {
     return (
-      <motion.h4
-        className="no-bus"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      <motion.div
+        className="max-w-2xl mx-auto px-4 py-12 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        No buses coming in the next hour.
-      </motion.h4>
+        <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
+        <h4 className="text-xl font-semibold text-foreground mb-2">Unable to Load</h4>
+        <p className="text-muted-foreground">This page cannot be loaded at the moment.</p>
+      </motion.div>
+    );
+  }
+
+  // No buses state
+  if (validRequest === true && departures.length === 0) {
+    return (
+      <motion.div
+        className="max-w-2xl mx-auto px-4 py-12 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="text-6xl mb-4">🚌</div>
+        <h4 className="text-xl font-semibold text-foreground mb-2">No Buses Coming</h4>
+        <p className="text-muted-foreground">No buses coming in the next hour.</p>
+      </motion.div>
     );
   }
 
   return (
-    <div style={style}>
+    <div style={style} className="max-w-4xl mx-auto px-4">
       <BusInfoModal
         busInfo={modalInfo}
         isOpen={modalOpen}
@@ -118,34 +120,19 @@ const BusResults = ({ stopInfo, resultCallback, style, shouldRefresh, errorHandl
         stopInfo={stopInfo}
         headerStyle={getModalStyle(modalInfo)}
       />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
-      >
-        <Table responsive>
-          <thead>
-            <tr>
-              <th id="bus-name">Bus Name</th>
-              <th id="mins-left">Mins Left</th>
-              <th id="eta">ETA</th>
-              <th id="last-location">Last Location</th>
-            </tr>
-          </thead>
-          <tbody>
-            <AnimatePresence>
-              {departures.map((element, key) => (
-                <BusResultRow
-                  info={element}
-                  toggleModal={toggleModal}
-                  key={`${element.headsign}-${element.expected_mins}-${key}`}
-                  elementOrder={key}
-                />
-              ))}
-            </AnimatePresence>
-          </tbody>
-        </Table>
-      </motion.div>
+
+      <div className="space-y-3">
+        <AnimatePresence mode="popLayout">
+          {departures.map((element, key) => (
+            <BusResultRow
+              info={element}
+              toggleModal={toggleModal}
+              key={`${element.headsign}-${element.expected_mins}-${key}`}
+              elementOrder={key}
+            />
+          ))}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

@@ -3,10 +3,24 @@ import * as Sentry from '@sentry/browser';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import ReactGA from 'react-ga';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'sonner';
 import HomePage from './pages/HomePage';
 import TrackingPage from './pages/TrackingPage';
 import BusNavbar from './components/BusNavbar';
+import { ThemeProvider } from './components/theme-provider';
 import LogRocket from 'logrocket';
+
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 2, // 2 minutes
+      refetchOnWindowFocus: true,
+    },
+  },
+});
+
 if (import.meta.env.PROD) {
   ReactGA.initialize('UA-109186351-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
@@ -30,13 +44,18 @@ if (import.meta.env.PROD) {
 }
 function App() {
   return (
-      <div>
-        <BusNavbar />
-        <Routes>
-          <Route exact path="/" element={<HomePage/>} />
-          <Route path="/track/:id" element={<TrackingPage/>} />
-        </Routes>
-      </div>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <QueryClientProvider client={queryClient}>
+        <div className="min-h-screen">
+          <BusNavbar />
+          <Routes>
+            <Route exact path="/" element={<HomePage />} />
+            <Route path="/track/:id" element={<TrackingPage />} />
+          </Routes>
+          <Toaster position="top-center" richColors />
+        </div>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 
