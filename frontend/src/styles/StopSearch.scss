@@ -19,15 +19,20 @@
   font-weight: var(--font-weight-normal);
   font-size: 1rem;
   border: 2px solid rgba(0, 0, 0, 0.1);
-  border-right: 0;
-  border-radius: var(--radius-md);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-right: none;
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
   margin: var(--spacing-md) 0;
+  margin-right: 0;
   transition: all var(--transition-normal);
 
   &::placeholder {
     color: var(--color-text-muted);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
   }
 
   @media screen and (max-width: 500px) {
@@ -73,11 +78,9 @@
 }
 
 .location-btn {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: var(--radius-md);
-  border-bottom-right-radius: var(--radius-md);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   height: 40px;
+  margin-left: -1px;
   transition: all var(--transition-fast);
 
   &:hover {
