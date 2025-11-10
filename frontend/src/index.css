@@ -2,45 +2,63 @@
 
 @layer base {
   :root {
+    /* Light mode - clean, crisp, visible contrast */
     --background: 0 0% 98%;
     --foreground: 222 47% 11%;
+
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
+
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
+
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 94%;
+
+    --secondary: 217 20% 92%;
     --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 94%;
-    --muted-foreground: 215 16% 40%;
-    --accent: 210 40% 93%;
+
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 10% 43%;
+
+    --accent: 217 30% 93%;
     --accent-foreground: 222 47% 11%;
+
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 85%;
-    --input: 214 32% 88%;
+
+    --border: 220 13% 87%;
+    --input: 220 13% 87%;
     --ring: 217 91% 60%;
     --radius: 0.75rem;
   }
 
   .dark {
+    /* Dark mode - optimized for OLED and reduced eye strain */
     --background: 222 47% 11%;
     --foreground: 210 40% 98%;
+
     --card: 217 33% 17%;
     --card-foreground: 210 40% 98%;
+
     --popover: 217 33% 17%;
     --popover-foreground: 210 40% 98%;
+
     --primary: 217 91% 70%;
     --primary-foreground: 222 47% 11%;
+
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
+
     --muted: 223 47% 11%;
     --muted-foreground: 215 20% 65%;
+
     --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
+
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 217 33% 17%;
     --input: 217 33% 17%;
     --ring: 217 91% 70%;
