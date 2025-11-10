@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from 'react';
 import Autosuggest from 'react-autosuggest';
 import PropTypes from 'prop-types';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import '../styles/StopSearch.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,11 +29,9 @@ const getSuggestionValue = (suggestion) => suggestion.stop_name;
 const renderSuggestion = (suggestion) => <div>{suggestion.stop_name}</div>;
 
 const StopSearch = ({ style }) => {
+  const navigate = useNavigate();
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [selectionID, setSelectionID] = useState('');
-  const [selectionName, setSelectionName] = useState('');
-  const [shouldRedirect, setShouldRedirect] = useState(false);
   const [nearestStopModalOpen, setNearestStopModalOpen] = useState(false);
   const [highlightedSuggestion, setHighlightedSuggestion] = useState(null);
 
@@ -44,11 +42,13 @@ const StopSearch = ({ style }) => {
   }, []);
 
   const onSuggestionSelected = useCallback((e, { suggestion }) => {
-    setShouldRedirect(true);
-    setSelectionID(suggestion.stop_id);
-    setSelectionName(suggestion.stop_name);
+    appendRecentStop({
+      name: suggestion.stop_name,
+      id: suggestion.stop_id,
+    });
     setValue('');
-  }, []);
+    navigate(`/track/${suggestion.stop_id}`);
+  }, [navigate]);
 
   const onSuggestionsFetchRequested = useCallback(({ value }) => {
     setSuggestions(getSuggestions(value));
@@ -78,15 +78,6 @@ const StopSearch = ({ style }) => {
     onChange,
     'aria-label': 'Search for bus stop',
   };
-
-  if (shouldRedirect) {
-    appendRecentStop({
-      name: selectionName,
-      id: selectionID,
-    });
-    setShouldRedirect(false);
-    return <Navigate to={`/track/${selectionID}`} />;
-  }
 
   return (
     <div className="search-wrapper">
