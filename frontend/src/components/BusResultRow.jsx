@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Timer } from 'lucide-react';
+import { Clock, Timer } from 'lucide-react';
 import removeColors from './HelperFunctions';
-import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { cn } from '@/lib/utils';
 
@@ -35,10 +34,11 @@ const BusResultRow = ({ info, toggleModal, elementOrder }) => {
     >
       <Card
         className={cn(
-          'overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border-l-4',
+          'overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border-l-4 cursor-pointer',
           isArriving && 'animate-pulse'
         )}
         style={{ borderLeftColor: bgColor }}
+        onClick={() => toggleModal(info)}
       >
         <div className="p-4 sm:p-5">
           <div className="flex items-center justify-between gap-4">
@@ -56,8 +56,8 @@ const BusResultRow = ({ info, toggleModal, elementOrder }) => {
               </div>
             </div>
 
-            {/* Center: Time Display */}
-            <div className="flex flex-col items-center justify-center px-4">
+            {/* Right: Time Display */}
+            <div className="flex flex-col items-end justify-center">
               <div
                 className={cn(
                   'text-3xl sm:text-4xl font-bold tabular-nums',
@@ -75,20 +75,6 @@ const BusResultRow = ({ info, toggleModal, elementOrder }) => {
                 <Timer className="h-3 w-3" />
                 <span>{isArriving ? 'Arriving' : 'minutes'}</span>
               </div>
-            </div>
-
-            {/* Right: Location Button */}
-            <div className="flex-shrink-0">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => toggleModal(info)}
-                className="gap-2"
-                aria-label={`View location of ${removeColors(info.headsign)}`}
-              >
-                <MapPin className="h-4 w-4" />
-                <span className="hidden sm:inline">Location</span>
-              </Button>
             </div>
           </div>
         </div>

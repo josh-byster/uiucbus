@@ -52,7 +52,7 @@ const BusNavbar = () => {
   }, [updateRecents]);
 
   return (
-    <nav className="glass sticky top-0 z-50 border-b border-white/10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 border-b bg-white dark:bg-gray-900 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -72,7 +72,7 @@ const BusNavbar = () => {
                 key={stop.id}
                 to={`/track/${stop.id}`}
                 onClick={handleStopClick(stop)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-accent hover:text-accent-foreground transition-all"
+                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
               >
                 {stop.name}
               </Link>
@@ -82,7 +82,7 @@ const BusNavbar = () => {
             <Menu as="div" className="relative">
               <Menu.Button
                 onClick={updateRecents}
-                className="flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-accent hover:text-accent-foreground transition-all"
+                className="flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
               >
                 <Clock className="h-4 w-4" />
                 <span>Recents</span>
@@ -153,7 +153,7 @@ const BusNavbar = () => {
             <ThemeToggle />
             <button
               onClick={toggle}
-              className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-accent transition-colors"
+              className="p-2 rounded-lg text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label="Toggle navigation"
             >
               {isOpen ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
@@ -172,14 +172,14 @@ const BusNavbar = () => {
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 -translate-y-1"
       >
-        <div className="md:hidden border-t border-white/10">
+        <div className="md:hidden border-t">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {DEFAULT_STOPS.map((stop) => (
               <Link
                 key={stop.id}
                 to={`/track/${stop.id}`}
                 onClick={handleStopClick(stop)}
-                className="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-accent hover:text-accent-foreground transition-all"
+                className="block px-3 py-2 rounded-lg text-base font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
               >
                 {stop.name}
               </Link>
@@ -187,7 +187,7 @@ const BusNavbar = () => {
 
             {/* Mobile Recents Section */}
             <div className="pt-2">
-              <div className="px-3 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+              <div className="px-3 py-2 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                 Recent Stops
               </div>
               {recentStops.length > 0 ? (
@@ -197,20 +197,20 @@ const BusNavbar = () => {
                       key={`${stop.id}-${index}`}
                       to={`/track/${stop.id}`}
                       onClick={handleRecentClick}
-                      className="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-accent hover:text-accent-foreground transition-all"
+                      className="block px-3 py-2 rounded-lg text-base font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                     >
                       {stop.name}
                     </Link>
                   ))}
                   <button
                     onClick={handleClearAll}
-                    className="w-full text-left px-3 py-2 rounded-lg text-base font-medium text-red-600 dark:text-red-400 hover:bg-destructive hover:text-destructive-foreground transition-all"
+                    className="w-full text-left px-3 py-2 rounded-lg text-base font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
                   >
                     Clear All
                   </button>
                 </>
               ) : (
-                <div className="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
+                <div className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400">
                   No recent stops
                 </div>
               )}
