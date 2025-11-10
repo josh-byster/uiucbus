@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Collapse,
@@ -44,6 +44,10 @@ const BusNavbar = () => {
     setRecentStops(getRecentStops());
   }, []);
 
+  useEffect(() => {
+    updateRecents();
+  }, [updateRecents]);
+
   const handleStopClick = useCallback(
     (stop) => (e) => {
       appendRecentStop({ name: stop.name, id: stop.id });
@@ -68,7 +72,7 @@ const BusNavbar = () => {
       </NavbarBrand>
       <NavbarToggler onClick={toggle} aria-label="Toggle navigation" />
       <Collapse isOpen={isOpen} navbar>
-        <Nav className="ms-auto" navbar>
+        <Nav navbar>
           {DEFAULT_STOPS.map((stop) => (
             <NavItem key={stop.id}>
               <NavLink tag={Link} to={`/track/${stop.id}`} onClick={handleStopClick(stop)}>
