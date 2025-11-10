@@ -1,25 +1,21 @@
 .home {
-  background: #8a2387; /* fallback for old browsers */
+  background: var(--color-purple);
+
   @keyframes bgcolor {
     0% {
-      background-color: #3498db;
+      background-color: var(--color-primary);
     }
-
     50% {
-      background-color: #27ae60;
+      background-color: var(--color-secondary);
     }
-
     100% {
-      background-color: #e67e22;
+      background-color: var(--color-accent);
     }
   }
 
-  -webkit-animation: bgcolor 10s infinite;
-  animation: bgcolor 10s infinite;
-  -webkit-animation-direction: alternate;
-  animation-direction: alternate;
+  animation: bgcolor 10s infinite alternate;
 
-  min-height: calc(100vh - 56px); // subtract navbar height
+  min-height: calc(100vh - 56px);
   background-repeat: no-repeat;
   text-align: center;
   display: flex;
@@ -27,52 +23,102 @@
   justify-content: center;
 
   h1 {
-    padding-top: 30px;
+    padding-top: var(--spacing-xl);
     display: inline-block;
-    color: #2c3e50;
+    color: var(--color-text-dark);
     max-width: 80%;
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-md);
+
+    @media screen and (max-width: 768px) {
+      font-size: 2rem;
+    }
+
+    @media screen and (max-width: 500px) {
+      font-size: 1.75rem;
+    }
   }
+
   p {
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: var(--spacing-md);
+    padding-left: var(--spacing-md);
   }
+
   .info-box {
-    border-radius: 6px;
+    border-radius: var(--radius-lg);
     width: 800px;
     max-width: 80%;
     margin-top: 80px;
-    padding-bottom: 30px;
-    box-shadow: 0 30px 30px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-    background-color: rgba(255, 255, 255, 0.7);
-    animation: fadein 0.5s;
-    animation-timing-function: ease-out;
-  }
-  @keyframes fadein {
-    from {
-      opacity: 0;
+    padding-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-card);
+    background-color: var(--color-bg-overlay);
+    backdrop-filter: blur(10px);
+
+    @media screen and (max-width: 768px) {
+      margin-top: 60px;
+      max-width: 90%;
     }
-    to {
-      opacity: 1;
+
+    @media screen and (max-width: 500px) {
+      margin-top: 40px;
+      max-width: 95%;
     }
   }
 
   .react-autosuggest__container {
     width: 60%;
+
+    @media screen and (max-width: 768px) {
+      width: 70%;
+    }
+
+    @media screen and (max-width: 500px) {
+      width: 80%;
+    }
   }
+
   .react-autosuggest__input {
     width: 100%;
     height: 40px;
-    margin: 10px 0px 10px 0px;
+    margin: var(--spacing-md) 0;
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    transition: all var(--transition-normal);
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
   }
+
   .react-autosuggest__suggestions-container--open {
     display: block;
     position: absolute;
-    top: 49px; // Margin + input height - 1
+    top: 49px;
     width: 100%;
-    // max-width: 240px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
   }
 }
+
 footer {
-  padding-top: 1.5rem;
-  padding-bottom: 1rem;
+  padding-top: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+
+  p {
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  a {
+    color: var(--color-primary);
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+  }
 }

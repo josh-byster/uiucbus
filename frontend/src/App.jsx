@@ -7,7 +7,7 @@ import HomePage from './pages/HomePage';
 import TrackingPage from './pages/TrackingPage';
 import BusNavbar from './components/BusNavbar';
 import LogRocket from 'logrocket';
-if (process.env.NODE_ENV === 'production') {
+if (import.meta.env.PROD) {
   ReactGA.initialize('UA-109186351-1');
   ReactGA.pageview(window.location.pathname + window.location.search);
 
@@ -18,9 +18,7 @@ if (process.env.NODE_ENV === 'production') {
   LogRocket.init('oh67gs/uiucbus');
 
   LogRocket.getSessionURL((sessionURL) => {
-    Sentry.configureScope((scope) => {
-      scope.setExtra('sessionURL', sessionURL);
-    });
+    Sentry.setContext('logrocket', { sessionURL });
   });
   window.addEventListener('offline', function (e) {
     console.log('Not connected to LAN');

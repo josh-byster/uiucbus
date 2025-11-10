@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon server.js",
     "test": "NODE_ENV=test nyc mocha tests --timeout 7500 --exit",
-    "coverage": "npm run test && nyc report --reporter=text-lcov | codecov -y --pipe"
+    "coverage": "npm run test && mkdir -p coverage && nyc report --reporter=text-lcov > coverage/lcov.info"
   },
   "author": "",
   "license": "ISC",
@@ -24,7 +24,6 @@
   "devDependencies": {
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
-    "codecov": "^3.8.2",
     "eslint": "^8.27.0",
     "mocha": "^10.1.0",
     "mocha-lcov-reporter": "^1.3.0",

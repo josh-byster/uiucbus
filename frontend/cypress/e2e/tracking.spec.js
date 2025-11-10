@@ -4,25 +4,9 @@ context('Tracking With Stops Available', () => {
     cy.fixture('getstop_iu.json').as('IUStopInfo');
     cy.fixture('getvehicle.json').as('IUVehicle');
 
-    cy.server(); // enable response stubbing
-
-    cy.route({
-      method: 'GET', // Route all GET requests
-      url: `*/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
-      response: '@IUStops'
-    }).as('getDepartures');
-
-    cy.route({
-      method: 'GET', // Route all GET requests
-      url: `*/getstop?stop_id=IU`, // Mock a response for a stop ID
-      response: '@IUStopInfo'
-    });
-
-    cy.route({
-      method: 'GET', // Route all GET requests
-      url: `*/getvehicle?vehicle_id=*`, // Mock a response for a stop ID
-      response: '@IUVehicle'
-    });
+    cy.intercept('GET', '*/getdeparturesbystop?stop_id=*', { fixture: 'many_stops.json' }).as('getDepartures');
+    cy.intercept('GET', '*/getstop?stop_id=IU', { fixture: 'getstop_iu.json' });
+    cy.intercept('GET', '*/getvehicle?vehicle_id=*', { fixture: 'getvehicle.json' });
 
     cy.visit('http://localhost:3000/#/track/IU');
   });

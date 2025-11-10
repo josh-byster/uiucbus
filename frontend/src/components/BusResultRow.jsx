@@ -1,73 +1,54 @@
-import React, { Component } from 'react';
+import React, { useMemo } from 'react';
 import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
 import removeColors from './HelperFunctions';
 
-class BusResultRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isVisible: false,
-    };
-  }
-
-  componentDidMount() {
-    this.setState({ isVisible: true });
-  }
-
-  computeHMS = (expectedDate) => {
+const BusResultRow = ({ info, toggleModal, elementOrder }) => {
+  const computeHMS = (expectedDate) => {
     const date = new Date(expectedDate.toString());
     let hour = date.getHours() % 12;
     if (hour === 0) {
       hour = 12;
     }
-    let minute = date.getMinutes();
-    if (minute < 10) {
-      minute = `0${minute}`;
-    }
-    let seconds = date.getSeconds();
-    if (seconds < 10) {
-      seconds = `0${seconds}`;
-    }
+    const minute = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
     return `${hour}:${minute}:${seconds}`;
   };
 
-  getTRStyle = () => {
-    const { info } = this.props;
-    return {
-      backgroundColor: `#${info.route.route_color}`,
-      color: `#${info.route.route_text_color}`,
-    };
-  };
+  const rowStyle = useMemo(() => ({
+    backgroundColor: `#${info.route.route_color}`,
+    color: `#${info.route.route_text_color}`,
+  }), [info.route.route_color, info.route.route_text_color]);
 
-  render() {
-    const { isVisible } = this.state;
-    const { info, toggleModal } = this.props;
-    return (isVisible && (
-          <tr
-            key={info.headsign + info.expected_mins}
-            style={this.getTRStyle()}
-            className="resultRow"
-          >
-            <td>
-              <b>{removeColors(info.headsign)}</b>
-            </td>
-            <td>
-              {info.expected_mins !== 0
-                ? `${info.expected_mins}m`
-                : 'Arriving Now'}
-            </td>
-            <td className="no-wrap">{this.computeHMS(info.expected)}</td>
-            <td>
-              <Button color="success" onClick={() => toggleModal(info)}>
-                Location
-              </Button>
-            </td>
-          </tr>
-        )
-    );
-  }
-}
+  return (
+    <motion.tr
+      style={rowStyle}
+      className="resultRow"
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ duration: 0.3, delay: elementOrder * 0.05 }}
+    >
+      <td>
+        <b>{removeColors(info.headsign)}</b>
+      </td>
+      <td>
+        {info.expected_mins !== 0 ? `${info.expected_mins}m` : 'Arriving Now'}
+      </td>
+      <td className="no-wrap">{computeHMS(info.expected)}</td>
+      <td>
+        <Button
+          color="success"
+          onClick={() => toggleModal(info)}
+          aria-label={`View location of ${removeColors(info.headsign)}`}
+        >
+          Location
+        </Button>
+      </td>
+    </motion.tr>
+  );
+};
 
 BusResultRow.propTypes = {
   info: PropTypes.object.isRequired,

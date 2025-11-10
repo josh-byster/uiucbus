@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import nProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatDistance } from 'date-fns';
 import { Alert } from 'reactstrap';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { motion, AnimatePresence } from 'framer-motion';
 import BusResults from '../components/BusResults';
 import '../styles/tracking.scss';
 import { getStop } from '../util/api';
@@ -14,181 +14,158 @@ import { useParams } from 'react-router-dom';
 
 const SECS_UNTIL_REFRESH_WARN = 10;
 
-class TrackingPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      stopInfo: {},
-      stopNameLoaded: null,
-      stopResultsLoaded: null,
-      secsSinceRefresh: 0,
-      shouldRefreshResults: false,
-      intervalID: -1,
-      error: '',
-    };
-    const { params } = this.props;
-    this.getStopName(params.id);
-    this.state.intervalID = setInterval(this.incrementCounter, 1000);
-  }
+const TrackingPage = () => {
+  const { id } = useParams();
+  const [stopInfo, setStopInfo] = useState({});
+  const [stopNameLoaded, setStopNameLoaded] = useState(null);
+  const [stopResultsLoaded, setStopResultsLoaded] = useState(null);
+  const [secsSinceRefresh, setSecsSinceRefresh] = useState(0);
+  const [shouldRefreshResults, setShouldRefreshResults] = useState(false);
+  const [error, setError] = useState('');
 
-  componentDidUpdate(prevProps) {
-    const { params } = this.props;
-    if (prevProps.params.id !== params.id) {
-      this.setState({ stopNameLoaded: null, stopResultsLoaded: null });
-      this.getStopName(params.id);
-    }
-  }
+  const incrementCounter = useCallback(() => {
+    setSecsSinceRefresh((prev) => prev + 1);
+  }, []);
 
-  componentWillUnmount() {
-    const { intervalID } = this.state;
-    if (intervalID !== -1) {
-      clearInterval(intervalID);
-    }
-  }
+  useEffect(() => {
+    const intervalID = setInterval(incrementCounter, 1000);
+    return () => clearInterval(intervalID);
+  }, [incrementCounter]);
 
-  finishedLoadingResults = () => {
-    this.setState({
-      error: '',
-      stopResultsLoaded: true,
-      shouldRefreshResults: false,
-      secsSinceRefresh: 0,
-    });
-  };
-
-  errorManager = (msg) => {
-    this.setState({ error: msg });
-  };
-
-  handleCurrentStopError = (numRetries) => {
-    this.errorManager(
+  const handleCurrentStopError = useCallback((numRetries) => {
+    setError(
       `Looks like at this moment, the MTD servers are under heavy load and are unresponsive. We'll keep retrying in the meantime. (Number of tries: ${numRetries})`
     );
-  };
+  }, []);
 
-  getStopName = async (stopId) => {
-    const { status, stops } = await getStop(
-      stopId,
-      this.handleCurrentStopError
-    );
-    if (status.code === 200 && stops.length > 0) {
-      const stopObj = stops[0];
-      this.setState({ stopInfo: stopObj, stopNameLoaded: true });
-      document.title = `${stopObj.stop_name} - Bus Tracker`;
-    } else {
-      this.setState({ stopInfo: {}, stopNameLoaded: false });
-    }
-  };
+  const getStopName = useCallback(
+    async (stopId) => {
+      const { status, stops } = await getStop(stopId, handleCurrentStopError);
+      if (status.code === 200 && stops.length > 0) {
+        const stopObj = stops[0];
+        setStopInfo(stopObj);
+        setStopNameLoaded(true);
+        document.title = `${stopObj.stop_name} - Bus Tracker`;
+      } else {
+        setStopInfo({});
+        setStopNameLoaded(false);
+      }
+    },
+    [handleCurrentStopError]
+  );
 
-  incrementCounter = () => {
-    this.setState((prevState) => ({
-      secsSinceRefresh: prevState.secsSinceRefresh + 1,
-    }));
-  };
+  useEffect(() => {
+    setStopNameLoaded(null);
+    setStopResultsLoaded(null);
+    getStopName(id);
+  }, [id, getStopName]);
 
-  refresh = () => {
-    this.setState({ shouldRefreshResults: true, stopResultsLoaded: false });
-  };
+  const finishedLoadingResults = useCallback(() => {
+    setError('');
+    setStopResultsLoaded(true);
+    setShouldRefreshResults(false);
+    setSecsSinceRefresh(0);
+  }, []);
 
-  shouldDisplayProgress = () => {
-    const { stopNameLoaded, stopResultsLoaded } = this.state;
-    return !stopResultsLoaded && stopNameLoaded !== false; // if the stop name invalid, display the "stop invalid"
-  };
+  const refresh = useCallback(() => {
+    setShouldRefreshResults(true);
+    setStopResultsLoaded(false);
+  }, []);
 
-  changeLoaderStatus = () => {
-    if (this.shouldDisplayProgress()) {
-      if (
-        this.state.stopNameLoaded === true &&
-        !this.state.stopResultsLoaded &&
-        nProgress.status < 0.5
-      ) {
+  const shouldDisplayProgress = useCallback(() => {
+    return !stopResultsLoaded && stopNameLoaded !== false;
+  }, [stopResultsLoaded, stopNameLoaded]);
+
+  useEffect(() => {
+    if (shouldDisplayProgress()) {
+      if (stopNameLoaded === true && !stopResultsLoaded && nProgress.status < 0.5) {
         nProgress.set(0.5);
       }
       nProgress.start();
     } else {
       nProgress.done();
     }
-  };
-  render() {
-    const {
-      stopNameLoaded,
-      stopInfo,
-      secsSinceRefresh,
-      shouldRefreshResults,
-      error,
-    } = this.state;
-    const resultStyle = this.shouldDisplayProgress() ? { display: 'none' } : {};
-    this.changeLoaderStatus();
-    const displayReload = secsSinceRefresh > SECS_UNTIL_REFRESH_WARN;
-    const timeSinceRefreshText = formatDistance(0, secsSinceRefresh * 1000, {
-      addSuffix: false,
-      includeSeconds: true,
-    });
+  }, [stopNameLoaded, stopResultsLoaded, shouldDisplayProgress]);
 
-    return (
-      <div className="tracking-page">
-        <div className="info">
-          <div className="errors container">
-            {error && <Alert color="danger">{error}</Alert>}
-          </div>
-          <div className="data" style={resultStyle}>
-            <h1 className="stop_name">{stopInfo.stop_name}</h1>
-
-            <StopSearch />
-            <div
-              className={`refresh-text ${displayReload ? 'fadeIn' : 'fadeOut'}`}
-            >
-              <h5>
-                Last refresh happened {timeSinceRefreshText} ago. Reload?
-                <br />
-                <button
-                  type="button"
-                  className="refresh-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    this.refresh();
-                  }}
-                  disabled={!displayReload}
-                >
-                  {' '}
-                  <FontAwesomeIcon icon={faSync} />
-                </button>
-              </h5>
-            </div>
-          </div>
-          <div style={resultStyle}>
-            {stopNameLoaded === false ? (
-              <h4 className="no-bus">Stop does not exist</h4>
-            ) : (
-              <BusResults
-                style={resultStyle}
-                resultCallback={this.finishedLoadingResults}
-                stopInfo={stopInfo}
-                shouldRefresh={shouldRefreshResults}
-                errorHandler={this.errorManager}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-TrackingPage.propTypes = {
-  params: PropTypes.object.isRequired,
-};
-
-const withRouter = WrappedComponent => props => {
-  const params = useParams();
-  // etc... other react-router-dom v6 hooks
+  const resultStyle = shouldDisplayProgress() ? { display: 'none' } : {};
+  const displayReload = secsSinceRefresh > SECS_UNTIL_REFRESH_WARN;
+  const timeSinceRefreshText = formatDistance(0, secsSinceRefresh * 1000, {
+    addSuffix: false,
+    includeSeconds: true,
+  });
 
   return (
-    <WrappedComponent
-      {...props}
-      params={params}
-      // etc...
-    />
+    <div className="tracking-page">
+      <div className="info">
+        <div className="errors container">
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Alert color="danger">{error}</Alert>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+        <div className="data" style={resultStyle}>
+          <motion.h1
+            className="stop_name"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {stopInfo.stop_name}
+          </motion.h1>
+
+          <StopSearch />
+          <motion.div
+            className={`refresh-text ${displayReload ? 'fadeIn' : 'fadeOut'}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: displayReload ? 1 : 0 }}
+            transition={{ duration: 0.75 }}
+          >
+            <h5>
+              Last refresh happened {timeSinceRefreshText} ago. Reload?
+              <br />
+              <button
+                type="button"
+                className="refresh-btn"
+                onClick={refresh}
+                disabled={!displayReload}
+                aria-label="Refresh bus arrivals"
+              >
+                <FontAwesomeIcon icon={faSync} />
+              </button>
+            </h5>
+          </motion.div>
+        </div>
+        <div style={resultStyle}>
+          {stopNameLoaded === false ? (
+            <motion.h4
+              className="no-bus"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              Stop does not exist
+            </motion.h4>
+          ) : (
+            <BusResults
+              style={resultStyle}
+              resultCallback={finishedLoadingResults}
+              stopInfo={stopInfo}
+              shouldRefresh={shouldRefreshResults}
+              errorHandler={setError}
+            />
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default withRouter(TrackingPage);
+export default TrackingPage;

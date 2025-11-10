@@ -6,12 +6,7 @@ context('Mobile', () => {
 
     cy.fixture('many_stops.json').as('stops');
     cy.fixture('getstop_par.json').as('PARStopInfo');
-    cy.server(); // enable response stubbing
-    cy.route({
-      method: 'GET', // Route all GET requests
-      url: `*/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
-      response: '@stops',
-    }).as('getDepartures');
+    cy.intercept('GET', '*/getdeparturesbystop?stop_id=*', { fixture: 'many_stops.json' }).as('getDepartures');
   });
 
   it('should have Bus Tracker title', () => {

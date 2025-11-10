@@ -1,77 +1,173 @@
 .tracking-page {
-  @import url('https://fonts.googleapis.com/css?family=Rubik:300,400');
   h1,
   h4 {
     text-align: center;
   }
+
+  h1 {
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-medium);
+  }
+
   h4 {
-    font-family: 'Rubik', sans-serif;
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-normal);
   }
 
   .errors {
-    margin-top: 10px;
+    margin-top: var(--spacing-md);
     text-align: center;
     white-space: pre-line;
   }
+
   .no-bus {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: var(--spacing-lg);
+    margin-right: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+    color: var(--color-text-muted);
   }
+
   .table {
-    font-family: 'Rubik', sans-serif;
+    font-family: var(--font-primary);
+
+    thead th {
+      border-top: none;
+      border-bottom: 2px solid var(--color-primary);
+      color: var(--color-text-dark);
+      font-weight: var(--font-weight-medium);
+      padding: var(--spacing-md);
+      font-size: 1rem;
+
+      @media screen and (max-width: 768px) {
+        font-size: 0.9rem;
+        padding: var(--spacing-sm);
+      }
+
+      @media screen and (max-width: 500px) {
+        font-size: 0.8rem;
+        padding: var(--spacing-xs);
+      }
+    }
+
     td {
-      padding-top: 2rem;
-      padding-bottom: 2rem;
-      font-size: 20px;
-      @media screen and(max-width:500px) {
+      padding-top: var(--spacing-xl);
+      padding-bottom: var(--spacing-xl);
+      font-size: 1.25rem;
+      font-family: var(--font-secondary);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      vertical-align: middle;
+
+      @media screen and (max-width: 768px) {
+        font-size: 1.1rem;
+        padding-top: var(--spacing-lg);
+        padding-bottom: var(--spacing-lg);
+      }
+
+      @media screen and (max-width: 500px) {
         font-size: 5vw;
+        padding-top: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+
         .btn {
-          font-size: 12px;
+          font-size: 0.75rem;
+          padding: var(--spacing-xs) var(--spacing-sm);
         }
       }
-      border-top: none;
-      font-family: 'Lato', sans-serif;
+    }
+  }
+
+  .table .resultRow {
+    // Ensure inline background colors for bus route colors are preserved
+    border-style: none;
+
+    td {
+      background-color: transparent;
+      color: inherit;
+      border-style: none;
+      border-width: 0;
     }
   }
 
   .no-wrap {
-    word-break: keep-all !important;
+    white-space: nowrap;
   }
 
   .stop_name {
-    margin-top: 20px;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    font-size: 2rem;
+
+    @media screen and (max-width: 768px) {
+      font-size: 1.75rem;
+    }
+
+    @media screen and (max-width: 500px) {
+      font-size: 1.5rem;
+    }
   }
 
   .refresh-text {
     text-align: center;
+    margin-top: var(--spacing-lg);
+
     h5 {
-      font-weight: 400;
-      @media screen and(max-width:500px) {
+      font-weight: var(--font-weight-normal);
+      color: var(--color-text-muted);
+      font-size: 1rem;
+
+      @media screen and (max-width: 768px) {
+        font-size: 0.9rem;
+      }
+
+      @media screen and (max-width: 500px) {
         font-size: 3.5vw;
       }
     }
-    opacity: 0;
-    transition: opacity 0.75s;
   }
 
   .fadeIn {
     opacity: 1;
   }
+
   .fadeOut {
     opacity: 0;
-    transition: none;
   }
 
   .refresh-btn {
-    color: #3498db;
+    color: var(--color-primary);
     outline: none;
     background-color: transparent;
     border: none;
-    padding: 0px;
-    transition: color 0.5s;
-    &:hover {
-      color: #2980b9;
-      outline: none;
+    padding: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    transition: color var(--transition-slow);
+    cursor: pointer;
+    font-size: 1.5rem;
+    border-radius: var(--radius-md);
+
+    &:hover:not(:disabled) {
+      color: var(--color-primary-hover);
+      background-color: rgba(52, 152, 219, 0.1);
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+  }
+
+  .data {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
   }
 }

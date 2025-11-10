@@ -1,16 +1,16 @@
 name: Testing
 
 on: [push]
-  
+
 jobs:
   tests:
     name: Cypress Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build Docker Image 📦
-        run: docker-compose -f docker-compose.prod.yml build
+        run: docker compose -f docker-compose.prod.yml build
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
 
@@ -20,20 +20,36 @@ jobs:
           timezone: 'America/Chicago'
 
       - name: Backend Testing 🧪
-        run: |
-          ci_env=`bash <(curl -s https://codecov.io/env)`
-          docker-compose run $ci_env backend npm run coverage
+        run: docker compose run backend npm run coverage
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
 
-      - run: cd frontend && rm package.json && rm package-lock.json && npm i cypress@11.0.1 && cd ..
+      - name: Upload Backend Coverage to Codecov 📊
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./backend/coverage/lcov.info
+          flags: backend
+          name: backend-coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Cypress
+        working-directory: frontend
+        run: |
+          npm install --legacy-peer-deps --no-save cypress@13
+
       - name: Cypress Run 🌲
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 180
-          start: docker-compose -f ../docker-compose.prod.yml up -d
+          start: docker compose -f ../docker-compose.prod.yml up -d
           install: false
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
