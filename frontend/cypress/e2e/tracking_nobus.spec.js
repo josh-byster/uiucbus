@@ -3,19 +3,10 @@ context('Tracking No Stops', () => {
   beforeEach(() => {
     cy.fixture('no_stops.json').as('stops');
     cy.fixture('getstop_par.json').as('PARStopInfo');
-    cy.server(); // enable response stubbing
-    cy.route({
-      method: 'GET',
-      url: `*/getdeparturesbystop?stop_id=*`, // Mock a response for a stop ID
-      response: '@stops'
-    }).as('getDepartures');
+    cy.intercept('GET', '*/getdeparturesbystop?stop_id=*', { fixture: 'no_stops.json' }).as('getDepartures');
 
     // Using this to reduce load on MTD's API
-    cy.route({
-      method: 'GET',
-      url: `*/getstop?stop_id=PAR`, // Mock a response for getting stops
-      response: '@PARStopInfo'
-    });
+    cy.intercept('GET', '*/getstop?stop_id=PAR', { fixture: 'getstop_par.json' });
     cy.visit('http://localhost:3000/#/track/PAR');
   });
 
