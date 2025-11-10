@@ -65,6 +65,11 @@ const BusNavbar = () => {
     [closeNavbar]
   );
 
+  const handleClearAll = useCallback(() => {
+    clearAllRecents();
+    updateRecents();
+  }, [updateRecents]);
+
   return (
     <Navbar color="dark" dark expand="md" className="navbar-modern">
       <NavbarBrand tag={Link} to="/">
@@ -100,13 +105,13 @@ const BusNavbar = () => {
                     </DropdownItem>
                   ))}
                   <DropdownItem divider />
-                  <DropdownItem onClick={clearAllRecents} className="clear-recents">
-                    Clear All
-                  </DropdownItem>
                 </>
               ) : (
                 <DropdownItem disabled>No recent stops</DropdownItem>
               )}
+              <DropdownItem onClick={handleClearAll} className="clear-recents">
+                Clear All
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
