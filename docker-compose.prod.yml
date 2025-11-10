@@ -27,7 +27,7 @@ services:
       sh -c 'npm run start:dev'
 
   frontend:
-    build: 
+    build:
       context: ./frontend
       dockerfile: Dockerfile-prod
     ports:
@@ -38,11 +38,8 @@ services:
       - redis
       - backend
     environment:
-      - REACT_APP_API_PORT=5000
-    command:
-      # Despite being built off the prod image that has the compiled build, 
-      # we are using the dev version because this will let us use localhost:PORT as the API endpoint
-      # which gets baked into the prod image and is thus unaffected by env vars from this file
-      sh -c 'npm start'
+      # Vite env vars must be prefixed with VITE_
+      - VITE_API_PORT=5000
+    # Production image serves the built files with http-server
     stdin_open: true
 

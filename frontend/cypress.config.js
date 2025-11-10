@@ -1,16 +1,16 @@
-const { defineConfig } = require('cypress');
+import { defineConfig } from 'cypress';
 
-module.exports = defineConfig({
-  "projectId": "139hik",
-  "blockHosts": "www.google-analytics.com",
-  "video": false,
-  "defaultCommandTimeout": 10000,
+export default defineConfig({
+  projectId: '139hik',
+  blockHosts: 'www.google-analytics.com',
+  video: false,
+  defaultCommandTimeout: 10000,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    baseUrl: 'http://localhost:3000',
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config);
+      // implement node event listeners here
+      return config;
     },
-    "specPattern": "cypress/e2e/**/*.{js,jsx,ts,tsx}"
-  }
+    specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+  },
 });

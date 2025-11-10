@@ -1,18 +1,19 @@
-FROM node:19
+FROM node:22-alpine
 
 WORKDIR '/var/www/app'
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
 
-RUN npm ci 
-# If you are building your code for production
-# RUN npm ci --only=production
+# Copy package files and .npmrc for legacy peer deps
+COPY package*.json .npmrc ./
+
+# Install dependencies
+RUN npm ci --legacy-peer-deps
+
 # Bundle app source
 COPY . .
+
 EXPOSE 3000
-ENV NODE_ENV production
-CMD [ "npm", "start" ]
 
+ENV NODE_ENV=development
 
+# Use Vite dev server
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
