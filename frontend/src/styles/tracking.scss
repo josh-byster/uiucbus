@@ -78,10 +78,13 @@
 
   .table .resultRow {
     // Ensure inline background colors for bus route colors are preserved
+    border-style: none;
+
     td {
       background-color: transparent;
       color: inherit;
-      border-top: none !important;
+      border-style: none;
+      border-width: 0;
     }
   }
 
