@@ -79,7 +79,7 @@ const StopSearch = ({ style }) => {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl bg-card shadow-xl ring-1 ring-black/10 dark:ring-white/10 max-h-60 overflow-y-auto">
+            <Combobox.Options className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl bg-card border-2 border-border shadow-xl max-h-60 overflow-y-auto">
               {filteredStops.length === 0 && query !== '' ? (
                 <div className="relative cursor-default select-none px-4 py-3 text-muted-foreground text-sm">
                   No stops found.
