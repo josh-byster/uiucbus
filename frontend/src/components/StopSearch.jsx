@@ -8,8 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { appendRecentStop } from '../util/CookieHandler';
 import NearestStop from './NearestStop';
-
-const stops = require('../util/allstops.json');
+import stops from '../util/allstops.json';
 
 const getSuggestions = (value) => {
   const inputValue = value.trim().toLowerCase();
