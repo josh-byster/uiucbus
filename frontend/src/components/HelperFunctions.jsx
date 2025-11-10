@@ -1,4 +1,5 @@
 function removeColors(str) {
+  let newStr = str;
   if (
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
@@ -40,11 +41,10 @@ function removeColors(str) {
       'RAVEN',
       'ILLINI',
     ];
-    let newStr = str;
     for (let i = 0; i < colors.length; i++) {
       newStr = newStr.split(colors[i]).join('');
     }
   }
-  return str;
+  return newStr;
 }
 export default removeColors;

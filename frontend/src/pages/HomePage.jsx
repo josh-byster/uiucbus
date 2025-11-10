@@ -21,7 +21,7 @@ const HomePage = () => {
             UIUC Bus Tracker
           </h1>
 
-          <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl shadow-2xl p-8">
+          <div className="bg-background/90 backdrop-blur-md rounded-2xl shadow-2xl p-8">
             <StopSearch />
           </div>
         </motion.div>

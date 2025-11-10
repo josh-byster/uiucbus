@@ -4,7 +4,7 @@ import { Skeleton } from './ui/skeleton';
 
 const BusResultSkeleton = () => {
   return (
-    <Card className="overflow-hidden border-l-4 border-gray-300 dark:border-gray-700">
+    <Card className="overflow-hidden border-l-4 border-border">
       <div className="p-4 sm:p-5">
         <div className="flex items-center justify-between gap-4">
           {/* Left: Bus Info Skeleton */}

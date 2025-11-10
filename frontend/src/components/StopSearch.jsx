@@ -64,7 +64,7 @@ const StopSearch = ({ style }) => {
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
             <Combobox.Input
-              className="w-full h-14 pl-12 pr-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all text-base"
+              className="w-full h-14 pl-12 pr-4 rounded-xl border-2 border-input bg-card text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all text-base"
               displayValue={(stop) => stop?.stop_name ?? ''}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search for a bus stop..."
@@ -79,9 +79,9 @@ const StopSearch = ({ style }) => {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-xl ring-1 ring-black/5 dark:ring-white/10 max-h-60 overflow-y-auto">
+            <Combobox.Options className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl bg-card shadow-xl ring-1 ring-black/10 dark:ring-white/10 max-h-60 overflow-y-auto">
               {filteredStops.length === 0 && query !== '' ? (
-                <div className="relative cursor-default select-none px-4 py-3 text-gray-500 dark:text-gray-400 text-sm">
+                <div className="relative cursor-default select-none px-4 py-3 text-muted-foreground text-sm">
                   No stops found.
                 </div>
               ) : (
@@ -93,7 +93,7 @@ const StopSearch = ({ style }) => {
                         'relative cursor-pointer select-none py-3 pl-10 pr-4 transition-colors',
                         active
                           ? 'bg-primary text-primary-foreground'
-                          : 'text-gray-900 dark:text-gray-100'
+                          : 'text-foreground'
                       )
                     }
                     value={stop}

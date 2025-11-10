@@ -1,6 +1,5 @@
 import React from 'react';
 import * as Sentry from '@sentry/browser';
-import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -35,11 +34,11 @@ if (import.meta.env.PROD) {
     Sentry.setContext('logrocket', { sessionURL });
   });
   window.addEventListener('offline', function (e) {
-    console.log('Not connected to LAN');
+    // Network offline - could add toast notification here if needed
   });
 
   window.addEventListener('online', function (e) {
-    console.log('Connected back on LAN');
+    // Network back online - could add toast notification here if needed
   });
 }
 function App() {

@@ -48,17 +48,20 @@ const BusNavbar = () => {
 
   const handleClearAll = useCallback(() => {
     clearAllRecents();
-    updateRecents();
+    // Delay state update to allow menu close animation to complete
+    setTimeout(() => {
+      updateRecents();
+    }, 200);
   }, [updateRecents]);
 
   return (
-    <nav className="sticky top-0 z-50 border-b bg-white dark:bg-gray-900 shadow-sm">
+    <nav className="sticky top-0 z-50 border-b bg-background shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center space-x-2 text-xl font-bold text-gray-900 dark:text-white hover:text-primary transition-colors"
+            className="flex items-center space-x-2 text-xl font-bold text-foreground hover:text-primary transition-colors"
           >
             <Bus className="h-6 w-6" />
             <span className="hidden sm:inline">UIUC Bus Tracker</span>
@@ -72,7 +75,7 @@ const BusNavbar = () => {
                 key={stop.id}
                 to={`/track/${stop.id}`}
                 onClick={handleStopClick(stop)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                className="px-3 py-2 rounded-lg text-sm font-medium text-foreground hover:bg-accent transition-all"
               >
                 {stop.name}
               </Link>
@@ -81,8 +84,7 @@ const BusNavbar = () => {
             {/* Recents Dropdown */}
             <Menu as="div" className="relative">
               <Menu.Button
-                onClick={updateRecents}
-                className="flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                className="flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium text-foreground hover:bg-accent transition-all"
               >
                 <Clock className="h-4 w-4" />
                 <span>Recents</span>
@@ -96,7 +98,7 @@ const BusNavbar = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-xl bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black/5 focus:outline-none overflow-hidden">
+                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-xl bg-card shadow-lg ring-1 ring-black/10 dark:ring-white/10 focus:outline-none overflow-hidden">
                   <div className="py-1">
                     {recentStops.length > 0 ? (
                       <>
@@ -110,7 +112,7 @@ const BusNavbar = () => {
                                   'block px-4 py-2 text-sm transition-colors',
                                   active
                                     ? 'bg-accent text-accent-foreground'
-                                    : 'text-gray-700 dark:text-gray-300'
+                                    : 'text-foreground'
                                 )}
                               >
                                 {stop.name}
@@ -118,10 +120,10 @@ const BusNavbar = () => {
                             )}
                           </Menu.Item>
                         ))}
-                        <div className="border-t border-gray-200 dark:border-gray-700 my-1" />
+                        <div className="border-t border-border my-1" />
                       </>
                     ) : (
-                      <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="px-4 py-2 text-sm text-muted-foreground">
                         No recent stops
                       </div>
                     )}
@@ -153,7 +155,7 @@ const BusNavbar = () => {
             <ThemeToggle />
             <button
               onClick={toggle}
-              className="p-2 rounded-lg text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-2 rounded-lg text-foreground hover:bg-accent transition-colors"
               aria-label="Toggle navigation"
             >
               {isOpen ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
@@ -179,7 +181,7 @@ const BusNavbar = () => {
                 key={stop.id}
                 to={`/track/${stop.id}`}
                 onClick={handleStopClick(stop)}
-                className="block px-3 py-2 rounded-lg text-base font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                className="block px-3 py-2 rounded-lg text-base font-medium text-foreground hover:bg-accent transition-all"
               >
                 {stop.name}
               </Link>
@@ -187,7 +189,7 @@ const BusNavbar = () => {
 
             {/* Mobile Recents Section */}
             <div className="pt-2">
-              <div className="px-3 py-2 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+              <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Recent Stops
               </div>
               {recentStops.length > 0 ? (
@@ -197,7 +199,7 @@ const BusNavbar = () => {
                       key={`${stop.id}-${index}`}
                       to={`/track/${stop.id}`}
                       onClick={handleRecentClick}
-                      className="block px-3 py-2 rounded-lg text-base font-medium text-gray-900 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                      className="block px-3 py-2 rounded-lg text-base font-medium text-foreground hover:bg-accent transition-all"
                     >
                       {stop.name}
                     </Link>
@@ -210,7 +212,7 @@ const BusNavbar = () => {
                   </button>
                 </>
               ) : (
-                <div className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400">
+                <div className="px-3 py-2 text-sm text-muted-foreground">
                   No recent stops
                 </div>
               )}
