@@ -76,11 +76,12 @@
     }
   }
 
-  .resultRow {
+  .table .resultRow {
     // Ensure inline background colors for bus route colors are preserved
     td {
       background-color: transparent;
-      border-top-color: rgba(0, 0, 0, 0.1);
+      color: inherit;
+      border-top: none !important;
     }
   }
 

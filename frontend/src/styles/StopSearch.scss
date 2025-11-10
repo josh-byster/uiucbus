@@ -19,10 +19,8 @@
   font-weight: var(--font-weight-normal);
   font-size: 1rem;
   border: 2px solid rgba(0, 0, 0, 0.1);
-  border-right: none;
-  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  border-radius: var(--radius-md);
   margin: var(--spacing-md) 0;
-  margin-right: 0;
   transition: all var(--transition-normal);
 
   &::placeholder {
@@ -78,9 +76,9 @@
 }
 
 .location-btn {
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-radius: var(--radius-md);
   height: 40px;
-  margin-left: -1px;
+  margin-left: var(--spacing-sm);
   transition: all var(--transition-fast);
 
   &:hover {
