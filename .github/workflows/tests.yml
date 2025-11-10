@@ -20,11 +20,18 @@ jobs:
           timezone: 'America/Chicago'
 
       - name: Backend Testing 🧪
-        run: |
-          ci_env=`bash <(curl -s https://codecov.io/env)`
-          docker compose run $ci_env backend npm run coverage
+        run: docker compose run backend npm run coverage
         env:
           CUMTD_API_KEY: ${{ secrets.CUMTD_API_KEY }}
+
+      - name: Upload Backend Coverage to Codecov 📊
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./backend/coverage/lcov.info
+          flags: backend
+          name: backend-coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
