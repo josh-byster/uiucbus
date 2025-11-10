@@ -11,7 +11,7 @@
     }
   }
 
-  .nav-link {
+  .nav-link:not(.dropdown-toggle) {
     transition: all var(--transition-fast);
     position: relative;
 
@@ -36,6 +36,11 @@
       outline-offset: 2px;
       border-radius: var(--radius-sm);
     }
+  }
+
+  .dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
   }
 
   .dropdown-menu {
