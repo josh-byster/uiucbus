@@ -6,11 +6,11 @@ context('Basic', () => {
   });
 
   it('should have Bus Tracker title', () => {
-    cy.get('.info-box').should('have.text', 'UIUC Bus Tracker');
+    cy.get('[data-testid="page-title"]').should('have.text', 'UIUC Bus Tracker');
   });
 
   it('typing into the main textbox on page', () => {
-    cy.get('.react-autosuggest__input')
+    cy.get('[data-testid="stop-search-input"]')
       .type('PAR')
       .should('have.value', 'PAR')
 
@@ -20,7 +20,7 @@ context('Basic', () => {
   });
 
   it('cycling through results should work', () => {
-    cy.get('.react-autosuggest__input')
+    cy.get('[data-testid="stop-search-input"]')
       .type('PAR')
       .should('have.value', 'PAR')
 
@@ -30,7 +30,7 @@ context('Basic', () => {
   });
 
   it('should autofill based on selection', () => {
-    cy.get('.react-autosuggest__input')
+    cy.get('[data-testid="stop-search-input"]')
       .type('PAR{downarrow}{uparrow}')
       .should('have.value', 'PAR (Pennsylvania Ave. Residence Hall)')
 
@@ -40,57 +40,60 @@ context('Basic', () => {
   });
 
   it('clicking enter should take to tracking page', () => {
-    cy.get('.react-autosuggest__input').type('PAR{enter}');
+    cy.get('[data-testid="stop-search-input"]').type('PAR{enter}');
 
-    cy.get('.stop_name')
+    cy.get('[data-testid="stop-name"]')
       .should('have.text', 'Pennsylvania Ave. Residence Hall')
       .should('be.visible');
   });
 
   it('picking another result should take to appropriate tracking page', () => {
-    cy.get('.react-autosuggest__input').type('PAR{downarrow}{enter}');
+    cy.get('[data-testid="stop-search-input"]').type('PAR{downarrow}{enter}');
 
-    cy.get('.stop_name')
+    cy.get('[data-testid="stop-name"]')
       .should('have.text', 'First and Lake Park North')
       .should('be.visible');
   });
 
   it('invalid result takes you nowhere', () => {
-    cy.get('.react-autosuggest__input')
+    cy.get('[data-testid="stop-search-input"]')
       .type('ajsldk{uparrow}{downarrow}{enter}')
       .should('have.value', 'ajsldk');
   });
 
   it('empty result takes you nowhere', () => {
-    cy.get('.react-autosuggest__input')
+    cy.get('[data-testid="stop-search-input"]')
       .type('{enter}')
-      .should('have.value', '')
-      .get('.info-box')
+      .should('have.value', '');
+
+    cy.get('[data-testid="page-title"]')
       .should('have.text', 'UIUC Bus Tracker');
   });
 
   it('backspace to correct search gets results', () => {
-    cy.get('.react-autosuggest__input')
+    cy.get('[data-testid="stop-search-input"]')
       .type('PARaaa{backspace}{backspace}{backspace}')
       .should('have.value', 'PAR');
   });
 
   it('fuzzy search works as expected', () => {
-    cy.get('.react-autosuggest__input').type('greg first');
+    cy.get('[data-testid="stop-search-input"]').type('greg first');
 
-    cy.get('.react-autosuggest__suggestions-list').should(
-      'have.text',
+    cy.get('[data-testid="stop-search-suggestions"]').should(
+      'contain.text',
       'First and Gregory'
     );
   });
 
   it('fuzzy search advanced', () => {
-    cy.get('.react-autosuggest__input').type('fo gree an');
+    cy.get('[data-testid="stop-search-input"]').type('fo gree an');
 
-    cy.get('.react-autosuggest__suggestions-list')
-      .should('have.text', 'Green and Fourth')
+    cy.get('[data-testid="stop-search-option"]')
+      .first()
+      .should('contain.text', 'Green and Fourth')
       .click();
-    cy.get('.stop_name')
+
+    cy.get('[data-testid="stop-name"]')
       .should('have.text', 'Green and Fourth')
       .should('be.visible');
   });

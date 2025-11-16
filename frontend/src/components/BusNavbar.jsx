@@ -62,6 +62,7 @@ const BusNavbar = () => {
           <Link
             to="/"
             className="flex items-center space-x-2 text-xl font-bold text-foreground hover:text-primary transition-colors"
+            data-testid="navbar-home-link"
           >
             <Bus className="h-6 w-6" />
             <span className="hidden sm:inline">UIUC Bus Tracker</span>
@@ -76,6 +77,7 @@ const BusNavbar = () => {
                 to={`/track/${stop.id}`}
                 onClick={handleStopClick(stop)}
                 className="px-3 py-2 rounded-lg text-sm font-medium text-foreground hover:bg-accent transition-all"
+                data-testid="nav-stop-link"
               >
                 {stop.name}
               </Link>
@@ -85,6 +87,7 @@ const BusNavbar = () => {
             <Menu as="div" className="relative">
               <Menu.Button
                 className="flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium text-foreground hover:bg-accent transition-all"
+                data-testid="recents-dropdown-toggle"
               >
                 <Clock className="h-4 w-4" />
                 <span>Recents</span>
@@ -98,7 +101,7 @@ const BusNavbar = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-xl bg-card border-2 border-border shadow-xl focus:outline-none overflow-hidden">
+                <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-xl bg-card border-2 border-border shadow-xl focus:outline-none overflow-hidden" data-testid="recents-dropdown-menu">
                   <div className="py-1">
                     {recentStops.length > 0 ? (
                       <>
@@ -114,6 +117,7 @@ const BusNavbar = () => {
                                     ? 'bg-accent text-accent-foreground'
                                     : 'text-foreground'
                                 )}
+                                data-testid="recents-dropdown-item"
                               >
                                 {stop.name}
                               </Link>
@@ -137,6 +141,7 @@ const BusNavbar = () => {
                               ? 'bg-destructive text-destructive-foreground'
                               : 'text-red-600 dark:text-red-400'
                           )}
+                          data-testid="recents-clear-all"
                         >
                           Clear All
                         </button>

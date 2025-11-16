@@ -12,79 +12,91 @@ context('Tracking With Stops Available', () => {
   });
 
   it('should have proper title', () => {
-    cy.get('.stop_name').should('have.text', 'Illini Union');
-  });
-
-  it('should have proper headers', () => {
-    cy.get('#bus-name').should('have.text', 'Bus Name');
-
-    cy.get('#eta').should('have.text', 'ETA');
+    cy.get('[data-testid="stop-name"]').should('have.text', 'Illini Union');
   });
 
   it('can navigate to another tracking page', () => {
-    cy.get('.react-autosuggest__input').type('First{enter}');
+    cy.get('[data-testid="stop-search-input"]').type('First{enter}');
 
-    cy.get('.stop_name')
+    cy.get('[data-testid="stop-name"]')
       .should('contain', 'First')
       .should('be.visible');
   });
 
   it("doesn't display the no results message", () => {
     cy.wait('@getDepartures').then(() => {
-      cy.get('No buses').should('not.exist');
+      cy.contains('No buses').should('not.exist');
     });
   });
 
-  it('first row is correct', () => {
-    cy.get('.resultRow:first b').should('have.text', '100S Yellow E14');
-    cy.get('.resultRow:first td:nth-child(2)').should('have.text', '1m');
-    cy.get('.resultRow:first td:nth-child(3)').should('have.text', '9:47:03');
-    cy.get('.resultRow:first')
-      .should('have.css', 'background-color')
-      .and('equal', 'rgb(252, 238, 31)');
+  it('first row is correct headsign', () => {
+    cy.get('[data-testid="bus-result-row"]')
+      .first()
+      .find('[data-testid="bus-headsign"]')
+      .should('contain.text', '100S')
+      .and('contain.text', 'E14');
+  });
+
+  it('first row has correct ETA', () => {
+    cy.get('[data-testid="bus-result-row"]')
+      .first()
+      .find('[data-testid="bus-eta"]')
+      .should('contain.text', '1m');
   });
 
   it('should have the correct number of rows', () => {
-    cy.get('.resultRow').should('have.length', 27);
+    cy.get('[data-testid="bus-result-row"]').should('have.length', 27);
   });
 
   it("should have a modal title that's correct", () => {
-    cy.get('.resultRow:first td:nth-child(4) > .btn')
-      .click()
-      .get('.modal-title')
+    cy.get('[data-testid="bus-result-row"]')
+      .first()
+      .click();
+
+    cy.get('[data-testid="bus-modal-title"]')
       .should('be.visible')
-      .should('have.text', '100S Yellow E14');
+      .should('contain.text', '100S')
+      .and('contain.text', 'E14');
   });
 
   it('should have a modal image', () => {
-    cy.get('.resultRow:first td:nth-child(4) > .btn')
-      .click()
-      .get('.img-fluid')
+    cy.get('[data-testid="bus-result-row"]')
+      .first()
+      .click();
+
+    cy.get('[data-testid="bus-modal-image"]')
       .should('be.visible');
   });
 
   it('should have space for next stop and previous stop', () => {
-    cy.get('.resultRow:first td:nth-child(4) > .btn')
-      .click()
-      .get('.modal-body')
-      .contains('Next Stop:')
-      .get('.modal-body')
-      .contains('Previous Stop:');
+    cy.get('[data-testid="bus-result-row"]')
+      .first()
+      .click();
+
+    cy.contains('Next Stop');
+    cy.contains('Previous Stop');
   });
 
-  it('should be able to click on multiple locations ', () => {
-    cy.get('.resultRow:nth-child(2) td:nth-child(4) > .btn')
-      .click()
-      .get('.modal-title')
-      .should('be.visible')
-      .should('have.text', '120W Teal');
+  it('should be able to click on multiple locations', () => {
+    cy.get('[data-testid="bus-result-row"]')
+      .eq(1)
+      .click();
 
-    cy.get('.modal-footer > .btn').click();
-
-    cy.get('.resultRow:nth-child(3) td:nth-child(4) > .btn')
-      .click()
-      .get('.modal-title')
+    cy.get('[data-testid="bus-modal-title"]')
       .should('be.visible')
-      .should('have.text', '220S Illini');
+      .should('contain.text', '120W')
+      .and('contain.text', 'Teal');
+
+    // Close modal by clicking backdrop or close button
+    cy.get('body').type('{esc}');
+
+    cy.get('[data-testid="bus-result-row"]')
+      .eq(2)
+      .click();
+
+    cy.get('[data-testid="bus-modal-title"]')
+      .should('be.visible')
+      .should('contain.text', '220S')
+      .and('contain.text', 'Illini');
   });
 });

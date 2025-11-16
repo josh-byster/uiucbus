@@ -119,7 +119,7 @@ const BusInfoModal = ({ isOpen, toggle, busInfo, stopInfo, headerStyle }) => {
                   className="flex items-center justify-between px-6 py-4 text-white"
                   style={headerStyle}
                 >
-                  <Dialog.Title className="text-xl font-bold">{busInfo.headsign}</Dialog.Title>
+                  <Dialog.Title className="text-xl font-bold" data-testid="bus-modal-title">{busInfo.headsign}</Dialog.Title>
                   <button
                     onClick={handleClose}
                     className="rounded-full p-1 hover:bg-white/20 transition-colors"
@@ -145,6 +145,7 @@ const BusInfoModal = ({ isOpen, toggle, busInfo, stopInfo, headerStyle }) => {
                           src={mapURL}
                           style={imgLoaded ? {} : { visibility: 'hidden', height: '400px' }}
                           onLoad={() => setImgLoaded(true)}
+                          data-testid="bus-modal-image"
                         />
                       )}
                     </motion.div>

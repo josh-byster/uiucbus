@@ -17,7 +17,7 @@ const HomePage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-12 text-white drop-shadow-lg">
+          <h1 className="text-5xl md:text-6xl font-bold mb-12 text-white drop-shadow-lg" data-testid="page-title">
             UIUC Bus Tracker
           </h1>
 

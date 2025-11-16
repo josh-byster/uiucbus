@@ -110,7 +110,7 @@ const TrackingPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground" data-testid="stop-name">
             {stopInfo.stop_name || 'Loading...'}
           </h1>
 

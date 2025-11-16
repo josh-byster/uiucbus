@@ -69,6 +69,7 @@ const StopSearch = ({ style }) => {
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search for a bus stop..."
               aria-label="Search for bus stop"
+              data-testid="stop-search-input"
             />
           </div>
 
@@ -79,7 +80,7 @@ const StopSearch = ({ style }) => {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl bg-card border-2 border-border shadow-xl max-h-60 overflow-y-auto">
+            <Combobox.Options className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl bg-card border-2 border-border shadow-xl max-h-60 overflow-y-auto" data-testid="stop-search-suggestions">
               {filteredStops.length === 0 && query !== '' ? (
                 <div className="relative cursor-default select-none px-4 py-3 text-muted-foreground text-sm">
                   No stops found.
@@ -97,6 +98,7 @@ const StopSearch = ({ style }) => {
                       )
                     }
                     value={stop}
+                    data-testid="stop-search-option"
                   >
                     {({ selected, active }) => (
                       <>

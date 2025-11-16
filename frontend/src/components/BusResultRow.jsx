@@ -31,6 +31,7 @@ const BusResultRow = ({ info, toggleModal, elementOrder }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.3, delay: elementOrder * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      data-testid="bus-result-row"
     >
       <Card
         className={cn(
@@ -47,6 +48,7 @@ const BusResultRow = ({ info, toggleModal, elementOrder }) => {
               <div
                 className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold mb-2"
                 style={{ backgroundColor: bgColor, color: textColor }}
+                data-testid="bus-headsign"
               >
                 {removeColors(info.headsign)}
               </div>
@@ -66,9 +68,9 @@ const BusResultRow = ({ info, toggleModal, elementOrder }) => {
                 )}
               >
                 {isArriving ? (
-                  <span className="text-2xl sm:text-3xl">Now</span>
+                  <span className="text-2xl sm:text-3xl" data-testid="bus-eta">Now</span>
                 ) : (
-                  <span>{info.expected_mins}m</span>
+                  <span data-testid="bus-eta">{info.expected_mins}m</span>
                 )}
               </div>
               <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
