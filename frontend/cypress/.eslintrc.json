@@ -1,8 +1,0 @@
-// my-project/cypress/.eslintrc.json
-
-{
-  "plugins": ["cypress"],
-  "env": {
-    "cypress/globals": true
-  }
-}
