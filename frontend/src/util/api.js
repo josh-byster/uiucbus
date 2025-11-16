@@ -2,9 +2,9 @@ import axios from 'axios';
 import promiseRetry from 'promise-retry';
 
 const CUMTD_API_URI =
-  process.env.NODE_ENV === 'production'
+  import.meta.env.PROD
     ? 'https://api.uiucbus.com/api'
-    : `http://localhost:${process.env.REACT_APP_API_PORT}/api`;
+    : `http://localhost:${import.meta.env.VITE_API_PORT || 8080}/api`;
 
 const MAPBOX_API_KEY =
   'pk.eyJ1Ijoiam9zaC1ieXN0ZXIiLCJhIjoiY2psN2xyZGFoMDY5ZjNxbWtpeDE0dDlwNSJ9.AAJipEPA6e-kLi1Jv3Wpyg';
