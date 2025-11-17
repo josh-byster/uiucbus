@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
-import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
+import { Clock, Timer } from 'lucide-react';
 import removeColors from './HelperFunctions';
+import { Card } from './ui/card';
+import { cn } from '@/lib/utils';
 
 const BusResultRow = ({ info, toggleModal, elementOrder }) => {
   const computeHMS = (expectedDate) => {
@@ -13,40 +15,73 @@ const BusResultRow = ({ info, toggleModal, elementOrder }) => {
     }
     const minute = date.getMinutes().toString().padStart(2, '0');
     const seconds = date.getSeconds().toString().padStart(2, '0');
-    return `${hour}:${minute}:${seconds}`;
+    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+    return `${hour}:${minute}:${seconds} ${ampm}`;
   };
 
-  const rowStyle = useMemo(() => ({
-    backgroundColor: `#${info.route.route_color}`,
-    color: `#${info.route.route_text_color}`,
-  }), [info.route.route_color, info.route.route_text_color]);
+  const bgColor = useMemo(() => `#${info.route.route_color}`, [info.route.route_color]);
+  const textColor = useMemo(() => `#${info.route.route_text_color}`, [info.route.route_text_color]);
+
+  const isArriving = info.expected_mins === 0;
+  const isUrgent = info.expected_mins > 0 && info.expected_mins <= 5;
 
   return (
-    <motion.tr
-      style={rowStyle}
-      className="resultRow"
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.3, delay: elementOrder * 0.05 }}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.3, delay: elementOrder * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      data-testid="bus-result-row"
     >
-      <td>
-        <b>{removeColors(info.headsign)}</b>
-      </td>
-      <td>
-        {info.expected_mins !== 0 ? `${info.expected_mins}m` : 'Arriving Now'}
-      </td>
-      <td className="no-wrap">{computeHMS(info.expected)}</td>
-      <td>
-        <Button
-          color="success"
-          onClick={() => toggleModal(info)}
-          aria-label={`View location of ${removeColors(info.headsign)}`}
-        >
-          Location
-        </Button>
-      </td>
-    </motion.tr>
+      <Card
+        className={cn(
+          'overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border-l-4 cursor-pointer',
+          isArriving && 'animate-pulse'
+        )}
+        style={{ borderLeftColor: bgColor }}
+        onClick={() => toggleModal(info)}
+      >
+        <div className="p-4 sm:p-5">
+          <div className="flex items-center justify-between gap-4">
+            {/* Left: Bus Info */}
+            <div className="flex-1 min-w-0">
+              <div
+                className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold mb-2"
+                style={{ backgroundColor: bgColor, color: textColor }}
+                data-testid="bus-headsign"
+              >
+                {removeColors(info.headsign)}
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Clock className="h-4 w-4" />
+                <span>Arrives at {computeHMS(info.expected)}</span>
+              </div>
+            </div>
+
+            {/* Right: Time Display */}
+            <div className="flex flex-col items-end justify-center">
+              <div
+                className={cn(
+                  'text-3xl sm:text-4xl font-bold tabular-nums',
+                  isArriving && 'text-green-600 dark:text-green-400',
+                  isUrgent && 'text-orange-600 dark:text-orange-400'
+                )}
+              >
+                {isArriving ? (
+                  <span className="text-2xl sm:text-3xl" data-testid="bus-eta">Now</span>
+                ) : (
+                  <span data-testid="bus-eta">{info.expected_mins}m</span>
+                )}
+              </div>
+              <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                <Timer className="h-3 w-3" />
+                <span>{isArriving ? 'Arriving' : 'minutes'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </motion.div>
   );
 };
 
