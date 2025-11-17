@@ -1,0 +1,24 @@
+{
+  "time": "2019-01-03T17:52:40-06:00",
+  "changeset_id": "5C5084FE25CBB9E571287A2DF03C2590",
+  "new_changeset": true,
+  "status": { "code": 200, "msg": "ok" },
+  "rqst": { "method": "GetStop", "params": { "stop_id": "PAR" } },
+  "stops": [
+    {
+      "stop_id": "PAR",
+      "stop_name": "Pennsylvania Ave. Residence Hall",
+      "code": "MTD5524",
+      "distance": 6209.88,
+      "stop_points": [
+        {
+          "code": "MTD5524",
+          "stop_id": "PAR:2",
+          "stop_lat": 40.09949,
+          "stop_lon": -88.220416,
+          "stop_name": "PAR (North Side Shelter)"
+        }
+      ]
+    }
+  ]
+}

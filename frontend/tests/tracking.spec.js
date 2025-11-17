@@ -4,17 +4,17 @@ test.describe('Tracking With Stops Available', () => {
   test.beforeEach(async ({ page }) => {
     // Set up API mocking
     await page.route('**/getdeparturesbystop?stop_id=*', async (route) => {
-      const json = await import('../cypress/fixtures/many_stops.json', { assert: { type: 'json' } });
+      const json = await import('./fixtures/many_stops.json', { with: { type: 'json' } });
       await route.fulfill({ json: json.default });
     });
 
     await page.route('**/getstop?stop_id=IU', async (route) => {
-      const json = await import('../cypress/fixtures/getstop_iu.json', { assert: { type: 'json' } });
+      const json = await import('./fixtures/getstop_iu.json', { with: { type: 'json' } });
       await route.fulfill({ json: json.default });
     });
 
     await page.route('**/getvehicle?vehicle_id=*', async (route) => {
-      const json = await import('../cypress/fixtures/getvehicle.json', { assert: { type: 'json' } });
+      const json = await import('./fixtures/getvehicle.json', { with: { type: 'json' } });
       await route.fulfill({ json: json.default });
     });
 
