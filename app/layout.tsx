@@ -83,6 +83,12 @@ export default function RootLayout({
             }),
           }}
         />
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `requestAnimationFrame(() => document.documentElement.classList.add('theme-ready'))`,
+          }}
+        />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
