@@ -1,55 +1,58 @@
-"use client";
+"use client"
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, RefreshCw } from "lucide-react";
-import { StopSearch } from "@/components/stop-search";
-import { SavedStops } from "@/components/saved-stops";
-import { NearestStopsDialog } from "@/components/nearest-stops-dialog";
-import { DeparturesTable } from "@/components/departures-table";
-import { Button } from "@/components/ui/button";
-import { addSavedStop } from "@/lib/saved-stops";
-import type { StopSearchEntry } from "@/lib/types";
+import { useCallback, useEffect, useRef, useState } from "react"
+import { ChevronLeft, RefreshCw } from "lucide-react"
+import { StopSearch } from "@/components/stop-search"
+import { SavedStops } from "@/components/saved-stops"
+import { NearestStopsDialog } from "@/components/nearest-stops-dialog"
+import { DeparturesTable } from "@/components/departures-table"
+import { Button } from "@/components/ui/button"
+import { addSavedStop } from "@/lib/saved-stops"
+import type { StopSearchEntry } from "@/lib/types"
 
 interface UnifiedHomeProps {
-  initialStop?: StopSearchEntry;
+  initialStop?: StopSearchEntry
 }
 
 export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
-  const [nearestOpen, setNearestOpen] = useState(false);
+  const [nearestOpen, setNearestOpen] = useState(false)
   const [selectedStop, setSelectedStop] = useState<StopSearchEntry | null>(
     initialStop ?? null
-  );
-  const [updatedAgo, setUpdatedAgo] = useState(0);
-  const refreshRef = useRef<(() => void) | null>(null);
+  )
+  const [updatedAgo, setUpdatedAgo] = useState(0)
+  const refreshRef = useRef<(() => void) | null>(null)
 
-  const handleStatusChange = useCallback((seconds: number, refresh: () => void) => {
-    setUpdatedAgo(seconds);
-    refreshRef.current = refresh;
-  }, []);
+  const handleStatusChange = useCallback(
+    (seconds: number, refresh: () => void) => {
+      setUpdatedAgo(seconds)
+      refreshRef.current = refresh
+    },
+    []
+  )
 
   const handleSelect = useCallback((stop: StopSearchEntry) => {
-    setSelectedStop(stop);
-    addSavedStop({ id: stop.stop_id, name: stop.stop_name });
-    window.history.pushState(null, "", `/track/${stop.stop_id}`);
-  }, []);
+    setSelectedStop(stop)
+    addSavedStop({ id: stop.stop_id, name: stop.stop_name })
+    window.history.pushState(null, "", `/track/${stop.stop_id}`)
+  }, [])
 
   const handleBack = useCallback(() => {
-    setSelectedStop(null);
-    window.history.pushState(null, "", "/");
-  }, []);
+    setSelectedStop(null)
+    window.history.pushState(null, "", "/")
+  }, [])
 
   // Handle browser back/forward
   useEffect(() => {
     const onPopState = () => {
       if (window.location.pathname === "/") {
-        setSelectedStop(null);
+        setSelectedStop(null)
       }
-    };
-    window.addEventListener("popstate", onPopState);
-    return () => window.removeEventListener("popstate", onPopState);
-  }, []);
+    }
+    window.addEventListener("popstate", onPopState)
+    return () => window.removeEventListener("popstate", onPopState)
+  }, [])
 
-  const isTracking = !!selectedStop;
+  const isTracking = !!selectedStop
 
   return (
     <div className="relative flex h-[calc(100vh-3.5rem)] flex-col items-center overflow-hidden px-4">
@@ -64,7 +67,7 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
       <div
         className={`transition-all duration-500 ease-out ${
           isTracking
-            ? "h-0 opacity-0 pointer-events-none"
+            ? "pointer-events-none h-0 opacity-0"
             : "pt-[20vh] pb-8 opacity-100"
         }`}
       >
@@ -88,14 +91,14 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
 
       {/* Saved stops — only on hero */}
       {!isTracking && (
-        <div className="mt-6 animate-in fade-in duration-300">
+        <div className="mt-6 animate-in duration-300 fade-in">
           <SavedStops />
         </div>
       )}
 
       {/* Departures — slides in when tracking */}
       {isTracking && (
-        <div className="mt-6 flex w-full max-w-2xl min-h-0 flex-1 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-4">
+        <div className="mt-6 flex min-h-0 w-full max-w-2xl flex-1 animate-in pb-4 duration-500 fade-in slide-in-from-bottom-4">
           <div className="flex w-full flex-col rounded-xl border bg-card p-4 shadow-lg sm:p-6">
             <div className="mb-4 flex shrink-0 items-center justify-between">
               <div className="flex items-center gap-2">
@@ -126,7 +129,10 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
               </div>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto">
-              <DeparturesTable stopId={selectedStop.stop_id} onStatusChange={handleStatusChange} />
+              <DeparturesTable
+                stopId={selectedStop.stop_id}
+                onStatusChange={handleStatusChange}
+              />
             </div>
           </div>
         </div>
@@ -134,5 +140,5 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
 
       <NearestStopsDialog open={nearestOpen} onOpenChange={setNearestOpen} />
     </div>
-  );
+  )
 }

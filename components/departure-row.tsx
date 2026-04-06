@@ -1,25 +1,25 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { BusLocationDialog } from "@/components/bus-location-dialog";
-import type { Departure, StopPoint } from "@/lib/types";
+import { useState } from "react"
+import { MapPin } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { BusLocationDialog } from "@/components/bus-location-dialog"
+import type { Departure, StopPoint } from "@/lib/types"
 
 interface DepartureRowProps {
-  departure: Departure;
-  stopPoint?: StopPoint;
+  departure: Departure
+  stopPoint?: StopPoint
 }
 
 export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false)
 
-  const isArriving = departure.expected_mins <= 1;
+  const isArriving = departure.expected_mins <= 1
 
   const expectedTime = new Date(departure.expected).toLocaleTimeString([], {
     hour: "numeric",
     minute: "2-digit",
-  });
+  })
 
   return (
     <>
@@ -37,12 +37,10 @@ export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
 
         {/* Destination info */}
         <div className="min-w-0 flex-1">
-          <p className="truncate font-semibold leading-tight">
+          <p className="truncate leading-tight font-semibold">
             {departure.headsign}
           </p>
-          <p className="mt-0.5 text-xs text-muted-foreground">
-            {expectedTime}
-          </p>
+          <p className="mt-0.5 text-xs text-muted-foreground">{expectedTime}</p>
         </div>
 
         {/* ETA */}
@@ -53,7 +51,7 @@ export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
             </span>
           ) : (
             <div className="flex items-baseline gap-0.5">
-              <span className="text-2xl font-bold tabular-nums leading-none">
+              <span className="text-2xl leading-none font-bold tabular-nums">
                 {departure.expected_mins}
               </span>
               <span className="text-xs text-muted-foreground">min</span>
@@ -65,7 +63,7 @@ export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
         <Button
           variant="ghost"
           size="icon"
-          className="shrink-0 text-muted-foreground opacity-60 transition-opacity hover:opacity-100 group-hover:opacity-100"
+          className="shrink-0 text-muted-foreground opacity-60 transition-opacity group-hover:opacity-100 hover:opacity-100"
           onClick={() => setDialogOpen(true)}
           aria-label="Show bus location"
         >
@@ -81,5 +79,5 @@ export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
         stopPoint={stopPoint}
       />
     </>
-  );
+  )
 }

@@ -1,27 +1,28 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { Clock } from "lucide-react";
-import { getSavedStops } from "@/lib/saved-stops";
-import type { SavedStop } from "@/lib/types";
+import { useEffect, useState } from "react"
+import Link from "next/link"
+import { Clock } from "lucide-react"
+import { getSavedStops } from "@/lib/saved-stops"
+import type { SavedStop } from "@/lib/types"
 
 export function SavedStops() {
-  const [stops, setStops] = useState<SavedStop[]>([]);
+  const [stops, setStops] = useState<SavedStop[]>(() => {
+    if (typeof window === "undefined") return []
+    return getSavedStops()
+  })
 
   useEffect(() => {
-    setStops(getSavedStops());
-
     function onStorage() {
-      setStops(getSavedStops());
+      setStops(getSavedStops())
     }
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  }, []);
+    window.addEventListener("storage", onStorage)
+    return () => window.removeEventListener("storage", onStorage)
+  }, [])
 
-  if (stops.length === 0) return null;
+  if (stops.length === 0) return null
 
-  const visible = stops.slice(0, 3);
+  const visible = stops.slice(0, 3)
 
   return (
     <div className="flex flex-wrap justify-center gap-2">
@@ -36,5 +37,5 @@ export function SavedStops() {
         </Link>
       ))}
     </div>
-  );
+  )
 }

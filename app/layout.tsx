@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "next-themes";
-import { Toaster } from "@/components/ui/sonner";
-import { Navbar } from "@/components/navbar";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { ThemeProvider } from "next-themes"
+import { Toaster } from "@/components/ui/sonner"
+import { Navbar } from "@/components/navbar"
+import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] })
 
-const siteUrl = "https://uiucbus.com";
+const siteUrl = "https://uiucbus.com"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -52,12 +52,12 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -85,11 +85,7 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-        >
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar />
           <main>{children}</main>
           <footer className="py-4 text-center text-xs text-muted-foreground">
@@ -100,7 +96,7 @@ export default function RootLayout({
               href="https://github.com/josh-byster/bus-tracker"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:text-foreground transition-colors"
+              className="underline transition-colors hover:text-foreground"
             >
               Open source on GitHub
             </a>
@@ -109,5 +105,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

@@ -1,81 +1,81 @@
-"use client";
+"use client"
 
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Loader2, MapPin } from "lucide-react";
+import { useCallback, useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { Loader2, MapPin } from "lucide-react"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { addSavedStop } from "@/lib/saved-stops";
-import type { Stop } from "@/lib/types";
+} from "@/components/ui/dialog"
+import { addSavedStop } from "@/lib/saved-stops"
+import type { Stop } from "@/lib/types"
 
 interface NearestStopsDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
 export function NearestStopsDialog({
   open,
   onOpenChange,
 }: NearestStopsDialogProps) {
-  const router = useRouter();
-  const [stops, setStops] = useState<Stop[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
+  const router = useRouter()
+  const [stops, setStops] = useState<Stop[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) return
 
-    setLoading(true);
-    setError(null);
-    setStops([]);
-    setShowAll(false);
+    setLoading(true)
+    setError(null)
+    setStops([])
+    setShowAll(false)
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         try {
-          const { latitude, longitude } = position.coords;
+          const { latitude, longitude } = position.coords
           const res = await fetch(
             `/api/nearest?lat=${latitude}&lon=${longitude}`
-          );
-          const data = await res.json();
-          setStops(data.stops || []);
+          )
+          const data = await res.json()
+          setStops(data.stops || [])
         } catch {
-          setError("Failed to fetch nearby stops.");
+          setError("Failed to fetch nearby stops.")
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
       },
       () => {
-        setError("Location services are not enabled.");
-        setLoading(false);
+        setError("Location services are not enabled.")
+        setLoading(false)
       },
       { enableHighAccuracy: false, timeout: 5000 }
-    );
-  }, [open]);
+    )
+  }, [open])
 
   const handleStopClick = useCallback(
     (stop: Stop) => {
-      addSavedStop({ id: stop.stop_id, name: stop.stop_name });
-      onOpenChange(false);
-      router.push(`/track/${stop.stop_id}`);
+      addSavedStop({ id: stop.stop_id, name: stop.stop_name })
+      onOpenChange(false)
+      router.push(`/track/${stop.stop_id}`)
     },
     [router, onOpenChange]
-  );
+  )
 
-  const displayed = showAll ? stops.slice(0, 10) : stops.slice(0, 5);
+  const displayed = showAll ? stops.slice(0, 10) : stops.slice(0, 5)
 
   // base-ui onOpenChange passes (open, eventDetails) — wrap to match our prop type
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      onOpenChange(nextOpen);
+      onOpenChange(nextOpen)
     },
     [onOpenChange]
-  );
+  )
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -131,5 +131,5 @@ export function NearestStopsDialog({
         )}
       </DialogContent>
     </Dialog>
-  );
+  )
 }

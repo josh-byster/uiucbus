@@ -1,59 +1,63 @@
-"use client";
+"use client"
 
-import { useCallback, useEffect, useState } from "react";
-import { BusFront, RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { DepartureRow } from "@/components/departure-row";
-import type { Departure, StopPoint } from "@/lib/types";
+import { useCallback, useEffect, useState } from "react"
+import { BusFront, RefreshCw } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { DepartureRow } from "@/components/departure-row"
+import type { Departure, StopPoint } from "@/lib/types"
 
 interface DeparturesTableProps {
-  stopId: string;
-  stopPoint?: StopPoint;
-  onStatusChange?: (secondsAgo: number, refresh: () => void) => void;
+  stopId: string
+  stopPoint?: StopPoint
+  onStatusChange?: (secondsAgo: number, refresh: () => void) => void
 }
 
-const POLL_INTERVAL = 30_000;
+const POLL_INTERVAL = 30_000
 
-export function DeparturesTable({ stopId, stopPoint, onStatusChange }: DeparturesTableProps) {
-  const [departures, setDepartures] = useState<Departure[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const [secondsAgo, setSecondsAgo] = useState(0);
+export function DeparturesTable({
+  stopId,
+  stopPoint,
+  onStatusChange,
+}: DeparturesTableProps) {
+  const [departures, setDepartures] = useState<Departure[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [secondsAgo, setSecondsAgo] = useState(0)
 
   const fetchDepartures = useCallback(async () => {
     try {
-      const res = await fetch(`/api/departures?stop_id=${stopId}`);
-      const data = await res.json();
-      setDepartures(data.departures || []);
-      setError(null);
-      setLastUpdated(new Date());
+      const res = await fetch(`/api/departures?stop_id=${stopId}`)
+      const data = await res.json()
+      setDepartures(data.departures || [])
+      setError(null)
+      setLastUpdated(new Date())
     } catch {
-      setError("Failed to load departures.");
+      setError("Failed to load departures.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  }, [stopId]);
+  }, [stopId])
 
   // Initial fetch + polling
   useEffect(() => {
-    setLoading(true);
-    fetchDepartures();
-    const interval = setInterval(fetchDepartures, POLL_INTERVAL);
-    return () => clearInterval(interval);
-  }, [fetchDepartures]);
+    setLoading(true)
+    fetchDepartures()
+    const interval = setInterval(fetchDepartures, POLL_INTERVAL)
+    return () => clearInterval(interval)
+  }, [fetchDepartures])
 
   // "Updated X seconds ago" ticker — report to parent if callback provided
   useEffect(() => {
-    if (!lastUpdated) return;
+    if (!lastUpdated) return
     const interval = setInterval(() => {
-      const s = Math.round((Date.now() - lastUpdated.getTime()) / 1000);
-      setSecondsAgo(s);
-      onStatusChange?.(s, fetchDepartures);
-    }, 1000);
-    onStatusChange?.(0, fetchDepartures);
-    return () => clearInterval(interval);
-  }, [lastUpdated, onStatusChange, fetchDepartures]);
+      const s = Math.round((Date.now() - lastUpdated.getTime()) / 1000)
+      setSecondsAgo(s)
+      onStatusChange?.(s, fetchDepartures)
+    }, 1000)
+    onStatusChange?.(0, fetchDepartures)
+    return () => clearInterval(interval)
+  }, [lastUpdated, onStatusChange, fetchDepartures])
 
   if (loading) {
     return (
@@ -61,7 +65,7 @@ export function DeparturesTable({ stopId, stopPoint, onStatusChange }: Departure
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="flex items-center gap-4 rounded-lg border border-border/50 bg-muted/30 p-4 animate-pulse"
+            className="flex animate-pulse items-center gap-4 rounded-lg border border-border/50 bg-muted/30 p-4"
           >
             <div className="h-10 w-14 rounded-md bg-muted" />
             <div className="flex-1 space-y-2">
@@ -72,7 +76,7 @@ export function DeparturesTable({ stopId, stopPoint, onStatusChange }: Departure
           </div>
         ))}
       </div>
-    );
+    )
   }
 
   if (error) {
@@ -84,7 +88,7 @@ export function DeparturesTable({ stopId, stopPoint, onStatusChange }: Departure
           Retry
         </Button>
       </div>
-    );
+    )
   }
 
   return (
@@ -127,5 +131,5 @@ export function DeparturesTable({ stopId, stopPoint, onStatusChange }: Departure
         </div>
       )}
     </div>
-  );
+  )
 }
