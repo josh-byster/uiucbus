@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Clock } from "lucide-react";
 import { getSavedStops } from "@/lib/saved-stops";
 import type { SavedStop } from "@/lib/types";
 
@@ -24,15 +24,14 @@ export function SavedStops() {
   return (
     <div className="flex flex-wrap justify-center gap-2">
       {stops.map((stop) => (
-        <Button
+        <Link
           key={stop.id}
-          variant="outline"
-          size="sm"
-          nativeButton={false}
-          render={<Link href={`/track/${stop.id}`} />}
+          href={`/track/${stop.id}`}
+          className="flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-sm text-white/90 backdrop-blur-sm transition-colors hover:bg-white/25"
         >
+          <Clock className="h-3 w-3" />
           {stop.name}
-        </Button>
+        </Link>
       ))}
     </div>
   );
