@@ -1,17 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Bookmark, BookmarkCheck, ChevronLeft, RefreshCw } from "lucide-react";
+import { ChevronLeft, RefreshCw } from "lucide-react";
 import { StopSearch } from "@/components/stop-search";
 import { SavedStops } from "@/components/saved-stops";
 import { NearestStopsDialog } from "@/components/nearest-stops-dialog";
 import { DeparturesTable } from "@/components/departures-table";
 import { Button } from "@/components/ui/button";
-import {
-  addSavedStop,
-  removeSavedStop,
-  isStopSaved,
-} from "@/lib/saved-stops";
+import { addSavedStop } from "@/lib/saved-stops";
 import type { StopSearchEntry } from "@/lib/types";
 
 interface UnifiedHomeProps {
@@ -23,7 +19,6 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
   const [selectedStop, setSelectedStop] = useState<StopSearchEntry | null>(
     initialStop ?? null
   );
-  const [saved, setSaved] = useState(false);
   const [updatedAgo, setUpdatedAgo] = useState(0);
   const refreshRef = useRef<(() => void) | null>(null);
 
@@ -32,14 +27,9 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
     refreshRef.current = refresh;
   }, []);
 
-  useEffect(() => {
-    if (selectedStop) {
-      setSaved(isStopSaved(selectedStop.stop_id));
-    }
-  }, [selectedStop]);
-
   const handleSelect = useCallback((stop: StopSearchEntry) => {
     setSelectedStop(stop);
+    addSavedStop({ id: stop.stop_id, name: stop.stop_name });
     window.history.pushState(null, "", `/track/${stop.stop_id}`);
   }, []);
 
@@ -47,17 +37,6 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
     setSelectedStop(null);
     window.history.pushState(null, "", "/");
   }, []);
-
-  const toggleSave = useCallback(() => {
-    if (!selectedStop) return;
-    if (saved) {
-      removeSavedStop(selectedStop.stop_id);
-      setSaved(false);
-    } else {
-      addSavedStop({ id: selectedStop.stop_id, name: selectedStop.stop_name });
-      setSaved(true);
-    }
-  }, [saved, selectedStop]);
 
   // Handle browser back/forward
   useEffect(() => {
@@ -143,13 +122,6 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
                   onClick={() => refreshRef.current?.()}
                 >
                   <RefreshCw className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={toggleSave}>
-                  {saved ? (
-                    <BookmarkCheck className="h-5 w-5 text-primary" />
-                  ) : (
-                    <Bookmark className="h-5 w-5" />
-                  )}
                 </Button>
               </div>
             </div>

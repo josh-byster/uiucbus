@@ -21,9 +21,11 @@ export function SavedStops() {
 
   if (stops.length === 0) return null;
 
+  const visible = stops.slice(0, 3);
+
   return (
     <div className="flex flex-wrap justify-center gap-2">
-      {stops.map((stop) => (
+      {visible.map((stop) => (
         <Link
           key={stop.id}
           href={`/track/${stop.id}`}

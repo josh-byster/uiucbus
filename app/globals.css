@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 * {
-  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.3s ease, outline-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.3s ease, outline-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, scale 0.3s ease, opacity 0.3s ease;
 }
 
 @theme inline {

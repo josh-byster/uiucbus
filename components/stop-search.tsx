@@ -18,9 +18,12 @@ export function StopSearch({ onNearestClick, onSelect, compact }: StopSearchProp
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<StopSearchEntry[]>([]);
   const [focused, setFocused] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    setResults(searchStops(query));
+    const r = searchStops(query);
+    setResults(r);
+    setActiveIndex(0);
   }, [query]);
 
   const showResults = focused && query.trim().length > 0;
@@ -38,6 +41,24 @@ export function StopSearch({ onNearestClick, onSelect, compact }: StopSearchProp
     [router, onSelect]
   );
 
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!showResults || results.length === 0) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev + 1) % results.length);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev - 1 + results.length) % results.length);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        handleSelect(results[activeIndex]);
+      }
+    },
+    [showResults, results, activeIndex, handleSelect]
+  );
+
   return (
     <div className="relative w-full max-w-xl">
       <div className={`flex items-center gap-3 rounded-full border bg-background shadow-lg outline outline-2 outline-transparent transition-all duration-300 ease-out focus-within:shadow-xl focus-within:outline-ring/40 ${compact ? "px-4 py-2" : "px-5 py-3"}`}>
@@ -48,6 +69,7 @@ export function StopSearch({ onNearestClick, onSelect, compact }: StopSearchProp
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setTimeout(() => setFocused(false), 200)}
+          onKeyDown={handleKeyDown}
           placeholder="Search for a bus stop..."
           className={`w-full bg-transparent outline-none placeholder:text-muted-foreground/60 ${compact ? "text-sm" : "text-base"}`}
         />
@@ -85,8 +107,9 @@ export function StopSearch({ onNearestClick, onSelect, compact }: StopSearchProp
                       e.preventDefault();
                       handleSelect(stop);
                     }}
+                    onMouseEnter={() => setActiveIndex(i)}
                     className={`flex w-full items-center gap-3 px-5 py-3 text-left text-sm transition-colors hover:bg-accent ${
-                      i === 0 ? "bg-accent/50" : ""
+                      i === activeIndex ? "bg-accent/50" : ""
                     }`}
                   >
                     <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground">
