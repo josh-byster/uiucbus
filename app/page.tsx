@@ -12,7 +12,7 @@ export default function HomePage() {
     <div className="relative flex min-h-[calc(100vh-3.5rem)] flex-col items-center px-4 pt-[20vh]">
       <div
         className="absolute inset-0 -z-10 bg-cover bg-center"
-        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+        style={{ backgroundImage: "url('/hero-bg.avif')" }}
       />
       <div className="absolute inset-0 -z-10 bg-background/70 dark:bg-background/80" />
 
