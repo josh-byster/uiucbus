@@ -92,6 +92,10 @@ export default function RootLayout({
         >
           <Navbar />
           <main>{children}</main>
+          <footer className="py-4 text-center text-xs text-muted-foreground">
+            Not affiliated with CUMTD. Transit data provided by the
+            Champaign-Urbana Mass Transit District.
+          </footer>
           <Toaster />
         </ThemeProvider>
       </body>
