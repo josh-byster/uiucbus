@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, Search } from "lucide-react";
+import { MapPin } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -11,6 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
 import { searchStops } from "@/lib/stops";
 import { addSavedStop } from "@/lib/saved-stops";
 import type { StopSearchEntry } from "@/lib/types";
@@ -44,25 +45,16 @@ export function StopSearch({ onNearestClick }: StopSearchProps) {
   );
 
   return (
-    <div className="relative w-full max-w-lg mx-auto">
-      <Command className="rounded-lg border shadow-md" shouldFilter={false}>
-        <div className="flex items-center">
-          <CommandInput
-            placeholder="Search for a bus stop..."
-            value={query}
-            onValueChange={setQuery}
-            className="h-12"
-          />
-          {onNearestClick && (
-            <button
-              onClick={onNearestClick}
-              className="mr-2 rounded-md p-2 text-muted-foreground hover:text-foreground hover:bg-accent"
-              aria-label="Find nearest stops"
-            >
-              <MapPin className="h-5 w-5" />
-            </button>
-          )}
-        </div>
+    <div className="flex w-full max-w-md items-center gap-2">
+      <Command
+        className="rounded-lg border shadow-sm"
+        shouldFilter={false}
+      >
+        <CommandInput
+          placeholder="Search for a bus stop..."
+          value={query}
+          onValueChange={setQuery}
+        />
         {open && (
           <CommandList>
             <CommandEmpty>No stops found.</CommandEmpty>
@@ -73,7 +65,6 @@ export function StopSearch({ onNearestClick }: StopSearchProps) {
                   value={stop.stop_id}
                   onSelect={handleSelect}
                 >
-                  <Search className="mr-2 h-4 w-4 text-muted-foreground" />
                   {stop.stop_name}
                 </CommandItem>
               ))}
@@ -81,6 +72,17 @@ export function StopSearch({ onNearestClick }: StopSearchProps) {
           </CommandList>
         )}
       </Command>
+      {onNearestClick && (
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={onNearestClick}
+          aria-label="Find nearest stops"
+          className="shrink-0"
+        >
+          <MapPin className="h-4 w-4" />
+        </Button>
+      )}
     </div>
   );
 }
