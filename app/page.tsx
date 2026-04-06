@@ -4,22 +4,43 @@ import { useState } from "react";
 import { StopSearch } from "@/components/stop-search";
 import { SavedStops } from "@/components/saved-stops";
 import { NearestStopsDialog } from "@/components/nearest-stops-dialog";
+import { RouteSearch } from "@/components/route-search";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function HomePage() {
   const [nearestOpen, setNearestOpen] = useState(false);
 
   return (
     <div className="flex min-h-[calc(100vh-3.5rem)] flex-col items-center justify-center gap-6 px-4">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">
-          UIUC Bus Tracker
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          Real-time bus departures for Champaign-Urbana
-        </p>
-      </div>
+      <Card className="w-full max-w-lg">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">
+            UIUC Bus Tracker
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="stop">
+            <TabsList variant="line" className="mb-4 w-full">
+              <TabsTrigger value="stop">Stop</TabsTrigger>
+              <TabsTrigger value="route">Origin → Destination</TabsTrigger>
+            </TabsList>
 
-      <StopSearch onNearestClick={() => setNearestOpen(true)} />
+            <TabsContent value="stop" className="space-y-4">
+              <StopSearch onNearestClick={() => setNearestOpen(true)} />
+            </TabsContent>
+
+            <TabsContent value="route" className="space-y-4">
+              <RouteSearch />
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
 
       <SavedStops />
 

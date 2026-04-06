@@ -45,7 +45,7 @@ export function StopSearch({ onNearestClick }: StopSearchProps) {
   );
 
   return (
-    <div className="flex w-full max-w-lg items-start gap-2">
+    <div className="flex w-full items-start gap-2">
       <div className="relative w-full">
         <Command
           className="overflow-visible rounded-lg border bg-background shadow-sm"
