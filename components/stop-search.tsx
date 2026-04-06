@@ -2,16 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin } from "lucide-react";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { Button } from "@/components/ui/button";
+import { MapPin, Search, X } from "lucide-react";
 import { searchStops } from "@/lib/stops";
 import { addSavedStop } from "@/lib/saved-stops";
 import type { StopSearchEntry } from "@/lib/types";
@@ -24,71 +15,84 @@ export function StopSearch({ onNearestClick }: StopSearchProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<StopSearchEntry[]>([]);
-  const [open, setOpen] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   useEffect(() => {
     setResults(searchStops(query));
-    setOpen(query.trim().length > 0);
   }, [query]);
 
+  const showResults = focused && query.trim().length > 0;
+
   const handleSelect = useCallback(
-    (stopId: string) => {
-      const stop = results.find((s) => s.stop_id === stopId);
-      if (stop) {
-        addSavedStop({ id: stop.stop_id, name: stop.stop_name });
-        setQuery("");
-        setOpen(false);
-        router.push(`/track/${stop.stop_id}`);
-      }
+    (stop: StopSearchEntry) => {
+      addSavedStop({ id: stop.stop_id, name: stop.stop_name });
+      setQuery("");
+      router.push(`/track/${stop.stop_id}`);
     },
-    [results, router]
+    [router]
   );
 
   return (
-    <div className="flex w-full items-start gap-2">
-      <div className="relative w-full">
-        <Command
-          className="overflow-visible rounded-lg border bg-background shadow-sm"
-          shouldFilter={false}
-        >
-          <CommandInput
-            placeholder="Search for a bus stop..."
-            value={query}
-            onValueChange={setQuery}
-          />
-          {open && (
-            <div className="absolute left-0 right-0 top-full z-50 mt-1">
-              <CommandList className="rounded-lg border bg-popover shadow-lg">
-                <CommandEmpty className="py-4 text-center text-sm text-muted-foreground">
-                  No stops found.
-                </CommandEmpty>
-                <CommandGroup>
-                  {results.map((stop) => (
-                    <CommandItem
-                      key={stop.stop_id}
-                      value={stop.stop_id}
-                      onSelect={handleSelect}
-                      className="cursor-pointer justify-center py-3 text-sm"
-                    >
-                      {stop.stop_name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </div>
-          )}
-        </Command>
+    <div className="relative w-full max-w-xl">
+      <div className="flex items-center gap-3 rounded-full border bg-background px-5 py-3 shadow-lg transition-shadow focus-within:shadow-xl focus-within:ring-2 focus-within:ring-ring/20">
+        <Search className="h-5 w-5 shrink-0 text-muted-foreground" />
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setTimeout(() => setFocused(false), 200)}
+          placeholder="Search for a bus stop..."
+          className="w-full bg-transparent text-base outline-none placeholder:text-muted-foreground/60"
+        />
+        {query && (
+          <button
+            onClick={() => setQuery("")}
+            className="shrink-0 text-muted-foreground hover:text-foreground"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        )}
+        {onNearestClick && (
+          <button
+            onClick={onNearestClick}
+            className="shrink-0 rounded-full p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
+            aria-label="Find nearest stops"
+          >
+            <MapPin className="h-5 w-5" />
+          </button>
+        )}
       </div>
-      {onNearestClick && (
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={onNearestClick}
-          aria-label="Find nearest stops"
-          className="mt-1 shrink-0"
-        >
-          <MapPin className="h-4 w-4" />
-        </Button>
+
+      {showResults && (
+        <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border bg-popover shadow-xl">
+          {results.length === 0 ? (
+            <p className="px-5 py-4 text-center text-sm text-muted-foreground">
+              No stops found.
+            </p>
+          ) : (
+            <ul>
+              {results.map((stop, i) => (
+                <li key={stop.stop_id}>
+                  <button
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      handleSelect(stop);
+                    }}
+                    className={`flex w-full items-center gap-3 px-5 py-3 text-left text-sm transition-colors hover:bg-accent ${
+                      i === 0 ? "bg-accent/50" : ""
+                    }`}
+                  >
+                    <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground">
+                      {stop.stop_id}
+                    </span>
+                    <span>{stop.stop_name}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       )}
     </div>
   );
