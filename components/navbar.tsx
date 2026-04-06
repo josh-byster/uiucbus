@@ -77,6 +77,7 @@ export function Navbar() {
                 <Button
                   variant="ghost"
                   size="sm"
+                  aria-label="Recent stops"
                   className="text-muted-foreground hover:text-foreground"
                 />
               }

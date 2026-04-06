@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import Image from "next/image"
 import { ChevronLeft, RefreshCw } from "lucide-react"
 import { StopSearch } from "@/components/stop-search"
 import { SavedStops } from "@/components/saved-stops"
@@ -57,10 +58,16 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
   return (
     <div className="relative flex h-[calc(100vh-3.5rem)] flex-col items-center overflow-hidden px-4">
       {/* Background — always full height */}
-      <div
-        className="absolute inset-0 -z-10 bg-cover bg-center"
-        style={{ backgroundImage: "url('/hero-bg.jpg')" }}
-      />
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/hero-bg.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+      </div>
       <div className="absolute inset-0 -z-10 bg-black/60 dark:bg-black/75" />
 
       {/* Hero title — fades out when tracking */}
