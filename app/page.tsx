@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <div className="flex min-h-[calc(100vh-3.5rem)] flex-col items-center px-4 pt-[20vh]">
       <h1 className="mb-8 text-center text-4xl font-bold tracking-tight sm:text-5xl">
-        Where are you headed?
+        Track your bus
       </h1>
 
       <StopSearch onNearestClick={() => setNearestOpen(true)} />
