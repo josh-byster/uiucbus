@@ -14,9 +14,9 @@ export default function HomePage() {
         className="absolute inset-0 -z-10 bg-cover bg-center"
         style={{ backgroundImage: "url('/hero-bg.avif')" }}
       />
-      <div className="absolute inset-0 -z-10 bg-background/70 dark:bg-background/80" />
+      <div className="absolute inset-0 -z-10 bg-black/60 dark:bg-black/75" />
 
-      <h1 className="mb-8 text-center text-4xl font-bold tracking-tight sm:text-5xl">
+      <h1 className="mb-8 text-center text-4xl font-bold tracking-tight text-white sm:text-5xl">
         Track your bus
       </h1>
 
