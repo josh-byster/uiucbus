@@ -60,7 +60,7 @@ export function UnifiedHome({ initialStop }: UnifiedHomeProps) {
       {/* Background — always full height */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/hero-bg.jpg"
+          src="/hero-bg.webp"
           alt=""
           fill
           priority
