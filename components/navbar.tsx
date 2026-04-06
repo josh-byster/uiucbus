@@ -71,7 +71,7 @@ export function Navbar() {
               Recents
               <ChevronDown className="ml-1 h-4 w-4" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuContent align="end" className="min-w-48 max-w-72">
               {savedStops.length === 0 ? (
                 <DropdownMenuItem disabled>No recent stops</DropdownMenuItem>
               ) : (
@@ -80,6 +80,7 @@ export function Navbar() {
                     <DropdownMenuItem
                       key={stop.id}
                       render={<Link href={`/track/${stop.id}`} />}
+                      className="truncate"
                     >
                       {stop.name}
                     </DropdownMenuItem>
