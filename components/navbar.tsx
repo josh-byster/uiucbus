@@ -28,12 +28,11 @@ const DEFAULT_STOPS = [
 ]
 
 export function Navbar() {
-  const [savedStops, setSavedStops] = useState<SavedStop[]>(() => {
-    if (typeof window === "undefined") return []
-    return getSavedStops()
-  })
+  const [savedStops, setSavedStops] = useState<SavedStop[]>([])
 
   useEffect(() => {
+    setSavedStops(getSavedStops()) // eslint-disable-line react-hooks/set-state-in-effect -- hydrate from localStorage
+
     function onStorage() {
       setSavedStops(getSavedStops())
     }

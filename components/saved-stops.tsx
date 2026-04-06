@@ -7,12 +7,11 @@ import { getSavedStops } from "@/lib/saved-stops"
 import type { SavedStop } from "@/lib/types"
 
 export function SavedStops() {
-  const [stops, setStops] = useState<SavedStop[]>(() => {
-    if (typeof window === "undefined") return []
-    return getSavedStops()
-  })
+  const [stops, setStops] = useState<SavedStop[]>([])
 
   useEffect(() => {
+    setStops(getSavedStops()) // eslint-disable-line react-hooks/set-state-in-effect -- hydrate from localStorage
+
     function onStorage() {
       setStops(getSavedStops())
     }
