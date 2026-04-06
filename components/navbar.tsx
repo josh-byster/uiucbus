@@ -54,6 +54,7 @@ export function Navbar() {
                 key={stop.id}
                 variant="ghost"
                 size="sm"
+                nativeButton={false}
                 render={<Link href={`/track/${stop.id}`} />}
               >
                 {stop.name}

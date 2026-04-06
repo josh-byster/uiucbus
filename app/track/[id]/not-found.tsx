@@ -8,7 +8,7 @@ export default function StopNotFound() {
       <p className="text-muted-foreground">
         This bus stop doesn&apos;t exist. Try searching for another one.
       </p>
-      <Button render={<Link href="/" />}>
+      <Button nativeButton={false} render={<Link href="/" />}>
         Search stops
       </Button>
     </div>

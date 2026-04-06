@@ -28,6 +28,7 @@ export function SavedStops() {
           key={stop.id}
           variant="outline"
           size="sm"
+          nativeButton={false}
           render={<Link href={`/track/${stop.id}`} />}
         >
           {stop.name}
