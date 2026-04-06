@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Bookmark, BookmarkCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { DeparturesTable } from "@/components/departures-table";
 import {
   addSavedStop,
@@ -35,21 +36,24 @@ export function TrackingClient({ stop }: TrackingClientProps) {
   const stopPoint = stop.stop_points?.[0];
 
   return (
-    <div className="container mx-auto max-w-2xl px-4 py-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">
-          {stop.stop_name}
-        </h1>
-        <Button variant="ghost" size="icon" onClick={toggleSave}>
-          {saved ? (
-            <BookmarkCheck className="h-5 w-5 text-primary" />
-          ) : (
-            <Bookmark className="h-5 w-5" />
-          )}
-        </Button>
-      </div>
-
-      <DeparturesTable stopId={stop.stop_id} stopPoint={stopPoint} />
+    <div className="container mx-auto max-w-2xl px-4 py-8">
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <h1 className="text-xl font-bold tracking-tight">
+            {stop.stop_name}
+          </h1>
+          <Button variant="ghost" size="icon" onClick={toggleSave}>
+            {saved ? (
+              <BookmarkCheck className="h-5 w-5 text-primary" />
+            ) : (
+              <Bookmark className="h-5 w-5" />
+            )}
+          </Button>
+        </CardHeader>
+        <CardContent>
+          <DeparturesTable stopId={stop.stop_id} stopPoint={stopPoint} />
+        </CardContent>
+      </Card>
     </div>
   );
 }

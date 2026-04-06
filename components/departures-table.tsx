@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { RefreshCw } from "lucide-react";
+import { BusFront, RefreshCw } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -84,9 +84,17 @@ export function DeparturesTable({ stopId, stopPoint }: DeparturesTableProps) {
   return (
     <div>
       {departures.length === 0 ? (
-        <p className="py-8 text-center text-muted-foreground">
-          No upcoming departures.
-        </p>
+        <div className="flex flex-col items-center gap-3 py-16">
+          <div className="rounded-full bg-muted p-4">
+            <BusFront className="h-8 w-8 text-muted-foreground" />
+          </div>
+          <div className="text-center">
+            <p className="font-medium">No upcoming departures</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Buses may not be running at this time.
+            </p>
+          </div>
+        </div>
       ) : (
         <Table>
           <TableHeader>
