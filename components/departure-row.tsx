@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { MapPin } from "lucide-react";
-import { TableCell, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BusLocationDialog } from "@/components/bus-location-dialog";
 import type { Departure, StopPoint } from "@/lib/types";
@@ -16,10 +14,7 @@ interface DepartureRowProps {
 export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const etaText =
-    departure.expected_mins === 0
-      ? "Arriving"
-      : `${departure.expected_mins} min`;
+  const isArriving = departure.expected_mins <= 1;
 
   const expectedTime = new Date(departure.expected).toLocaleTimeString([], {
     hour: "numeric",
@@ -28,41 +23,55 @@ export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
 
   return (
     <>
-      <TableRow>
-        <TableCell>
-          <Badge
-            style={{
-              backgroundColor: `#${departure.route.route_color}`,
-              color: `#${departure.route.route_text_color}`,
-            }}
-          >
-            {departure.route.route_short_name || departure.route.route_id}
-          </Badge>
-        </TableCell>
-        <TableCell className="font-medium">{departure.headsign}</TableCell>
-        <TableCell>
-          <span
-            className={
-              departure.expected_mins <= 1 ? "font-bold text-green-600" : ""
-            }
-          >
-            {etaText}
-          </span>
-        </TableCell>
-        <TableCell className="hidden sm:table-cell text-muted-foreground">
-          {expectedTime}
-        </TableCell>
-        <TableCell>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setDialogOpen(true)}
-            aria-label="Show bus location"
-          >
-            <MapPin className="h-4 w-4" />
-          </Button>
-        </TableCell>
-      </TableRow>
+      <div className="group flex items-center gap-3 rounded-lg border border-border/50 bg-card/50 p-3 transition-colors hover:bg-card/80 sm:gap-4 sm:p-4">
+        {/* Route badge */}
+        <div
+          className="flex h-10 w-14 shrink-0 items-center justify-center rounded-md text-sm font-bold shadow-sm"
+          style={{
+            backgroundColor: `#${departure.route.route_color}`,
+            color: `#${departure.route.route_text_color}`,
+          }}
+        >
+          {departure.route.route_short_name || departure.route.route_id}
+        </div>
+
+        {/* Destination info */}
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-semibold leading-tight">
+            {departure.headsign}
+          </p>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            {expectedTime}
+          </p>
+        </div>
+
+        {/* ETA */}
+        <div className="shrink-0 text-right">
+          {isArriving ? (
+            <span className="inline-flex items-center rounded-full bg-green-500/15 px-3 py-1 text-sm font-bold text-green-500">
+              NOW
+            </span>
+          ) : (
+            <div className="flex items-baseline gap-0.5">
+              <span className="text-2xl font-bold tabular-nums leading-none">
+                {departure.expected_mins}
+              </span>
+              <span className="text-xs text-muted-foreground">min</span>
+            </div>
+          )}
+        </div>
+
+        {/* Location button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="shrink-0 text-muted-foreground opacity-60 transition-opacity hover:opacity-100 group-hover:opacity-100"
+          onClick={() => setDialogOpen(true)}
+          aria-label="Show bus location"
+        >
+          <MapPin className="h-4 w-4" />
+        </Button>
+      </div>
 
       <BusLocationDialog
         open={dialogOpen}

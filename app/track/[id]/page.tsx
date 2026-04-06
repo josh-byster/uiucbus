@@ -1,6 +1,5 @@
-import { notFound } from "next/navigation";
-import { getStop } from "@/lib/cumtd";
-import { TrackingClient } from "./tracking-client";
+import { getStopName } from "@/lib/stops";
+import { TrackPageClient } from "./track-page-client";
 
 interface TrackingPageProps {
   params: Promise<{ id: string }>;
@@ -8,16 +7,7 @@ interface TrackingPageProps {
 
 export default async function TrackingPage({ params }: TrackingPageProps) {
   const { id } = await params;
+  const stopName = getStopName(id) ?? id;
 
-  try {
-    const data = await getStop(id);
-    if (!data.stops || data.stops.length === 0) {
-      notFound();
-    }
-
-    const stop = data.stops[0];
-    return <TrackingClient stop={stop} />;
-  } catch {
-    notFound();
-  }
+  return <TrackPageClient stopId={id} stopName={stopName} />;
 }

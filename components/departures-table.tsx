@@ -2,14 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { BusFront, RefreshCw } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { DepartureRow } from "@/components/departure-row";
 import type { Departure, StopPoint } from "@/lib/types";
@@ -17,11 +9,12 @@ import type { Departure, StopPoint } from "@/lib/types";
 interface DeparturesTableProps {
   stopId: string;
   stopPoint?: StopPoint;
+  onStatusChange?: (secondsAgo: number, refresh: () => void) => void;
 }
 
 const POLL_INTERVAL = 30_000;
 
-export function DeparturesTable({ stopId, stopPoint }: DeparturesTableProps) {
+export function DeparturesTable({ stopId, stopPoint, onStatusChange }: DeparturesTableProps) {
   const [departures, setDepartures] = useState<Departure[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,20 +43,33 @@ export function DeparturesTable({ stopId, stopPoint }: DeparturesTableProps) {
     return () => clearInterval(interval);
   }, [fetchDepartures]);
 
-  // "Updated X seconds ago" ticker
+  // "Updated X seconds ago" ticker — report to parent if callback provided
   useEffect(() => {
     if (!lastUpdated) return;
     const interval = setInterval(() => {
-      setSecondsAgo(Math.round((Date.now() - lastUpdated.getTime()) / 1000));
+      const s = Math.round((Date.now() - lastUpdated.getTime()) / 1000);
+      setSecondsAgo(s);
+      onStatusChange?.(s, fetchDepartures);
     }, 1000);
+    onStatusChange?.(0, fetchDepartures);
     return () => clearInterval(interval);
-  }, [lastUpdated]);
+  }, [lastUpdated, onStatusChange, fetchDepartures]);
 
   if (loading) {
     return (
       <div className="space-y-3">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="h-12 w-full" />
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-4 rounded-lg border border-border/50 bg-muted/30 p-4 animate-pulse"
+          >
+            <div className="h-10 w-14 rounded-md bg-muted" />
+            <div className="flex-1 space-y-2">
+              <div className="h-4 w-32 rounded bg-muted" />
+              <div className="h-3 w-20 rounded bg-muted" />
+            </div>
+            <div className="h-8 w-16 rounded bg-muted" />
+          </div>
         ))}
       </div>
     );
@@ -96,40 +102,29 @@ export function DeparturesTable({ stopId, stopPoint }: DeparturesTableProps) {
           </div>
         </div>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-20">Route</TableHead>
-              <TableHead>Destination</TableHead>
-              <TableHead className="w-20">ETA</TableHead>
-              <TableHead className="hidden sm:table-cell w-24">Time</TableHead>
-              <TableHead className="w-12"></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {departures.map((dep, i) => (
-              <DepartureRow
-                key={`${dep.vehicle_id}-${dep.expected}-${i}`}
-                departure={dep}
-                stopPoint={stopPoint}
-              />
-            ))}
-          </TableBody>
-        </Table>
+        <div className="space-y-2">
+          {departures.map((dep, i) => (
+            <DepartureRow
+              key={`${dep.vehicle_id}-${dep.expected}-${i}`}
+              departure={dep}
+              stopPoint={stopPoint}
+            />
+          ))}
+        </div>
       )}
 
-      {lastUpdated && (
-        <p className="mt-3 text-center text-xs text-muted-foreground">
-          Updated {secondsAgo}s ago
+      {!onStatusChange && lastUpdated && (
+        <div className="mt-4 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+          <span>Updated {secondsAgo}s ago</span>
           <Button
             variant="ghost"
             size="icon"
-            className="ml-1 h-6 w-6"
+            className="h-5 w-5"
             onClick={fetchDepartures}
           >
             <RefreshCw className="h-3 w-3" />
           </Button>
-        </p>
+        </div>
       )}
     </div>
   );

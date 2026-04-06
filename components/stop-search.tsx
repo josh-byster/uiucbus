@@ -9,9 +9,11 @@ import type { StopSearchEntry } from "@/lib/types";
 
 interface StopSearchProps {
   onNearestClick?: () => void;
+  onSelect?: (stop: StopSearchEntry) => void;
+  compact?: boolean;
 }
 
-export function StopSearch({ onNearestClick }: StopSearchProps) {
+export function StopSearch({ onNearestClick, onSelect, compact }: StopSearchProps) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<StopSearchEntry[]>([]);
@@ -27,15 +29,19 @@ export function StopSearch({ onNearestClick }: StopSearchProps) {
     (stop: StopSearchEntry) => {
       addSavedStop({ id: stop.stop_id, name: stop.stop_name });
       setQuery("");
-      router.push(`/track/${stop.stop_id}`);
+      if (onSelect) {
+        onSelect(stop);
+      } else {
+        router.push(`/track/${stop.stop_id}`);
+      }
     },
-    [router]
+    [router, onSelect]
   );
 
   return (
     <div className="relative w-full max-w-xl">
-      <div className="flex items-center gap-3 rounded-full border bg-background px-5 py-3 shadow-lg transition-shadow focus-within:shadow-xl focus-within:ring-2 focus-within:ring-ring/20">
-        <Search className="h-5 w-5 shrink-0 text-muted-foreground" />
+      <div className={`flex items-center gap-3 rounded-full border bg-background shadow-lg outline outline-2 outline-transparent transition-all duration-300 ease-out focus-within:shadow-xl focus-within:outline-ring/40 ${compact ? "px-4 py-2" : "px-5 py-3"}`}>
+        <Search className={`shrink-0 text-muted-foreground ${compact ? "h-4 w-4" : "h-5 w-5"}`} />
         <input
           type="text"
           value={query}
@@ -43,7 +49,7 @@ export function StopSearch({ onNearestClick }: StopSearchProps) {
           onFocus={() => setFocused(true)}
           onBlur={() => setTimeout(() => setFocused(false), 200)}
           placeholder="Search for a bus stop..."
-          className="w-full bg-transparent text-base outline-none placeholder:text-muted-foreground/60"
+          className={`w-full bg-transparent outline-none placeholder:text-muted-foreground/60 ${compact ? "text-sm" : "text-base"}`}
         />
         {query && (
           <button
@@ -65,7 +71,7 @@ export function StopSearch({ onNearestClick }: StopSearchProps) {
       </div>
 
       {showResults && (
-        <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border bg-popover shadow-xl">
+        <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border bg-popover shadow-xl animate-in fade-in slide-in-from-top-2 duration-200">
           {results.length === 0 ? (
             <p className="px-5 py-4 text-center text-sm text-muted-foreground">
               No stops found.
