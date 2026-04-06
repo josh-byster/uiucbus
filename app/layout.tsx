@@ -95,6 +95,15 @@ export default function RootLayout({
           <footer className="py-4 text-center text-xs text-muted-foreground">
             Not affiliated with CUMTD. Transit data provided by the
             Champaign-Urbana Mass Transit District.
+            <br />
+            <a
+              href="https://github.com/josh-byster/bus-tracker"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground transition-colors"
+            >
+              Open source on GitHub
+            </a>
           </footer>
           <Toaster />
         </ThemeProvider>
