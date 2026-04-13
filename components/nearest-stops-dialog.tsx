@@ -95,7 +95,18 @@ export function NearestStopsDialog({
         )}
 
         {error && (
-          <p className="py-4 text-center text-sm text-destructive">{error}</p>
+          <div className="flex flex-col items-center gap-3 py-8">
+            <div className="rounded-full bg-muted p-3">
+              <MapPin className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <div className="text-center">
+              <p className="font-medium">{error}</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Please enable location access in your browser settings and try
+                again.
+              </p>
+            </div>
+          </div>
         )}
 
         {!loading && !error && stops.length === 0 && (
