@@ -103,11 +103,6 @@ export function DeparturesTable({
     touchStartY.current = 0
   }, [pullDistance, fetchDepartures])
 
-  // Determine if service is likely not running
-  const now = new Date()
-  const hour = now.getHours()
-  const isLateNight = hour >= 1 && hour < 5
-
   if (loading) {
     return (
       <div className="space-y-3">
@@ -171,9 +166,7 @@ export function DeparturesTable({
           <div className="text-center">
             <p className="font-medium">No upcoming departures</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              {isLateNight
-                ? "Service typically resumes around 5:00 AM."
-                : "Buses may not be running at this time."}
+              Buses may not be running at this time.
             </p>
           </div>
         </div>
