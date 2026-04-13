@@ -105,18 +105,27 @@ export function DeparturesTable({
 
   if (loading) {
     return (
-      <div className="space-y-3">
+      <div className="space-y-2">
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="flex animate-pulse items-center gap-4 rounded-lg border border-border/50 bg-muted/30 p-4"
+            className="flex animate-pulse items-center gap-3 rounded-lg border border-border/50 bg-card/50 p-3 sm:gap-4 sm:p-4"
           >
-            <div className="h-10 w-14 rounded-md bg-muted" />
-            <div className="flex-1 space-y-2">
-              <div className="h-4 w-32 rounded bg-muted" />
-              <div className="h-3 w-20 rounded bg-muted" />
+            {/* Route badge */}
+            <div className="h-12 w-16 shrink-0 rounded-lg bg-muted" />
+            {/* Destination info */}
+            <div className="min-w-0 flex-1">
+              <div className="h-5 w-36 rounded bg-muted" />
+              <div className="mt-1.5 h-3.5 w-44 rounded bg-muted" />
+              <div className="mt-1 h-3.5 w-20 rounded bg-muted" />
             </div>
-            <div className="h-8 w-16 rounded bg-muted" />
+            {/* ETA */}
+            <div className="flex shrink-0 items-baseline gap-1">
+              <div className="h-8 w-10 rounded bg-muted" />
+              <div className="h-3.5 w-6 rounded bg-muted" />
+            </div>
+            {/* Map pin */}
+            <div className="h-5 w-5 shrink-0 rounded-full bg-muted" />
           </div>
         ))}
       </div>

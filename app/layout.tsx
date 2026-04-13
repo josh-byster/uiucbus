@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import Script from "next/script"
 import { ThemeProvider } from "next-themes"
 import { Toaster } from "@/components/ui/sonner"
 import { Navbar } from "@/components/navbar"
@@ -84,7 +85,9 @@ export default function RootLayout({
           }}
         />
 
-        <script
+        <Script
+          id="theme-ready"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `requestAnimationFrame(() => document.documentElement.classList.add('theme-ready'))`,
           }}
