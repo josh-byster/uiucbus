@@ -179,9 +179,9 @@ export function DeparturesTable({
         </div>
       ) : (
         <div className="space-y-2">
-          {departures.map((dep, i) => (
+          {departures.map((dep) => (
             <DepartureRow
-              key={`${dep.vehicle_id}-${dep.expected}-${i}`}
+              key={`${dep.vehicle_id}-${dep.trip.trip_id}`}
               departure={dep}
               stopPoint={stopPoints.find((sp) => sp.stop_id === dep.stop_id)}
             />
