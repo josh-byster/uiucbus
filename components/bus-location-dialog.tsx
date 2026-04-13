@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Image from "next/image"
 import { Loader2 } from "lucide-react"
 import {
@@ -32,34 +32,32 @@ export function BusLocationDialog({
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [now, setNow] = useState(() => Date.now())
-  const fetchedRef = useRef<string | null>(null)
 
-  useEffect(() => {
-    if (!open || !vehicleId) return
-    if (fetchedRef.current === vehicleId) return
-
-    let cancelled = false
-    fetchedRef.current = vehicleId
-
+  const fetchVehicle = useCallback(() => {
+    if (!vehicleId) return
     fetch(`/api/vehicle?vehicle_id=${vehicleId}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
-        if (cancelled) return
         if (data.vehicles?.length > 0) {
           setNow(Date.now())
           setVehicle(data.vehicles[0])
+          setError(null)
         } else {
           setError("Vehicle location not available.")
         }
       })
       .catch(() => {
-        if (!cancelled) setError("Failed to fetch vehicle location.")
+        setError("Failed to fetch vehicle location.")
       })
+  }, [vehicleId])
 
-    return () => {
-      cancelled = true
-    }
-  }, [open, vehicleId])
+  // Fetch on open + poll every 10s
+  useEffect(() => {
+    if (!open || !vehicleId) return
+    fetchVehicle()
+    const interval = setInterval(fetchVehicle, 10_000)
+    return () => clearInterval(interval)
+  }, [open, vehicleId, fetchVehicle])
 
   // Derive loading from fetch state: loading when open + vehicleId set but no result yet
   const isLoading = open && !!vehicleId && !vehicle && !error
@@ -90,7 +88,6 @@ export function BusLocationDialog({
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
       if (!nextOpen) {
-        fetchedRef.current = null
         setVehicle(null)
         setError(null)
       }

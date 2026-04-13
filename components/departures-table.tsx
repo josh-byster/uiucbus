@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { BusFront, RefreshCw } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DepartureRow } from "@/components/departure-row"
@@ -23,6 +23,10 @@ export function DeparturesTable({
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [secondsAgo, setSecondsAgo] = useState(0)
+  const [pullDistance, setPullDistance] = useState(0)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const touchStartY = useRef(0)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   // Fetch stop points once for map pins
   useEffect(() => {
@@ -72,6 +76,38 @@ export function DeparturesTable({
     return () => clearInterval(interval)
   }, [lastUpdated, onStatusChange, fetchDepartures])
 
+  // Pull-to-refresh handlers
+  const PULL_THRESHOLD = 80
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (containerRef.current?.scrollTop === 0) {
+      touchStartY.current = e.touches[0].clientY
+    }
+  }, [])
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!touchStartY.current) return
+    const delta = e.touches[0].clientY - touchStartY.current
+    if (delta > 0) {
+      setPullDistance(Math.min(delta * 0.5, 120))
+    }
+  }, [])
+
+  const handleTouchEnd = useCallback(async () => {
+    if (pullDistance >= PULL_THRESHOLD) {
+      setIsRefreshing(true)
+      await fetchDepartures()
+      setIsRefreshing(false)
+    }
+    setPullDistance(0)
+    touchStartY.current = 0
+  }, [pullDistance, fetchDepartures])
+
+  // Determine if service is likely not running
+  const now = new Date()
+  const hour = now.getHours()
+  const isLateNight = hour >= 1 && hour < 5
+
   if (loading) {
     return (
       <div className="space-y-3">
@@ -105,7 +141,28 @@ export function DeparturesTable({
   }
 
   return (
-    <div>
+    <div
+      ref={containerRef}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Pull-to-refresh indicator */}
+      {(pullDistance > 0 || isRefreshing) && (
+        <div
+          className="flex items-center justify-center overflow-hidden transition-[height] duration-200"
+          style={{ height: isRefreshing ? 40 : pullDistance }}
+        >
+          <RefreshCw
+            className={`h-5 w-5 text-muted-foreground ${isRefreshing ? "animate-spin" : ""}`}
+            style={{
+              opacity: Math.min(pullDistance / PULL_THRESHOLD, 1),
+              transform: `rotate(${pullDistance * 2}deg)`,
+            }}
+          />
+        </div>
+      )}
+
       {departures.length === 0 ? (
         <div className="flex flex-col items-center gap-3 py-16">
           <div className="rounded-full bg-muted p-4">
@@ -114,7 +171,9 @@ export function DeparturesTable({
           <div className="text-center">
             <p className="font-medium">No upcoming departures</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Buses may not be running at this time.
+              {isLateNight
+                ? "Service typically resumes around 5:00 AM."
+                : "Buses may not be running at this time."}
             </p>
           </div>
         </div>
