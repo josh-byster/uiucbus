@@ -4,6 +4,7 @@ import { useState } from "react"
 import { MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { BusLocationDialog } from "@/components/bus-location-dialog"
+import { getStopName } from "@/lib/stops"
 import type { Departure, StopPoint } from "@/lib/types"
 
 interface DepartureRowProps {
@@ -15,6 +16,12 @@ export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
 
   const isArriving = departure.expected_mins <= 1
+
+  const routeNum = departure.route.route_short_name || departure.route.route_id
+  const dirLetter = departure.trip.direction?.[0] ?? ""
+  const badgeLabel = `${routeNum}${dirLetter}`
+  const headsign = departure.headsign.replace(/^\S+\s+/, "")
+  const destinationName = getStopName(departure.destination.stop_id)
 
   const expectedTime = new Date(departure.expected).toLocaleTimeString([], {
     hour: "numeric",
@@ -32,14 +39,17 @@ export function DepartureRow({ departure, stopPoint }: DepartureRowProps) {
             color: `#${departure.route.route_text_color}`,
           }}
         >
-          {departure.route.route_short_name || departure.route.route_id}
+          {badgeLabel}
         </div>
 
         {/* Destination info */}
         <div className="min-w-0 flex-1">
-          <p className="truncate leading-tight font-semibold">
-            {departure.headsign}
-          </p>
+          <p className="truncate leading-tight font-semibold">{headsign}</p>
+          {destinationName && (
+            <p className="mt-0.5 truncate text-xs text-muted-foreground">
+              to {destinationName}
+            </p>
+          )}
           <p className="mt-0.5 text-xs text-muted-foreground">{expectedTime}</p>
         </div>
 
