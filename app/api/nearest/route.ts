@@ -13,7 +13,9 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getNearestStops(lat, lon)
-    return NextResponse.json(data)
+    return NextResponse.json(data, {
+      headers: { "Cache-Control": "no-store" },
+    })
   } catch (error) {
     console.error("Nearest stops API error:", error)
     return NextResponse.json(

@@ -9,7 +9,9 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getDepartures(stopId)
-    return NextResponse.json(data)
+    return NextResponse.json(data, {
+      headers: { "Cache-Control": "no-store" },
+    })
   } catch (error) {
     console.error("Departures API error:", error)
     return NextResponse.json(

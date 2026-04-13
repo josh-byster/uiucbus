@@ -27,7 +27,9 @@ export function DeparturesTable({
 
   const fetchDepartures = useCallback(async () => {
     try {
-      const res = await fetch(`/api/departures?stop_id=${stopId}`)
+      const res = await fetch(`/api/departures?stop_id=${stopId}`, {
+        cache: "no-store",
+      })
       const data = await res.json()
       setDepartures(data.departures || [])
       setError(null)

@@ -41,7 +41,7 @@ export function BusLocationDialog({
     let cancelled = false
     fetchedRef.current = vehicleId
 
-    fetch(`/api/vehicle?vehicle_id=${vehicleId}`)
+    fetch(`/api/vehicle?vehicle_id=${vehicleId}`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (cancelled) return

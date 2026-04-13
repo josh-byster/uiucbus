@@ -40,7 +40,8 @@ export function NearestStopsDialog({
         try {
           const { latitude, longitude } = position.coords
           const res = await fetch(
-            `/api/nearest?lat=${latitude}&lon=${longitude}`
+            `/api/nearest?lat=${latitude}&lon=${longitude}`,
+            { cache: "no-store" }
           )
           const data = await res.json()
           setStops(data.stops || [])

@@ -32,14 +32,10 @@ async function cumtdFetch<T>(
 }
 
 export function getDepartures(stopId: string) {
-  return cumtdFetch<DeparturesResponse>(
-    "getdeparturesbystop",
-    {
-      stop_id: stopId,
-      pt: String(MAX_EXPECTED_MINS),
-    },
-    30
-  )
+  return cumtdFetch<DeparturesResponse>("getdeparturesbystop", {
+    stop_id: stopId,
+    pt: String(MAX_EXPECTED_MINS),
+  })
 }
 
 export function getStop(stopId: string) {

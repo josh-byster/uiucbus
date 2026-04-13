@@ -12,7 +12,9 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getVehicle(vehicleId)
-    return NextResponse.json(data)
+    return NextResponse.json(data, {
+      headers: { "Cache-Control": "no-store" },
+    })
   } catch (error) {
     console.error("Vehicle API error:", error)
     return NextResponse.json(

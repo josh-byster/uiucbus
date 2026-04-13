@@ -9,7 +9,9 @@ export async function GET(request: NextRequest) {
 
   try {
     const data = await getStop(stopId)
-    return NextResponse.json(data)
+    return NextResponse.json(data, {
+      headers: { "Cache-Control": "no-store" },
+    })
   } catch (error) {
     console.error("Stop API error:", error)
     return NextResponse.json(
