@@ -8,7 +8,6 @@ import type { Departure, StopPoint } from "@/lib/types"
 
 interface DeparturesTableProps {
   stopId: string
-  stopPoint?: StopPoint
   onStatusChange?: (secondsAgo: number, refresh: () => void) => void
 }
 
@@ -16,14 +15,26 @@ const POLL_INTERVAL = 30_000
 
 export function DeparturesTable({
   stopId,
-  stopPoint,
   onStatusChange,
 }: DeparturesTableProps) {
   const [departures, setDepartures] = useState<Departure[]>([])
+  const [stopPoints, setStopPoints] = useState<StopPoint[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [secondsAgo, setSecondsAgo] = useState(0)
+
+  // Fetch stop points once for map pins
+  useEffect(() => {
+    fetch(`/api/stop?stop_id=${stopId}`, { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.stops?.[0]?.stop_points) {
+          setStopPoints(data.stops[0].stop_points)
+        }
+      })
+      .catch(() => {})
+  }, [stopId])
 
   const fetchDepartures = useCallback(async () => {
     try {
@@ -113,7 +124,7 @@ export function DeparturesTable({
             <DepartureRow
               key={`${dep.vehicle_id}-${dep.expected}-${i}`}
               departure={dep}
-              stopPoint={stopPoint}
+              stopPoint={stopPoints.find((sp) => sp.stop_id === dep.stop_id)}
             />
           ))}
         </div>

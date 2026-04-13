@@ -21,7 +21,9 @@ async function cumtdFetch<T>(
   }
 
   const res = await fetch(url.toString(), {
-    next: revalidate !== undefined ? { revalidate } : { revalidate: false },
+    ...(revalidate !== undefined
+      ? { next: { revalidate } }
+      : { cache: "no-store" }),
   } as RequestInit)
 
   if (!res.ok) {

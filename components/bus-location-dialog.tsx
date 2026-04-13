@@ -46,6 +46,7 @@ export function BusLocationDialog({
       .then((data) => {
         if (cancelled) return
         if (data.vehicles?.length > 0) {
+          setNow(Date.now())
           setVehicle(data.vehicles[0])
         } else {
           setError("Vehicle location not available.")
@@ -82,7 +83,7 @@ export function BusLocationDialog({
     : null
 
   const lastUpdated = vehicle?.last_updated
-    ? `${Math.round((now - new Date(vehicle.last_updated).getTime()) / 1000)}s ago`
+    ? `${Math.max(0, Math.round((now - new Date(vehicle.last_updated).getTime()) / 1000))}s ago`
     : null
 
   // base-ui onOpenChange passes (open, eventDetails) — wrap to match our prop type

@@ -17,7 +17,8 @@ export function searchStops(query: string): StopSearchEntry[] {
 }
 
 export function getStopName(stopId: string): string | undefined {
-  return stops.find((s) => s.stop_id === stopId)?.stop_name
+  const parentId = stopId.split(":")[0]
+  return stops.find((s) => s.stop_id === parentId)?.stop_name
 }
 
 export { stops as allStops }
