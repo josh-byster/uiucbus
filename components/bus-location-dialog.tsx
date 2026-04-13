@@ -136,7 +136,7 @@ export function BusLocationDialog({
               </p>
               {lastUpdated && (
                 <p>
-                  <span className="text-muted-foreground">Last updated:</span>{" "}
+                  <span className="text-muted-foreground">GPS updated:</span>{" "}
                   {lastUpdated}
                 </p>
               )}
